@@ -1,0 +1,35 @@
+{
+ "model": "B",
+ "task": "T3",
+ "rep": 2,
+ "t0": 1792488441.2118385,
+ "t1": 1792488531.2325509,
+ "wall_s": 90.0,
+ "exit_code": 0,
+ "killed": null,
+ "prompt_chars": 1549,
+ "cmd": [
+  "C:\\Users\\user\\AppData\\Roaming\\npm\\node_modules\\opencode-ai\\bin\\opencode.exe",
+  "run",
+  "--pure",
+  "-m",
+  "llamacpp/qwen38-27b",
+  "--format",
+  "json",
+  "<README on stdin>"
+ ],
+ "steps": 7,
+ "tool_calls": 9,
+ "tokens": {
+  "input": 14408,
+  "output": 4406,
+  "reasoning": 0,
+  "cache_read": 74578,
+  "cache_write": 0
+ },
+ "ran_visible_tests": true,
+ "pytest_calls": 1,
+ "peeked_outside": [],
+ "errors": [],
+ "final_text": "Done. Refactored `pricing.py`: split `compute_order_total` into `_check_preconditions`, `_price_line`, `_price_lines`, `_apply_coupon`, and `_finish` \u2014 each well under 40 lines. Public API, field order, rounding, error types/messages, and per-line error ordering (quantity checked before catalog lookup) are unchanged. All 31 tests pass, including the structure check."
+}

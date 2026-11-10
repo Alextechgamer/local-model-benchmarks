@@ -1,0 +1,103 @@
+{
+ "rate_per_kwh": 0.104,
+ "rate_high_per_kwh": 0.15,
+ "assumptions": {
+  "rest_of_pc_w": 60,
+  "psu_efficiency": 0.9
+ },
+ "per_page": [
+  {
+   "run": "Flash-Next IQ1_M, claude-code run 2",
+   "minutes": 20.2,
+   "gpu_cpu_wh": 129,
+   "wall_wh_est": 166,
+   "cost_gpu_cpu": 0.0134,
+   "cost_wall_est": 0.0172,
+   "cost_wall_est_high_rate": 0.0249
+  },
+  {
+   "run": "Qwen 3.8 27B IQ4_XS, opencode",
+   "minutes": 62.5,
+   "gpu_cpu_wh": 363,
+   "wall_wh_est": 473,
+   "cost_gpu_cpu": 0.0378,
+   "cost_wall_est": 0.0492,
+   "cost_wall_est_high_rate": 0.0709
+  }
+ ],
+ "per_machine": [
+  {
+   "machine": "Current PC (RX 7900 XT + Ryzen 9 5900X)",
+   "price": 0,
+   "watts_low": 382,
+   "watts_high": 491,
+   "basis": "measured GPU+CPU during run 2 (low); plus estimated rest-of-PC and PSU loss (high)",
+   "month_8h_nightly": [
+    9.53,
+    12.26
+   ],
+   "month_24_7": [
+    28.6,
+    36.77
+   ],
+   "api_pages_for_purchase_price": {}
+  },
+  {
+   "machine": "Strix Halo 128 GB (BOSGAME M5 / Ryzen AI Halo class)",
+   "price": 3599,
+   "watts_low": 140,
+   "watts_high": 170,
+   "basis": "ServeTheHome Framework Desktop review, same chip: 140-170 W under load",
+   "month_8h_nightly": [
+    3.49,
+    4.24
+   ],
+   "month_24_7": [
+    10.48,
+    12.73
+   ],
+   "api_pages_for_purchase_price": {
+    "DeepSeek V4.1 Flash (API)": 37884,
+    "GPT-6 Luna #3 (API)": 83698
+   }
+  },
+  {
+   "machine": "Mac Studio M3 Ultra 256 GB",
+   "price": 8078,
+   "watts_low": 190,
+   "watts_high": 270,
+   "basis": "reported under 200 W running DeepSeek R1 (Dave2D via TechRadar); Apple's max 270 W",
+   "month_8h_nightly": [
+    4.74,
+    6.74
+   ],
+   "month_24_7": [
+    14.23,
+    20.22
+   ],
+   "api_pages_for_purchase_price": {
+    "DeepSeek V4.1 Flash (API)": 85032,
+    "GPT-6 Luna #3 (API)": 187860
+   }
+  },
+  {
+   "machine": "Mac Studio M5 Ultra 256 GB",
+   "price": 9499,
+   "watts_low": 200,
+   "watts_high": 385,
+   "basis": "no measured LLM figure found; Apple's max 385 W (512 GB config)",
+   "month_8h_nightly": [
+    4.99,
+    9.61
+   ],
+   "month_24_7": [
+    14.98,
+    28.83
+   ],
+   "api_pages_for_purchase_price": {
+    "DeepSeek V4.1 Flash (API)": 99989,
+    "GPT-6 Luna #3 (API)": 220907
+   }
+  }
+ ]
+}

@@ -1,0 +1,65 @@
+﻿>>> backend-vk10752
+{"event": "start", "pid": 37936, "free_gb": 46.6, "cmd": ["C:\\Users\\user\\AppData\\Local\\Microsoft\\WinGet\\Packages\\ggml.llamacpp_Microsoft.Winget.Source_8wekyb3d8bbwe\\llama-server.exe", "-m", "C:\\models\\qwen38\\Qwen\\Qwen3.8-27B\\Qwen3.8-27B-IQ4_XS.gguf", "-ngl", "99", "-c", "98304", "-np", "1", "-fa", "on", "-ctk", "q4_0", "-ctv", "q4_0", "-b", "2048", "-ub", "512", "-fit", "off", "--host", "127.0.0.1", "--port", "8090", "--spec-type", "draft-mtp", "--spec-draft-n-max", "3", "--temp", "1.0", "--top-k", "20", "--top-p", "0.95", "--min-p", "0", "--presence-penalty", "0", "--repeat-penalty", "1.0", "--reasoning-format", "deepseek", "--reasoning-budget", "8192", "--reasoning-effort", "medium"], "env": [], "tag": "B-backend-vk10752", "t": 1792475521.3504753}
+{"event": "loaded", "load_s": 9.9, "tag": "B-backend-vk10752", "t": 1792475531.2857914}
+warmup {'error': None, 'prompt_tokens': 16103, 'completion_tokens': 512, 'ttft_s': 32.514360189437866}
+{"run": 1, "error": null, "prompt_tokens": 16101, "completion_tokens": 512, "ttft_s": 32.73012399673462, "prompt_tps": 491.93214182770424, "output_tps": 55.126391351587365, "peak_vram_dedicated_mb": 19758.0, "peak_vram_shared_mb": 467.0}
+{"run": 2, "error": null, "prompt_tokens": 16105, "completion_tokens": 512, "ttft_s": 33.15519952774048, "prompt_tps": 485.7458326114183, "output_tps": 49.5599103861352, "peak_vram_dedicated_mb": 19813.0, "peak_vram_shared_mb": 475.0}
+{"run": 3, "error": null, "prompt_tokens": 16101, "completion_tokens": 512, "ttft_s": 32.983643770217896, "prompt_tps": 488.15103971436184, "output_tps": 53.72686093695619, "peak_vram_dedicated_mb": 19798.0, "peak_vram_shared_mb": 467.0}
+SUMMARY {"tag": "B-backend-vk10752", "n": 3, "median_ttft_s": 32.983643770217896, "median_prompt_tps": 488.15103971436184, "median_output_tps": 53.72686093695619, "max_vram_shared_mb": 475.0, "max_vram_dedicated_mb": 19813.0, "completion_tokens": [512, 512, 512], "errors": []}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "B-backend-vk10752", "rep": 1, "wall_s": 11.4}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "B-backend-vk10752", "rep": 2, "wall_s": 13.0}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "B-backend-vk10752", "rep": 3, "wall_s": 16.5}
+SMOKE B-backend-vk10752 {"tool_call": 3, "tool_typed": 3, "tool_result": 3, "code": 3} of 3
+{"event": "stopped", "pid": 37936, "alive_s": 224.4, "tag": "B-backend-vk10752", "t": 1792475745.7685373}
+>>> backend-vk11748
+{"event": "start", "pid": 38536, "free_gb": 46.4, "cmd": ["E:\\strata-tests\\coding-bench\\tools\\llama-b11748-vulkan-x64\\llama-server.exe", "-m", "C:\\models\\qwen38\\Qwen\\Qwen3.8-27B\\Qwen3.8-27B-IQ4_XS.gguf", "-ngl", "99", "-c", "98304", "-np", "1", "-fa", "on", "-ctk", "q4_0", "-ctv", "q4_0", "-b", "2048", "-ub", "512", "-fit", "off", "--host", "127.0.0.1", "--port", "8090", "--spec-type", "draft-mtp", "--spec-draft-n-max", "3", "--temp", "1.0", "--top-k", "20", "--top-p", "0.95", "--min-p", "0", "--presence-penalty", "0", "--repeat-penalty", "1.0", "--reasoning-format", "deepseek", "--reasoning-budget", "8192", "--reasoning-effort", "medium"], "env": [], "tag": "B-backend-vk11748", "t": 1792475746.3247054}
+{"event": "loaded", "load_s": 11.8, "tag": "B-backend-vk11748", "t": 1792475758.1486688}
+warmup {'error': None, 'prompt_tokens': 16103, 'completion_tokens': 512, 'ttft_s': 27.320839405059814}
+{"run": 1, "error": null, "prompt_tokens": 16102, "completion_tokens": 512, "ttft_s": 27.52579164505005, "prompt_tps": 584.9786341347831, "output_tps": 56.116154340535296, "peak_vram_dedicated_mb": 19315.0, "peak_vram_shared_mb": 476.0}
+{"run": 2, "error": null, "prompt_tokens": 16099, "completion_tokens": 512, "ttft_s": 27.30220937728882, "prompt_tps": 589.6592388377131, "output_tps": 60.64369283642852, "peak_vram_dedicated_mb": 19309.0, "peak_vram_shared_mb": 476.0}
+{"run": 3, "error": null, "prompt_tokens": 16103, "completion_tokens": 512, "ttft_s": 27.2973473072052, "prompt_tps": 589.9108004443192, "output_tps": 60.3771811939118, "peak_vram_dedicated_mb": 19315.0, "peak_vram_shared_mb": 476.0}
+SUMMARY {"tag": "B-backend-vk11748", "n": 3, "median_ttft_s": 27.30220937728882, "median_prompt_tps": 589.6592388377131, "median_output_tps": 60.3771811939118, "max_vram_shared_mb": 476.0, "max_vram_dedicated_mb": 19315.0, "completion_tokens": [512, 512, 512], "errors": []}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "B-backend-vk11748", "rep": 1, "wall_s": 14.2}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "B-backend-vk11748", "rep": 2, "wall_s": 10.4}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "B-backend-vk11748", "rep": 3, "wall_s": 10.7}
+SMOKE B-backend-vk11748 {"tool_call": 3, "tool_typed": 3, "tool_result": 3, "code": 3} of 3
+{"event": "stopped", "pid": 38536, "alive_s": 194.8, "tag": "B-backend-vk11748", "t": 1792475941.1090543}
+>>> backend-rocm11748
+{"event": "start", "pid": 14004, "free_gb": 49.0, "cmd": ["E:\\strata-tests\\coding-bench\\tools\\llama-b11748-rocm-10.0-x64\\llama-server.exe", "-m", "C:\\models\\qwen38\\Qwen\\Qwen3.8-27B\\Qwen3.8-27B-IQ4_XS.gguf", "-ngl", "99", "-c", "98304", "-np", "1", "-fa", "on", "-ctk", "q4_0", "-ctv", "q4_0", "-b", "2048", "-ub", "512", "-fit", "off", "--host", "127.0.0.1", "--port", "8090", "--spec-type", "draft-mtp", "--spec-draft-n-max", "3", "--temp", "1.0", "--top-k", "20", "--top-p", "0.95", "--min-p", "0", "--presence-penalty", "0", "--repeat-penalty", "1.0", "--reasoning-format", "deepseek", "--reasoning-budget", "8192", "--reasoning-effort", "medium"], "env": ["HIP_VISIBLE_DEVICES=0", "PATH=E:\\strata-tests\\coding-bench\\tools\\llama-b11748-rocm-10.0-x64;<rest of PATH removed>"], "tag": "B-backend-rocm11748", "t": 1792475941.6594875}
+{"event": "loaded", "load_s": 14.4, "tag": "B-backend-rocm11748", "t": 1792475956.072649}
+warmup {'error': None, 'prompt_tokens': 16100, 'completion_tokens': 512, 'ttft_s': 70.04066133499146}
+{"run": 1, "error": null, "prompt_tokens": 16101, "completion_tokens": 512, "ttft_s": 70.00854349136353, "prompt_tps": 229.98621592500734, "output_tps": 58.16335857358301, "peak_vram_dedicated_mb": 20017.0, "peak_vram_shared_mb": 935.0}
+{"run": 2, "error": null, "prompt_tokens": 16103, "completion_tokens": 512, "ttft_s": 70.18363809585571, "prompt_tps": 229.44094146283462, "output_tps": 57.961801217157905, "peak_vram_dedicated_mb": 20044.0, "peak_vram_shared_mb": 935.0}
+{"run": 3, "error": null, "prompt_tokens": 16098, "completion_tokens": 512, "ttft_s": 70.12237405776978, "prompt_tps": 229.57009394373594, "output_tps": 58.19349960199988, "peak_vram_dedicated_mb": 20050.0, "peak_vram_shared_mb": 934.0}
+SUMMARY {"tag": "B-backend-rocm11748", "n": 3, "median_ttft_s": 70.12237405776978, "median_prompt_tps": 229.57009394373594, "median_output_tps": 58.16335857358301, "max_vram_shared_mb": 935.0, "max_vram_dedicated_mb": 20050.0, "completion_tokens": [512, 512, 512], "errors": []}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "B-backend-rocm11748", "rep": 1, "wall_s": 10.9}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "B-backend-rocm11748", "rep": 2, "wall_s": 12.5}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "B-backend-rocm11748", "rep": 3, "wall_s": 10.4}
+SMOKE B-backend-rocm11748 {"tool_call": 3, "tool_typed": 3, "tool_result": 3, "code": 3} of 3
+{"event": "stopped", "pid": 14004, "alive_s": 366.4, "tag": "B-backend-rocm11748", "t": 1792476308.0423288}
+>>> backend-lemonade1350
+{"event": "start", "pid": 25388, "free_gb": 48.7, "cmd": ["E:\\strata-tests\\coding-bench\\tools\\lemonade-b1350-gfx110X\\llama-server.exe", "-m", "C:\\models\\qwen38\\Qwen\\Qwen3.8-27B\\Qwen3.8-27B-IQ4_XS.gguf", "-ngl", "99", "-c", "98304", "-np", "1", "-fa", "on", "-ctk", "q4_0", "-ctv", "q4_0", "-b", "2048", "-ub", "512", "-fit", "off", "--host", "127.0.0.1", "--port", "8090", "--spec-type", "draft-mtp", "--spec-draft-n-max", "3", "--temp", "1.0", "--top-k", "20", "--top-p", "0.95", "--min-p", "0", "--presence-penalty", "0", "--repeat-penalty", "1.0", "--reasoning-format", "deepseek", "--reasoning-budget", "8192", "--reasoning-effort", "medium"], "env": ["HIP_VISIBLE_DEVICES=0"], "tag": "B-backend-lemonade1350", "t": 1792476308.5596979}
+{"event": "loaded", "load_s": 13.7, "tag": "B-backend-lemonade1350", "t": 1792476322.2067635}
+warmup {'error': None, 'prompt_tokens': 16103, 'completion_tokens': 512, 'ttft_s': 39.40123152732849}
+{"run": 1, "error": null, "prompt_tokens": 16100, "completion_tokens": 512, "ttft_s": 39.22671818733215, "prompt_tps": 410.43453910960415, "output_tps": 59.40306740639508, "peak_vram_dedicated_mb": 20050.0, "peak_vram_shared_mb": 905.0}
+{"run": 2, "error": null, "prompt_tokens": 16104, "completion_tokens": 512, "ttft_s": 39.36231780052185, "prompt_tps": 409.1222493962614, "output_tps": 64.8131130162391, "peak_vram_dedicated_mb": 20050.0, "peak_vram_shared_mb": 905.0}
+{"run": 3, "error": null, "prompt_tokens": 16100, "completion_tokens": 512, "ttft_s": 39.14475440979004, "prompt_tps": 411.29393306331275, "output_tps": 60.86287775076629, "peak_vram_dedicated_mb": 20044.0, "peak_vram_shared_mb": 904.0}
+SUMMARY {"tag": "B-backend-lemonade1350", "n": 3, "median_ttft_s": 39.22671818733215, "median_prompt_tps": 410.43453910960415, "median_output_tps": 60.86287775076629, "max_vram_shared_mb": 905.0, "max_vram_dedicated_mb": 20050.0, "completion_tokens": [512, 512, 512], "errors": []}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "B-backend-lemonade1350", "rep": 1, "wall_s": 13.1}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "B-backend-lemonade1350", "rep": 2, "wall_s": 12.2}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "B-backend-lemonade1350", "rep": 3, "wall_s": 11.5}
+SMOKE B-backend-lemonade1350 {"tool_call": 3, "tool_typed": 3, "tool_result": 3, "code": 3} of 3
+{"event": "stopped", "pid": 25388, "alive_s": 243.3, "tag": "B-backend-lemonade1350", "t": 1792476551.9015262}
+>>> backend-bee048
+{"event": "start", "pid": 30576, "free_gb": 48.7, "cmd": ["E:\\strata-tests\\coding-bench\\tools\\beellama-v0.4.8-vulkan\\llama-server.exe", "-m", "C:\\models\\qwen38\\Qwen\\Qwen3.8-27B\\Qwen3.8-27B-IQ4_XS.gguf", "-ngl", "99", "-c", "98304", "-np", "1", "-fa", "on", "-ctk", "q4_0", "-ctv", "q4_0", "-b", "2048", "-ub", "512", "-fit", "off", "--host", "127.0.0.1", "--port", "8090", "--spec-type", "draft-mtp", "--spec-draft-n-max", "3", "--temp", "1.0", "--top-k", "20", "--top-p", "0.95", "--min-p", "0", "--presence-penalty", "0", "--repeat-penalty", "1.0", "--reasoning-format", "deepseek", "--reasoning-budget", "8192", "--reasoning-effort", "medium"], "env": [], "tag": "B-backend-bee048", "t": 1792476552.4477396}
+{"event": "loaded", "load_s": 23.1, "tag": "B-backend-bee048", "t": 1792476575.4931734}
+warmup {'error': None, 'prompt_tokens': 16115, 'completion_tokens': 512, 'ttft_s': 31.102018117904663}
+{"run": 1, "error": null, "prompt_tokens": 16114, "completion_tokens": 512, "ttft_s": 27.680338144302368, "prompt_tps": 582.1460675803505, "output_tps": 56.0659847577612, "peak_vram_dedicated_mb": 19813.0, "peak_vram_shared_mb": 402.0}
+{"run": 2, "error": null, "prompt_tokens": 16114, "completion_tokens": 512, "ttft_s": 27.408772230148315, "prompt_tps": 587.9139665466439, "output_tps": 58.793396596143594, "peak_vram_dedicated_mb": 19813.0, "peak_vram_shared_mb": 402.0}
+{"run": 3, "error": null, "prompt_tokens": 16114, "completion_tokens": 512, "ttft_s": 27.480831384658813, "prompt_tps": 586.3723616817375, "output_tps": 60.315400033685385, "peak_vram_dedicated_mb": 19780.0, "peak_vram_shared_mb": 401.0}
+SUMMARY {"tag": "B-backend-bee048", "n": 3, "median_ttft_s": 27.480831384658813, "median_prompt_tps": 586.3723616817375, "median_output_tps": 58.793396596143594, "max_vram_shared_mb": 402.0, "max_vram_dedicated_mb": 19813.0, "completion_tokens": [512, 512, 512], "errors": []}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "B-backend-bee048", "rep": 1, "wall_s": 10.0}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "B-backend-bee048", "rep": 2, "wall_s": 11.4}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "B-backend-bee048", "rep": 3, "wall_s": 10.4}
+SMOKE B-backend-bee048 {"tool_call": 3, "tool_typed": 3, "tool_result": 3, "code": 3} of 3
+{"event": "stopped", "pid": 30576, "alive_s": 207.0, "tag": "B-backend-bee048", "t": 1792476759.3939576}

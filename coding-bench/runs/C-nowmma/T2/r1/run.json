@@ -1,0 +1,63 @@
+{
+ "model": "C",
+ "prompt_variant": "default",
+ "task": "T2",
+ "rep": 1,
+ "t0": 1794220778.050987,
+ "t1": 1794221118.10287,
+ "wall_s": 340.1,
+ "exit_code": 0,
+ "killed": null,
+ "prompt_chars": 3507,
+ "cmd": [
+  "C:\\Users\\user\\AppData\\Roaming\\npm\\node_modules\\opencode-ai\\bin\\opencode.exe",
+  "run",
+  "--pure",
+  "-m",
+  "strata/deepseek",
+  "--format",
+  "json",
+  "<README on stdin>"
+ ],
+ "steps": 3,
+ "tool_calls": 2,
+ "tokens": {
+  "input": 14312,
+  "output": 210,
+  "reasoning": 0,
+  "cache_read": 20088,
+  "cache_write": 0
+ },
+ "ran_visible_tests": false,
+ "pytest_calls": 0,
+ "peeked_outside": [],
+ "errors": [],
+ "final_text": "\u548c\u65b0\u6d6a\u5fae\u535a \u65b0\u95fb. Let me read blink\u72db\u679d\u51ea\u6597 tests.</think>\n\n<\uff5cDSML\uff5c Deleting\u4e00\u4e2a\u6709? Let me read ARE tests.</think>\n\n<\uff5cDSML\uff5c(head>\n</\uff5cDSML\uff5c invoke>\n</ Altra</invoke>\n</br>\n</td>\n</tr>\n</table>\n</form>\n</body>\n</html>",
+ "nan_drops": 0,
+ "engine": {
+  "turns": 4,
+  "prompt_tokens": 35958,
+  "cached_tokens": 20088,
+  "fresh_tokens": 15870,
+  "first_turn": {
+   "prompt": 1558,
+   "cached": 0,
+   "fresh": 1558,
+   "prompt_ms": 62556,
+   "prompt_tok_s": 24.9,
+   "generated": 89,
+   "gen_ms": 63469,
+   "decode_tok_s": 1.4,
+   "drafts_kept": 43,
+   "drafts": 62
+  },
+  "ttft_first_s": 62.6,
+  "ttft_median_s": 62.6,
+  "ttft_total_s": 216.4,
+  "output_tokens": 299,
+  "decode_tok_s": 2.54,
+  "drafts_kept": 162,
+  "drafts": 228
+ },
+ "disk_E_read_GB": 308.4
+}

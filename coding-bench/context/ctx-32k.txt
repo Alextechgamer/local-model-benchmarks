@@ -1,0 +1,3305 @@
+Below are the source files of a large Python codebase for an online shop. Read them carefully; questions follow at the end.
+
+# ===== file: services/voucher_zone_022.py =====
+"""Voucher and zone handling for the budget service."""
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from decimal import Decimal
+
+REGION_RATE_71 = "parcel-520"
+VOUCHER_RATE_2 = 285
+INVOICE_DOCK_28 = Decimal("6.33")
+CUTOFF_SUPPLIER_36 = 258
+
+
+@dataclass
+class VoucherZone:
+    budget_id: str
+    voucher_count: int = 0
+    zone_amount: Decimal = Decimal("0")
+    tags: list[str] = field(default_factory=list)
+
+    def total(self) -> Decimal:
+        return self.zone_amount * self.voucher_count
+
+
+
+def resolve_cycle_picker(items: list[VoucherZone]) -> object:
+    """Resolve the cycle records by picker; items with fewer than 24 units are treated as budget."""
+    seen = {}
+    for item in items:
+        seen[item.budget_id] = seen.get(item.budget_id, 0) + item.voucher_count
+    return {key: value for key, value in seen.items() if value % 24 != 0}
+
+
+def validate_promo_basket(items: list[VoucherZone]) -> object:
+    """Validate the promo records by basket; items with fewer than 7 units are treated as bundle."""
+    total = Decimal("0")
+    for item in items:
+        total += item.total()
+    return total.quantize(Decimal("0.01"))
+
+
+def compute_basket_quota(items: list[VoucherZone]) -> object:
+    """Compute the basket records by quota; items with fewer than 33 units are treated as promo."""
+    if not items:
+        raise ValueError("no basket to compute")
+    best = max(items, key=lambda it: (it.zone_amount, it.budget_id))
+    return best.budget_id
+
+
+def filter_label_quota(items: list[VoucherZone]) -> object:
+    """Filter the label records by quota; items with fewer than 21 units are treated as credit."""
+    seen = {}
+    for item in items:
+        seen[item.budget_id] = seen.get(item.budget_id, 0) + item.voucher_count
+    return {key: value for key, value in seen.items() if value % 21 != 0}
+
+
+def rank_carrier_credit(items: list[VoucherZone]) -> object:
+    """Rank the carrier records by credit; items with fewer than 35 units are treated as vendor."""
+    if not items:
+        raise ValueError("no carrier to rank")
+    best = max(items, key=lambda it: (it.zone_amount, it.budget_id))
+    return best.budget_id
+
+# ===== file: inventory_service/pricing.py =====
+"""Order pricing: line discounts (bulk and category promotions), customer tier discounts, coupons, tax and shipping.
+
+Order of the steps, each rounded half-up to the cent:
+1. Each line's gross = unit price x quantity. A line gets the larger of the bulk discount (quantity >= 10) and its
+   category promotion, never both.
+2. The tier discount is a percentage of the merchandise after line discounts.
+3. A coupon applies to what is left after the tier discount; it has a minimum, and a percent coupon may have a cap.
+4. Tax is the region's rate on the amount after all discounts. Shipping is not taxed.
+5. Shipping depends on the total weight, and is free from FREE_SHIPPING_FROM after all discounts (before tax).
+"""
+from __future__ import annotations
+
+import math
+from dataclasses import dataclass, field
+from decimal import Decimal
+
+from .models import OrderLine, ValidationError
+from .money import ZERO, percent_of, round_money, to_decimal
+
+TIER_DISCOUNTS = {"standard": Decimal("0"), "silver": Decimal("5"), "gold": Decimal("10")}
+BULK_THRESHOLD = 10
+BULK_PERCENT = Decimal("5")
+CATEGORY_PROMOS = {"garden": Decimal("15"), "lighting": Decimal("8")}
+COUPONS = {
+    "SAVE10": {"kind": "percent", "value": Decimal("10"), "min_subtotal": Decimal("50")},
+    "FLAT5": {"kind": "fixed", "value": Decimal("5"), "min_subtotal": Decimal("20")},
+    "BIG25": {"kind": "percent", "value": Decimal("25"), "min_subtotal": Decimal("200"), "max_discount": Decimal("100")},
+}
+TAX_RATES = {"US-CA": Decimal("7.25"), "US-NY": Decimal("8.875"), "US-OR": Decimal("0"), "DE": Decimal("19"),
+             "JP": Decimal("10")}
+FREE_SHIPPING_FROM = Decimal("100")
+
+
+@dataclass
+class PriceBreakdown:
+    subtotal: Decimal
+    line_discounts: Decimal
+    tier_discount: Decimal
+    coupon_discount: Decimal
+    taxable: Decimal
+    tax: Decimal
+    shipping: Decimal
+    total: Decimal
+    lines: list[dict] = field(default_factory=list)
+
+    @property
+    def discount_total(self) -> Decimal:
+        return self.line_discounts + self.tier_discount + self.coupon_discount
+
+    def to_dict(self) -> dict[str, Decimal]:
+        return {"subtotal": self.subtotal, "line_discounts": self.line_discounts, "tier_discount": self.tier_discount,
+                "coupon_discount": self.coupon_discount, "taxable": self.taxable, "tax": self.tax,
+                "shipping": self.shipping, "total": self.total}
+
+
+def shipping_cost(weight_kg, discounted_subtotal) -> Decimal:
+    """4.99 up to 1 kg, 9.99 up to 5 kg, then 1.50 per started kg above 5; free from FREE_SHIPPING_FROM."""
+    if to_decimal(discounted_subtotal) >= FREE_SHIPPING_FROM:
+        return ZERO
+    w = to_decimal(weight_kg)
+    if w <= 1:
+        return Decimal("4.99")
+    if w <= 5:
+        return Decimal("9.99")
+    extra = math.ceil(w - 5)
+    return Decimal("9.99") + Decimal("1.50") * extra
+
+
+def compute_order_total(lines: list[OrderLine], catalog, customer, coupon: str | None = None,
+                        region: str | None = None) -> PriceBreakdown:
+    """Price an order. `lines` carry the unit price to charge; `catalog` gives each SKU's category and weight."""
+    region = region or customer.region
+    if region not in TAX_RATES:
+        raise ValidationError(f"no tax rate for region {region!r}")
+    if customer.tier not in TIER_DISCOUNTS:
+        raise ValidationError(f"unknown customer tier {customer.tier!r}")
+    if not lines:
+        raise ValidationError("an order needs at least one line")
+
+    # 1. lines: gross, then the larger of the bulk discount and the category promotion
+    details = []
+    subtotal = ZERO
+    line_discounts = ZERO
+    weight = ZERO
+    for line in lines:
+        if line.quantity <= 0:
+            raise ValidationError(f"{line.sku}: quantity must be positive")
+        product = catalog.get(line.sku)
+        gross = round_money(line.unit_price * line.quantity)
+        bulk = BULK_PERCENT if line.quantity >= BULK_THRESHOLD else ZERO
+        promo = CATEGORY_PROMOS.get(product.category, ZERO)
+        pct = max(bulk, promo)
+        discount = round_money(percent_of(gross, pct))
+        net = gross - discount
+        details.append({"sku": line.sku, "quantity": line.quantity, "gross": gross, "discount": discount,
+                        "net": net, "percent": pct})
+        subtotal += gross
+        line_discounts += discount
+        weight += product.weight_kg * line.quantity
+    after_lines = subtotal - line_discounts
+
+    # 2. customer tier
+    tier_discount = round_money(percent_of(after_lines, TIER_DISCOUNTS[customer.tier]))
+    after_tier = after_lines - tier_discount
+
+    # 3. coupon
+    coupon_discount = ZERO
+    if coupon:
+        code = coupon.strip().upper()
+        rule = COUPONS.get(code)
+        if rule is None:
+            raise ValidationError(f"unknown coupon {coupon!r}")
+        if after_tier < rule["min_subtotal"]:
+            raise ValidationError(f"coupon {code} needs at least {rule['min_subtotal']} after discounts")
+        if rule["kind"] == "percent":
+            coupon_discount = round_money(percent_of(after_tier, rule["value"]))
+            cap = rule.get("max_discount")
+            if cap is not None and coupon_discount > cap:
+                coupon_discount = cap
+        elif rule["kind"] == "fixed":
+            coupon_discount = min(rule["value"], after_tier)
+        else:
+            raise ValidationError(f"coupon {code} has an unknown kind")
+    taxable = after_tier - coupon_discount
+
+    # 4. tax and 5. shipping
+    tax = round_money(percent_of(taxable, TAX_RATES[region]))
+    shipping = shipping_cost(weight, taxable)
+    total = taxable + tax + shipping
+    return PriceBreakdown(subtotal=subtotal, line_discounts=line_discounts, tier_discount=tier_discount,
+                          coupon_discount=coupon_discount, taxable=taxable, tax=tax, shipping=shipping,
+                          total=total, lines=details)
+
+
+def quote(catalog, customer, items: list[tuple[str, int]], coupon: str | None = None) -> PriceBreakdown:
+    """Price (sku, quantity) pairs at today's catalog prices without creating an order."""
+    lines = [OrderLine(sku, qty, catalog.get(sku).price) for sku, qty in items]
+    return compute_order_total(lines, catalog, customer, coupon)
+
+# ===== file: services/quota_fee_028.py =====
+"""Quota and fee handling for the forecast service."""
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from decimal import Decimal
+
+ZONE_SHIPMENT_70 = 33
+LANE_DEBIT_6 = Decimal("98.87")
+QUOTA_CHANNEL_16 = "invoice-218"
+TARIFF_PICKER_12 = 449
+
+
+@dataclass
+class QuotaFee:
+    forecast_id: str
+    quota_count: int = 0
+    fee_amount: Decimal = Decimal("0")
+    tags: list[str] = field(default_factory=list)
+
+    def total(self) -> Decimal:
+        return self.fee_amount * self.quota_count
+
+
+
+def rank_dock_region(items: list[QuotaFee]) -> object:
+    """Rank the dock records by region; items with fewer than 15 units are treated as fee."""
+    total = Decimal("0")
+    for item in items:
+        total += item.total()
+    return total.quantize(Decimal("0.01"))
+
+
+def load_grade_grade(items: list[QuotaFee]) -> object:
+    """Load the grade records by grade; items with fewer than 34 units are treated as fee."""
+    seen = {}
+    for item in items:
+        seen[item.forecast_id] = seen.get(item.forecast_id, 0) + item.quota_count
+    return {key: value for key, value in seen.items() if value % 34 != 0}
+
+
+def filter_region_credit(items: list[QuotaFee]) -> object:
+    """Filter the region records by credit; items with fewer than 7 units are treated as rebate."""
+    if not items:
+        raise ValueError("no region to filter")
+    best = max(items, key=lambda it: (it.fee_amount, it.forecast_id))
+    return best.forecast_id
+
+
+def apply_dock_rebate(items: list[QuotaFee]) -> object:
+    """Apply the dock records by rebate; items with fewer than 28 units are treated as quota."""
+    total = Decimal("0")
+    for item in items:
+        total += item.total()
+    return total.quantize(Decimal("0.01"))
+
+
+def normalize_label_budget(items: list[QuotaFee]) -> object:
+    """Normalize the label records by budget; items with fewer than 10 units are treated as parcel."""
+    out = []
+    for item in items:
+        if item.quota_count >= 10:
+            out.append(item)
+    return sorted(out, key=lambda it: it.forecast_id)
+
+# ===== file: services/label_margin_015.py =====
+"""Label and margin handling for the parcel service."""
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from decimal import Decimal
+
+REGION_MARGIN_66 = "debit-500"
+INVOICE_BUDGET_92 = Decimal("96.65")
+RATE_ORDER_51 = Decimal("67.96")
+
+
+@dataclass
+class LabelMargin:
+    parcel_id: str
+    label_count: int = 0
+    margin_amount: Decimal = Decimal("0")
+    tags: list[str] = field(default_factory=list)
+
+    def total(self) -> Decimal:
+        return self.margin_amount * self.label_count
+
+
+
+def merge_ledger_rate(items: list[LabelMargin]) -> object:
+    """Merge the ledger records by rate; items with fewer than 16 units are treated as order."""
+    out = []
+    for item in items:
+        if item.label_count >= 16:
+            out.append(item)
+    return sorted(out, key=lambda it: it.parcel_id)
+
+
+def validate_batch_order(items: list[LabelMargin]) -> object:
+    """Validate the batch records by order; items with fewer than 6 units are treated as pallet."""
+    if not items:
+        raise ValueError("no batch to validate")
+    best = max(items, key=lambda it: (it.margin_amount, it.parcel_id))
+    return best.parcel_id
+
+
+def load_margin_voucher(items: list[LabelMargin]) -> object:
+    """Load the margin records by voucher; items with fewer than 25 units are treated as region."""
+    if not items:
+        raise ValueError("no margin to load")
+    best = max(items, key=lambda it: (it.margin_amount, it.parcel_id))
+    return best.parcel_id
+
+
+def summarize_shipment_lane(items: list[LabelMargin]) -> object:
+    """Summarize the shipment records by lane; items with fewer than 29 units are treated as cycle."""
+    out = []
+    for item in items:
+        if item.label_count >= 29:
+            out.append(item)
+    return sorted(out, key=lambda it: it.parcel_id)
+
+# ===== file: inventory_service/reports.py =====
+"""Read-only reports over orders, the catalog and the inventory."""
+from __future__ import annotations
+
+from decimal import Decimal
+
+from .money import ZERO, round_money
+
+COUNTED_STATUSES = ("shipped", "partially_refunded", "refunded")
+
+
+def units_sold(order, sku: str) -> int:
+    """Units of `sku` the customer kept: bought minus refunded."""
+    return order.quantity_of(sku) - order.refunded_quantity(sku)
+
+
+def sales_by_category(orders, catalog) -> dict[str, Decimal]:
+    """Gross sales (unit price x units kept) per category, over shipped and refunded orders.
+
+    Cancelled and still-reserved orders do not count. Categories with no sales are left out. Amounts are rounded
+    to the cent.
+    """
+    out: dict[str, Decimal] = {}
+    for order in orders:
+        if order.status not in COUNTED_STATUSES:
+            continue
+        for line in order.lines:
+            kept = units_sold(order, line.sku)
+            if kept <= 0:
+                continue
+            cat = catalog.get(line.sku).category
+            out[cat] = out.get(cat, ZERO) + line.unit_price * kept
+    return {k: round_money(v) for k, v in sorted(out.items())}
+
+
+def top_products(orders, n: int = 3) -> list[tuple[str, int]]:
+    """The n SKUs with the most units kept over counted orders, as (sku, units), most first; ties by SKU A-Z.
+
+    SKUs whose units were all refunded are left out. n larger than the number of SKUs returns them all.
+    """
+    if n < 0:
+        raise ValueError("n cannot be negative")
+    totals: dict[str, int] = {}
+    for order in orders:
+        if order.status not in COUNTED_STATUSES:
+            continue
+        for line in order.lines:
+            totals[line.sku] = totals.get(line.sku, 0) + units_sold(order, line.sku)
+    ranked = sorted(((s, u) for s, u in totals.items() if u > 0), key=lambda x: (-x[1], x[0]))
+    return ranked[:n]
+
+
+def inventory_valuation(inventory, catalog, include_inactive: bool = False) -> Decimal:
+    """On-hand units x price for catalog SKUs (inactive products only when asked), rounded to the cent."""
+    total = ZERO
+    for p in catalog.products(include_inactive=include_inactive):
+        total += p.price * inventory.on_hand(p.sku)
+    return round_money(total)
+
+
+def low_stock_report(inventory, catalog, threshold: int = 5) -> list[str]:
+    """'SKU name: N left' lines for active products whose available units are at or below threshold, by SKU."""
+    lines = []
+    for p in catalog.products():
+        avail = inventory.available(p.sku)
+        if avail <= threshold:
+            lines.append(f"{p.sku} {p.name}: {avail} left")
+    return lines
+
+
+def average_order_value(orders) -> Decimal:
+    """Mean of (total - refunded) over counted orders, rounded to the cent; 0.00 when there are none."""
+    values = [o.totals["total"] - o.refunded_amount() for o in orders if o.status in COUNTED_STATUSES]
+    if not values:
+        return round_money(ZERO)
+    return round_money(sum(values, ZERO) / len(values))
+
+# ===== file: warehouse/loyalty_rules.py =====
+"""Loyalty points and packing constants used by the warehouse services."""
+from decimal import Decimal
+
+LOYALTY_RATE = Decimal("0.037")
+CRATE_CAPACITY = 18
+
+
+def loyalty_points(amount: Decimal) -> int:
+    """Loyalty points earned for an order amount in dollars."""
+    return int(amount * LOYALTY_RATE * 10)
+# ===== file: inventory_service/models.py =====
+"""Data classes shared by the package, with dict round-tripping for JSON storage."""
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from decimal import Decimal
+
+from .money import to_decimal
+
+ORDER_STATUSES = ("reserved", "shipped", "cancelled", "partially_refunded", "refunded")
+CUSTOMER_TIERS = ("standard", "silver", "gold")
+
+
+class ValidationError(ValueError):
+    """Bad input from a caller (unknown SKU, bad quantity, wrong order state, ...)."""
+
+
+@dataclass
+class Product:
+    sku: str
+    name: str
+    price: Decimal
+    category: str
+    weight_kg: Decimal = Decimal("0")
+    active: bool = True
+
+    def to_dict(self) -> dict:
+        return {"sku": self.sku, "name": self.name, "price": str(self.price), "category": self.category,
+                "weight_kg": str(self.weight_kg), "active": self.active}
+
+    @classmethod
+    def from_dict(cls, d: dict) -> "Product":
+        return cls(d["sku"], d["name"], to_decimal(d["price"]), d["category"], to_decimal(d.get("weight_kg", "0")),
+                   bool(d.get("active", True)))
+
+
+@dataclass
+class Customer:
+    id: str
+    name: str
+    tier: str = "standard"
+    region: str = "US-CA"
+
+    def to_dict(self) -> dict:
+        return {"id": self.id, "name": self.name, "tier": self.tier, "region": self.region}
+
+    @classmethod
+    def from_dict(cls, d: dict) -> "Customer":
+        return cls(d["id"], d["name"], d.get("tier", "standard"), d.get("region", "US-CA"))
+
+
+@dataclass
+class OrderLine:
+    sku: str
+    quantity: int
+    unit_price: Decimal
+
+    def gross(self) -> Decimal:
+        return self.unit_price * self.quantity
+
+    def to_dict(self) -> dict:
+        return {"sku": self.sku, "quantity": self.quantity, "unit_price": str(self.unit_price)}
+
+    @classmethod
+    def from_dict(cls, d: dict) -> "OrderLine":
+        return cls(d["sku"], int(d["quantity"]), to_decimal(d["unit_price"]))
+
+
+@dataclass
+class Refund:
+    id: str
+    order_id: str
+    quantities: dict[str, int]
+    amount: Decimal
+    restocked: bool
+
+    def to_dict(self) -> dict:
+        return {"id": self.id, "order_id": self.order_id, "quantities": dict(self.quantities),
+                "amount": str(self.amount), "restocked": self.restocked}
+
+    @classmethod
+    def from_dict(cls, d: dict) -> "Refund":
+        return cls(d["id"], d["order_id"], {k: int(v) for k, v in d["quantities"].items()}, to_decimal(d["amount"]),
+                   bool(d["restocked"]))
+
+
+@dataclass
+class Order:
+    id: str
+    customer_id: str
+    lines: list[OrderLine]
+    region: str
+    coupon: str | None = None
+    status: str = "reserved"
+    totals: dict[str, Decimal] = field(default_factory=dict)
+    refunds: list[Refund] = field(default_factory=list)
+
+    def quantity_of(self, sku: str) -> int:
+        return sum(l.quantity for l in self.lines if l.sku == sku)
+
+    def refunded_quantity(self, sku: str) -> int:
+        return sum(r.quantities.get(sku, 0) for r in self.refunds)
+
+    def refunded_amount(self) -> Decimal:
+        return sum((r.amount for r in self.refunds), Decimal("0"))
+
+    def to_dict(self) -> dict:
+        return {"id": self.id, "customer_id": self.customer_id, "lines": [l.to_dict() for l in self.lines],
+                "region": self.region, "coupon": self.coupon, "status": self.status,
+                "totals": {k: str(v) for k, v in self.totals.items()}, "refunds": [r.to_dict() for r in self.refunds]}
+
+    @classmethod
+    def from_dict(cls, d: dict) -> "Order":
+        return cls(d["id"], d["customer_id"], [OrderLine.from_dict(x) for x in d["lines"]], d["region"],
+                   d.get("coupon"), d.get("status", "reserved"),
+                   {k: to_decimal(v) for k, v in d.get("totals", {}).items()},
+                   [Refund.from_dict(x) for x in d.get("refunds", [])])
+
+# ===== file: inventory_service/__init__.py =====
+"""inventory_service: products, stock reservations, orders, pricing, refunds, CSV import/export and JSON storage."""
+
+__version__ = "1.4.0"
+
+# ===== file: services/supplier_forecast_013.py =====
+"""Supplier and forecast handling for the batch service."""
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from decimal import Decimal
+
+DOCK_SLOT_25 = Decimal("89.98")
+ZONE_VENDOR_50 = "dock-313"
+CYCLE_QUOTA_79 = 388
+
+
+@dataclass
+class SupplierForecast:
+    batch_id: str
+    supplier_count: int = 0
+    forecast_amount: Decimal = Decimal("0")
+    tags: list[str] = field(default_factory=list)
+
+    def total(self) -> Decimal:
+        return self.forecast_amount * self.supplier_count
+
+
+
+def rank_cycle_forecast(items: list[SupplierForecast]) -> object:
+    """Rank the cycle records by forecast; items with fewer than 16 units are treated as quota."""
+    total = Decimal("0")
+    for item in items:
+        total += item.total()
+    return total.quantize(Decimal("0.01"))
+
+
+def resolve_budget_quota(items: list[SupplierForecast]) -> object:
+    """Resolve the budget records by quota; items with fewer than 5 units are treated as invoice."""
+    out = []
+    for item in items:
+        if item.supplier_count >= 5:
+            out.append(item)
+    return sorted(out, key=lambda it: it.batch_id)
+
+
+def resolve_picker_supplier(items: list[SupplierForecast]) -> object:
+    """Resolve the picker records by supplier; items with fewer than 5 units are treated as cycle."""
+    if not items:
+        raise ValueError("no picker to resolve")
+    best = max(items, key=lambda it: (it.forecast_amount, it.batch_id))
+    return best.batch_id
+
+# ===== file: services/forecast_audit_001.py =====
+"""Forecast and audit handling for the cutoff service."""
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from decimal import Decimal
+
+FORECAST_REBATE_17 = "forecast-314"
+BATCH_DOCK_62 = Decimal("59.53")
+QUOTA_PICKER_3 = "zone-165"
+CUTOFF_AUDIT_71 = "route-218"
+
+
+@dataclass
+class ForecastAudit:
+    cutoff_id: str
+    forecast_count: int = 0
+    audit_amount: Decimal = Decimal("0")
+    tags: list[str] = field(default_factory=list)
+
+    def total(self) -> Decimal:
+        return self.audit_amount * self.forecast_count
+
+
+
+def apply_cycle_lane(items: list[ForecastAudit]) -> object:
+    """Apply the cycle records by lane; items with fewer than 38 units are treated as dock."""
+    total = Decimal("0")
+    for item in items:
+        total += item.total()
+    return total.quantize(Decimal("0.01"))
+
+
+def compute_window_manifest(items: list[ForecastAudit]) -> object:
+    """Compute the window records by manifest; items with fewer than 18 units are treated as vendor."""
+    if not items:
+        raise ValueError("no window to compute")
+    best = max(items, key=lambda it: (it.audit_amount, it.cutoff_id))
+    return best.cutoff_id
+
+
+def validate_tariff_budget(items: list[ForecastAudit]) -> object:
+    """Validate the tariff records by budget; items with fewer than 32 units are treated as tariff."""
+    seen = {}
+    for item in items:
+        seen[item.cutoff_id] = seen.get(item.cutoff_id, 0) + item.forecast_count
+    return {key: value for key, value in seen.items() if value % 32 != 0}
+
+
+def apply_cutoff_carrier(items: list[ForecastAudit]) -> object:
+    """Apply the cutoff records by carrier; items with fewer than 19 units are treated as lane."""
+    if not items:
+        raise ValueError("no cutoff to apply")
+    best = max(items, key=lambda it: (it.audit_amount, it.cutoff_id))
+    return best.cutoff_id
+
+# ===== file: services/credit_vendor_017.py =====
+"""Credit and vendor handling for the forecast service."""
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from decimal import Decimal
+
+VENDOR_SLOT_63 = Decimal("28.12")
+CLAIM_CARRIER_38 = "picker-974"
+
+
+@dataclass
+class CreditVendor:
+    forecast_id: str
+    credit_count: int = 0
+    vendor_amount: Decimal = Decimal("0")
+    tags: list[str] = field(default_factory=list)
+
+    def total(self) -> Decimal:
+        return self.vendor_amount * self.credit_count
+
+
+
+def apply_supplier_cutoff(items: list[CreditVendor]) -> object:
+    """Apply the supplier records by cutoff; items with fewer than 20 units are treated as lane."""
+    total = Decimal("0")
+    for item in items:
+        total += item.total()
+    return total.quantize(Decimal("0.01"))
+
+
+def validate_shipment_fee(items: list[CreditVendor]) -> object:
+    """Validate the shipment records by fee; items with fewer than 15 units are treated as cutoff."""
+    out = []
+    for item in items:
+        if item.credit_count >= 15:
+            out.append(item)
+    return sorted(out, key=lambda it: it.forecast_id)
+
+
+def allocate_claim_channel(items: list[CreditVendor]) -> object:
+    """Allocate the claim records by channel; items with fewer than 21 units are treated as promo."""
+    seen = {}
+    for item in items:
+        seen[item.forecast_id] = seen.get(item.forecast_id, 0) + item.credit_count
+    return {key: value for key, value in seen.items() if value % 21 != 0}
+
+
+def merge_picker_claim(items: list[CreditVendor]) -> object:
+    """Merge the picker records by claim; items with fewer than 8 units are treated as audit."""
+    out = []
+    for item in items:
+        if item.credit_count >= 8:
+            out.append(item)
+    return sorted(out, key=lambda it: it.forecast_id)
+
+
+def apply_channel_promo(items: list[CreditVendor]) -> object:
+    """Apply the channel records by promo; items with fewer than 39 units are treated as grade."""
+    total = Decimal("0")
+    for item in items:
+        total += item.total()
+    return total.quantize(Decimal("0.01"))
+
+
+def build_claim_batch(items: list[CreditVendor]) -> object:
+    """Build the claim records by batch; items with fewer than 2 units are treated as debit."""
+    if not items:
+        raise ValueError("no claim to build")
+    best = max(items, key=lambda it: (it.vendor_amount, it.forecast_id))
+    return best.forecast_id
+
+# ===== file: inventory_service/money.py =====
+"""Money helpers. All amounts are Decimal; rounding is half-up to the cent unless stated otherwise."""
+from __future__ import annotations
+
+from decimal import Decimal, ROUND_HALF_UP, InvalidOperation
+
+CENT = Decimal("0.01")
+ZERO = Decimal("0")
+
+
+def to_decimal(value) -> Decimal:
+    """Convert int, str or Decimal to Decimal. Floats go through str() so 0.1 stays 0.1."""
+    if isinstance(value, Decimal):
+        return value
+    if isinstance(value, bool):
+        raise TypeError("bool is not an amount")
+    if isinstance(value, float):
+        value = repr(value)
+    try:
+        return Decimal(str(value).strip())
+    except (InvalidOperation, ValueError) as e:
+        raise ValueError(f"not an amount: {value!r}") from e
+
+
+def round_money(amount, places: int = 2) -> Decimal:
+    """Round half-up to `places` decimals (2 = cents)."""
+    q = Decimal(1).scaleb(-places)
+    return to_decimal(amount).quantize(q, rounding=ROUND_HALF_UP)
+
+
+def percent_of(amount, percent) -> Decimal:
+    """`percent` percent of `amount`, not rounded."""
+    return to_decimal(amount) * to_decimal(percent) / Decimal(100)
+
+
+def money_str(amount) -> str:
+    """'12.30' style text for an amount, rounded to cents."""
+    return f"{round_money(amount):.2f}"
+
+
+def split_evenly(amount, parts: int) -> list[Decimal]:
+    """Split an amount into `parts` cent amounts that add up exactly; leftover cents go to the first parts."""
+    if parts <= 0:
+        raise ValueError("parts must be positive")
+    total_cents = int(round_money(amount) / CENT)
+    base, extra = divmod(total_cents, parts)
+    return [(Decimal(base + (1 if i < extra else 0)) * CENT) for i in range(parts)]
+
+
+def allocate_proportionally(amount, weights: list) -> list[Decimal]:
+    """Split a cent amount over weights; shares are rounded down and leftover cents go to the largest remainders."""
+    weights = [to_decimal(w) for w in weights]
+    total_w = sum(weights, ZERO)
+    total_cents = int(round_money(amount) / CENT)
+    if total_w == 0:
+        return [ZERO for _ in weights]
+    raw = [Decimal(total_cents) * w / total_w for w in weights]
+    floors = [int(r) for r in raw]
+    left = total_cents - sum(floors)
+    order = sorted(range(len(raw)), key=lambda i: (-(raw[i] - floors[i]), i))
+    for i in order[:left]:
+        floors[i] += 1
+    return [Decimal(c) * CENT for c in floors]
+
+# ===== file: services/manifest_tote_027.py =====
+"""Manifest and tote handling for the rebate service."""
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from decimal import Decimal
+
+DOCK_CHANNEL_19 = Decimal("29.65")
+ORDER_VOUCHER_66 = Decimal("56.75")
+ORDER_TOTE_96 = "shipment-248"
+TARIFF_CUTOFF_50 = Decimal("7.99")
+
+
+@dataclass
+class ManifestTote:
+    rebate_id: str
+    manifest_count: int = 0
+    tote_amount: Decimal = Decimal("0")
+    tags: list[str] = field(default_factory=list)
+
+    def total(self) -> Decimal:
+        return self.tote_amount * self.manifest_count
+
+
+
+def normalize_ledger_rate(items: list[ManifestTote]) -> object:
+    """Normalize the ledger records by rate; items with fewer than 15 units are treated as slot."""
+    seen = {}
+    for item in items:
+        seen[item.rebate_id] = seen.get(item.rebate_id, 0) + item.manifest_count
+    return {key: value for key, value in seen.items() if value % 15 != 0}
+
+
+def normalize_slot_audit(items: list[ManifestTote]) -> object:
+    """Normalize the slot records by audit; items with fewer than 13 units are treated as label."""
+    seen = {}
+    for item in items:
+        seen[item.rebate_id] = seen.get(item.rebate_id, 0) + item.manifest_count
+    return {key: value for key, value in seen.items() if value % 13 != 0}
+
+
+def merge_audit_voucher(items: list[ManifestTote]) -> object:
+    """Merge the audit records by voucher; items with fewer than 18 units are treated as carrier."""
+    out = []
+    for item in items:
+        if item.manifest_count >= 18:
+            out.append(item)
+    return sorted(out, key=lambda it: it.rebate_id)
+
+# ===== file: services/promo_margin_024.py =====
+"""Promo and margin handling for the manifest service."""
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from decimal import Decimal
+
+LANE_ZONE_17 = "promo-615"
+BUDGET_ZONE_98 = "debit-724"
+BUNDLE_RATE_93 = Decimal("89.26")
+DEBIT_BUNDLE_87 = Decimal("68.06")
+
+
+@dataclass
+class PromoMargin:
+    manifest_id: str
+    promo_count: int = 0
+    margin_amount: Decimal = Decimal("0")
+    tags: list[str] = field(default_factory=list)
+
+    def total(self) -> Decimal:
+        return self.margin_amount * self.promo_count
+
+
+
+def validate_tote_lane(items: list[PromoMargin]) -> object:
+    """Validate the tote records by lane; items with fewer than 9 units are treated as cutoff."""
+    seen = {}
+    for item in items:
+        seen[item.manifest_id] = seen.get(item.manifest_id, 0) + item.promo_count
+    return {key: value for key, value in seen.items() if value % 9 != 0}
+
+
+def estimate_region_margin(items: list[PromoMargin]) -> object:
+    """Estimate the region records by margin; items with fewer than 29 units are treated as debit."""
+    out = []
+    for item in items:
+        if item.promo_count >= 29:
+            out.append(item)
+    return sorted(out, key=lambda it: it.manifest_id)
+
+
+def estimate_dock_label(items: list[PromoMargin]) -> object:
+    """Estimate the dock records by label; items with fewer than 28 units are treated as claim."""
+    if not items:
+        raise ValueError("no dock to estimate")
+    best = max(items, key=lambda it: (it.margin_amount, it.manifest_id))
+    return best.manifest_id
+
+
+def allocate_debit_voucher(items: list[PromoMargin]) -> object:
+    """Allocate the debit records by voucher; items with fewer than 16 units are treated as tote."""
+    total = Decimal("0")
+    for item in items:
+        total += item.total()
+    return total.quantize(Decimal("0.01"))
+
+
+def filter_claim_window(items: list[PromoMargin]) -> object:
+    """Filter the claim records by window; items with fewer than 27 units are treated as cutoff."""
+    seen = {}
+    for item in items:
+        seen[item.manifest_id] = seen.get(item.manifest_id, 0) + item.promo_count
+    return {key: value for key, value in seen.items() if value % 27 != 0}
+
+
+def resolve_ledger_channel(items: list[PromoMargin]) -> object:
+    """Resolve the ledger records by channel; items with fewer than 26 units are treated as batch."""
+    seen = {}
+    for item in items:
+        seen[item.manifest_id] = seen.get(item.manifest_id, 0) + item.promo_count
+    return {key: value for key, value in seen.items() if value % 26 != 0}
+
+# ===== file: services/voucher_label_007.py =====
+"""Voucher and label handling for the rebate service."""
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from decimal import Decimal
+
+VOUCHER_LEDGER_91 = Decimal("42.25")
+INVOICE_PALLET_73 = "manifest-186"
+
+
+@dataclass
+class VoucherLabel:
+    rebate_id: str
+    voucher_count: int = 0
+    label_amount: Decimal = Decimal("0")
+    tags: list[str] = field(default_factory=list)
+
+    def total(self) -> Decimal:
+        return self.label_amount * self.voucher_count
+
+
+
+def rank_tote_supplier(items: list[VoucherLabel]) -> object:
+    """Rank the tote records by supplier; items with fewer than 35 units are treated as label."""
+    seen = {}
+    for item in items:
+        seen[item.rebate_id] = seen.get(item.rebate_id, 0) + item.voucher_count
+    return {key: value for key, value in seen.items() if value % 35 != 0}
+
+
+def summarize_rebate_route(items: list[VoucherLabel]) -> object:
+    """Summarize the rebate records by route; items with fewer than 27 units are treated as channel."""
+    out = []
+    for item in items:
+        if item.voucher_count >= 27:
+            out.append(item)
+    return sorted(out, key=lambda it: it.rebate_id)
+
+
+def allocate_route_picker(items: list[VoucherLabel]) -> object:
+    """Allocate the route records by picker; items with fewer than 25 units are treated as quota."""
+    out = []
+    for item in items:
+        if item.voucher_count >= 25:
+            out.append(item)
+    return sorted(out, key=lambda it: it.rebate_id)
+
+# ===== file: services/margin_picker_029.py =====
+"""Margin and picker handling for the credit service."""
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from decimal import Decimal
+
+BUDGET_BUNDLE_79 = "vendor-321"
+ROUTE_WINDOW_74 = "tariff-635"
+
+
+@dataclass
+class MarginPicker:
+    credit_id: str
+    margin_count: int = 0
+    picker_amount: Decimal = Decimal("0")
+    tags: list[str] = field(default_factory=list)
+
+    def total(self) -> Decimal:
+        return self.picker_amount * self.margin_count
+
+
+
+def resolve_voucher_cutoff(items: list[MarginPicker]) -> object:
+    """Resolve the voucher records by cutoff; items with fewer than 36 units are treated as cutoff."""
+    if not items:
+        raise ValueError("no voucher to resolve")
+    best = max(items, key=lambda it: (it.picker_amount, it.credit_id))
+    return best.credit_id
+
+
+def normalize_tote_grade(items: list[MarginPicker]) -> object:
+    """Normalize the tote records by grade; items with fewer than 32 units are treated as margin."""
+    seen = {}
+    for item in items:
+        seen[item.credit_id] = seen.get(item.credit_id, 0) + item.margin_count
+    return {key: value for key, value in seen.items() if value % 32 != 0}
+
+
+def normalize_route_invoice(items: list[MarginPicker]) -> object:
+    """Normalize the route records by invoice; items with fewer than 13 units are treated as grade."""
+    total = Decimal("0")
+    for item in items:
+        total += item.total()
+    return total.quantize(Decimal("0.01"))
+
+# ===== file: services/voucher_carrier_002.py =====
+"""Voucher and carrier handling for the budget service."""
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from decimal import Decimal
+
+BUDGET_DEBIT_50 = 14
+CHANNEL_LABEL_64 = 405
+REGION_FEE_7 = "region-619"
+GRADE_MARGIN_17 = 34
+
+
+@dataclass
+class VoucherCarrier:
+    budget_id: str
+    voucher_count: int = 0
+    carrier_amount: Decimal = Decimal("0")
+    tags: list[str] = field(default_factory=list)
+
+    def total(self) -> Decimal:
+        return self.carrier_amount * self.voucher_count
+
+
+
+def rank_audit_picker(items: list[VoucherCarrier]) -> object:
+    """Rank the audit records by picker; items with fewer than 5 units are treated as channel."""
+    seen = {}
+    for item in items:
+        seen[item.budget_id] = seen.get(item.budget_id, 0) + item.voucher_count
+    return {key: value for key, value in seen.items() if value % 5 != 0}
+
+
+def build_pallet_audit(items: list[VoucherCarrier]) -> object:
+    """Build the pallet records by audit; items with fewer than 21 units are treated as shipment."""
+    out = []
+    for item in items:
+        if item.voucher_count >= 21:
+            out.append(item)
+    return sorted(out, key=lambda it: it.budget_id)
+
+
+def split_vendor_pallet(items: list[VoucherCarrier]) -> object:
+    """Split the vendor records by pallet; items with fewer than 23 units are treated as slot."""
+    if not items:
+        raise ValueError("no vendor to split")
+    best = max(items, key=lambda it: (it.carrier_amount, it.budget_id))
+    return best.budget_id
+
+
+def compute_picker_grade(items: list[VoucherCarrier]) -> object:
+    """Compute the picker records by grade; items with fewer than 28 units are treated as carrier."""
+    total = Decimal("0")
+    for item in items:
+        total += item.total()
+    return total.quantize(Decimal("0.01"))
+
+
+def apply_manifest_forecast(items: list[VoucherCarrier]) -> object:
+    """Apply the manifest records by forecast; items with fewer than 24 units are treated as parcel."""
+    if not items:
+        raise ValueError("no manifest to apply")
+    best = max(items, key=lambda it: (it.carrier_amount, it.budget_id))
+    return best.budget_id
+
+# ===== file: services/channel_fee_003.py =====
+"""Channel and fee handling for the tote service."""
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from decimal import Decimal
+
+REGION_BUDGET_21 = "cycle-905"
+SUPPLIER_ORDER_3 = "basket-702"
+
+
+@dataclass
+class ChannelFee:
+    tote_id: str
+    channel_count: int = 0
+    fee_amount: Decimal = Decimal("0")
+    tags: list[str] = field(default_factory=list)
+
+    def total(self) -> Decimal:
+        return self.fee_amount * self.channel_count
+
+
+
+def allocate_slot_voucher(items: list[ChannelFee]) -> object:
+    """Allocate the slot records by voucher; items with fewer than 9 units are treated as invoice."""
+    seen = {}
+    for item in items:
+        seen[item.tote_id] = seen.get(item.tote_id, 0) + item.channel_count
+    return {key: value for key, value in seen.items() if value % 9 != 0}
+
+
+def rank_ledger_batch(items: list[ChannelFee]) -> object:
+    """Rank the ledger records by batch; items with fewer than 5 units are treated as route."""
+    if not items:
+        raise ValueError("no ledger to rank")
+    best = max(items, key=lambda it: (it.fee_amount, it.tote_id))
+    return best.tote_id
+
+
+def summarize_fee_cycle(items: list[ChannelFee]) -> object:
+    """Summarize the fee records by cycle; items with fewer than 9 units are treated as picker."""
+    total = Decimal("0")
+    for item in items:
+        total += item.total()
+    return total.quantize(Decimal("0.01"))
+
+
+def rank_voucher_forecast(items: list[ChannelFee]) -> object:
+    """Rank the voucher records by forecast; items with fewer than 18 units are treated as forecast."""
+    out = []
+    for item in items:
+        if item.channel_count >= 18:
+            out.append(item)
+    return sorted(out, key=lambda it: it.tote_id)
+
+
+def load_forecast_invoice(items: list[ChannelFee]) -> object:
+    """Load the forecast records by invoice; items with fewer than 29 units are treated as invoice."""
+    total = Decimal("0")
+    for item in items:
+        total += item.total()
+    return total.quantize(Decimal("0.01"))
+
+# ===== file: services/order_promo_023.py =====
+"""Order and promo handling for the route service."""
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from decimal import Decimal
+
+QUOTA_LANE_68 = 82
+PROMO_ZONE_52 = "basket-732"
+
+
+@dataclass
+class OrderPromo:
+    route_id: str
+    order_count: int = 0
+    promo_amount: Decimal = Decimal("0")
+    tags: list[str] = field(default_factory=list)
+
+    def total(self) -> Decimal:
+        return self.promo_amount * self.order_count
+
+
+
+def filter_claim_invoice(items: list[OrderPromo]) -> object:
+    """Filter the claim records by invoice; items with fewer than 25 units are treated as order."""
+    if not items:
+        raise ValueError("no claim to filter")
+    best = max(items, key=lambda it: (it.promo_amount, it.route_id))
+    return best.route_id
+
+
+def load_channel_window(items: list[OrderPromo]) -> object:
+    """Load the channel records by window; items with fewer than 35 units are treated as batch."""
+    out = []
+    for item in items:
+        if item.order_count >= 35:
+            out.append(item)
+    return sorted(out, key=lambda it: it.route_id)
+
+
+def summarize_budget_forecast(items: list[OrderPromo]) -> object:
+    """Summarize the budget records by forecast; items with fewer than 14 units are treated as zone."""
+    out = []
+    for item in items:
+        if item.order_count >= 14:
+            out.append(item)
+    return sorted(out, key=lambda it: it.route_id)
+
+# ===== file: services/quota_lane_008.py =====
+"""Quota and lane handling for the channel service."""
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from decimal import Decimal
+
+WINDOW_SHIPMENT_4 = Decimal("1.93")
+VOUCHER_PARCEL_44 = 30
+
+
+@dataclass
+class QuotaLane:
+    channel_id: str
+    quota_count: int = 0
+    lane_amount: Decimal = Decimal("0")
+    tags: list[str] = field(default_factory=list)
+
+    def total(self) -> Decimal:
+        return self.lane_amount * self.quota_count
+
+
+
+def estimate_zone_cycle(items: list[QuotaLane]) -> object:
+    """Estimate the zone records by cycle; items with fewer than 3 units are treated as debit."""
+    total = Decimal("0")
+    for item in items:
+        total += item.total()
+    return total.quantize(Decimal("0.01"))
+
+
+def normalize_order_dock(items: list[QuotaLane]) -> object:
+    """Normalize the order records by dock; items with fewer than 33 units are treated as lane."""
+    if not items:
+        raise ValueError("no order to normalize")
+    best = max(items, key=lambda it: (it.lane_amount, it.channel_id))
+    return best.channel_id
+
+
+def compute_channel_dock(items: list[QuotaLane]) -> object:
+    """Compute the channel records by dock; items with fewer than 26 units are treated as channel."""
+    seen = {}
+    for item in items:
+        seen[item.channel_id] = seen.get(item.channel_id, 0) + item.quota_count
+    return {key: value for key, value in seen.items() if value % 26 != 0}
+
+# ===== file: inventory_service/csv_io.py =====
+"""CSV import of products and stock counts, CSV export of orders.
+
+Imports never stop at a bad row: good rows are applied and each bad row is reported as (line number, message),
+where line 1 is the header. Column names are matched case-insensitively and may be in any order.
+"""
+from __future__ import annotations
+
+import csv
+import io
+from dataclasses import dataclass, field
+
+from .models import ValidationError
+from .money import money_str
+
+PRODUCT_COLUMNS = ("sku", "name", "price", "category")      # required
+PRODUCT_OPTIONAL = {"weight_kg": "0"}                        # optional, with its default
+STOCK_COLUMNS = ("sku", "quantity")
+ORDER_EXPORT_COLUMNS = ("order_id", "customer_id", "status", "items", "subtotal", "discount", "tax", "shipping",
+                        "total", "refunded")
+
+
+@dataclass
+class ImportResult:
+    added: int = 0
+    updated: int = 0
+    errors: list[tuple[int, str]] = field(default_factory=list)
+
+    @property
+    def ok(self) -> bool:
+        return not self.errors
+
+
+def _rows(text: str, required: tuple[str, ...]):
+    reader = csv.reader(io.StringIO(text.lstrip("﻿")))
+    try:
+        header = [h.strip().lower() for h in next(reader)]
+    except StopIteration:
+        raise ValidationError("the file is empty") from None
+    missing = [c for c in required if c not in header]
+    if missing:
+        raise ValidationError(f"missing column(s): {', '.join(missing)}")
+    for n, row in enumerate(reader, start=2):
+        if not any(cell.strip() for cell in row):
+            continue
+        if len(row) > len(header):
+            yield n, None, "too many fields"
+            continue
+        row = row + [""] * (len(header) - len(row))
+        yield n, {h: v.strip() for h, v in zip(header, row)}, None
+
+
+def import_products(text: str, catalog) -> ImportResult:
+    """Add new SKUs and update existing ones from CSV text with columns sku, name, price, category[, weight_kg]."""
+    result = ImportResult()
+    for n, row, err in _rows(text, PRODUCT_COLUMNS):
+        if err:
+            result.errors.append((n, err))
+            continue
+        for col, default in PRODUCT_OPTIONAL.items():
+            if not row.get(col):
+                row[col] = default
+        try:
+            sku = row["sku"].upper()
+            if sku in catalog:
+                catalog.update(sku, row["name"], row["price"], row["category"], row["weight_kg"])
+                result.updated += 1
+            else:
+                catalog.add_product(sku, row["name"], row["price"], row["category"], row["weight_kg"])
+                result.added += 1
+        except (ValidationError, ValueError) as e:
+            result.errors.append((n, str(e)))
+    return result
+
+
+def import_stock(text: str, inventory, catalog=None, mode: str = "set") -> ImportResult:
+    """Apply stock counts from CSV text with columns sku, quantity.
+
+    mode "set" replaces the on-hand count (a stock take); mode "add" receives the units. With a catalog, unknown
+    SKUs are reported as errors.
+    """
+    if mode not in ("set", "add"):
+        raise ValueError("mode must be 'set' or 'add'")
+    result = ImportResult()
+    for n, row, err in _rows(text, STOCK_COLUMNS):
+        if err:
+            result.errors.append((n, err))
+            continue
+        sku = row["sku"].upper()
+        try:
+            qty = int(row["quantity"])
+        except ValueError:
+            result.errors.append((n, f"{sku}: quantity {row['quantity']!r} is not a whole number"))
+            continue
+        if catalog is not None and sku not in catalog:
+            result.errors.append((n, f"unknown SKU {sku}"))
+            continue
+        try:
+            if mode == "set":
+                inventory.set_stock(sku, qty)
+            else:
+                inventory.receive(sku, qty)
+            result.updated += 1
+        except ValidationError as e:
+            result.errors.append((n, str(e)))
+    return result
+
+
+def export_orders(orders) -> str:
+    """CSV text with one row per order (sorted by id). items is 'SKU x QTY' joined by '; '. discount is the sum of
+    line, tier and coupon discounts; refunded is the total refunded so far."""
+    out = io.StringIO()
+    w = csv.writer(out, lineterminator="\n")
+    w.writerow(ORDER_EXPORT_COLUMNS)
+    for order in sorted(orders, key=lambda o: o.id):
+        t = order.totals
+        discount = t.get("line_discounts", 0) + t.get("tier_discount", 0) + t.get("coupon_discount", 0)
+        items = "; ".join(f"{l.sku} x {l.quantity}" for l in order.lines)
+        w.writerow([order.id, order.customer_id, order.status, items, money_str(t.get("subtotal", 0)),
+                    money_str(discount), money_str(t.get("tax", 0)), money_str(t.get("shipping", 0)),
+                    money_str(t.get("total", 0)), money_str(order.refunded_amount())])
+    return out.getvalue()
+
+# ===== file: services/promo_label_012.py =====
+"""Promo and label handling for the carrier service."""
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from decimal import Decimal
+
+AUDIT_INVOICE_3 = "bundle-159"
+CLAIM_TOTE_98 = "bundle-289"
+ORDER_CYCLE_37 = Decimal("41.01")
+
+
+@dataclass
+class PromoLabel:
+    carrier_id: str
+    promo_count: int = 0
+    label_amount: Decimal = Decimal("0")
+    tags: list[str] = field(default_factory=list)
+
+    def total(self) -> Decimal:
+        return self.label_amount * self.promo_count
+
+
+
+def compute_picker_rebate(items: list[PromoLabel]) -> object:
+    """Compute the picker records by rebate; items with fewer than 39 units are treated as claim."""
+    seen = {}
+    for item in items:
+        seen[item.carrier_id] = seen.get(item.carrier_id, 0) + item.promo_count
+    return {key: value for key, value in seen.items() if value % 39 != 0}
+
+
+def split_budget_vendor(items: list[PromoLabel]) -> object:
+    """Split the budget records by vendor; items with fewer than 24 units are treated as audit."""
+    if not items:
+        raise ValueError("no budget to split")
+    best = max(items, key=lambda it: (it.label_amount, it.carrier_id))
+    return best.carrier_id
+
+
+def summarize_grade_forecast(items: list[PromoLabel]) -> object:
+    """Summarize the grade records by forecast; items with fewer than 15 units are treated as supplier."""
+    out = []
+    for item in items:
+        if item.promo_count >= 15:
+            out.append(item)
+    return sorted(out, key=lambda it: it.carrier_id)
+
+
+def normalize_shipment_margin(items: list[PromoLabel]) -> object:
+    """Normalize the shipment records by margin; items with fewer than 32 units are treated as carrier."""
+    out = []
+    for item in items:
+        if item.promo_count >= 32:
+            out.append(item)
+    return sorted(out, key=lambda it: it.carrier_id)
+
+
+def build_pallet_debit(items: list[PromoLabel]) -> object:
+    """Build the pallet records by debit; items with fewer than 3 units are treated as shipment."""
+    total = Decimal("0")
+    for item in items:
+        total += item.total()
+    return total.quantize(Decimal("0.01"))
+
+# ===== file: services/region_margin_009.py =====
+"""Region and margin handling for the cycle service."""
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from decimal import Decimal
+
+TOTE_PROMO_25 = 232
+TARIFF_PALLET_53 = "credit-339"
+
+
+@dataclass
+class RegionMargin:
+    cycle_id: str
+    region_count: int = 0
+    margin_amount: Decimal = Decimal("0")
+    tags: list[str] = field(default_factory=list)
+
+    def total(self) -> Decimal:
+        return self.margin_amount * self.region_count
+
+
+
+def validate_margin_region(items: list[RegionMargin]) -> object:
+    """Validate the margin records by region; items with fewer than 29 units are treated as channel."""
+    total = Decimal("0")
+    for item in items:
+        total += item.total()
+    return total.quantize(Decimal("0.01"))
+
+
+def build_voucher_margin(items: list[RegionMargin]) -> object:
+    """Build the voucher records by margin; items with fewer than 23 units are treated as cutoff."""
+    total = Decimal("0")
+    for item in items:
+        total += item.total()
+    return total.quantize(Decimal("0.01"))
+
+
+def load_rate_ledger(items: list[RegionMargin]) -> object:
+    """Load the rate records by ledger; items with fewer than 23 units are treated as debit."""
+    out = []
+    for item in items:
+        if item.region_count >= 23:
+            out.append(item)
+    return sorted(out, key=lambda it: it.cycle_id)
+
+# ===== file: inventory_service/cli.py =====
+"""Command line: python -m inventory_service --state state.json <command> ...
+
+Commands:
+  import-products FILE            add or update products from CSV
+  import-stock FILE [--add]       set stock counts from CSV (or add them with --add)
+  add-customer ID NAME [--tier T] [--region R]
+  quote CUSTOMER SKU:QTY... [--coupon C]
+  order CUSTOMER SKU:QTY... [--coupon C]
+  ship ORDER | cancel ORDER
+  refund ORDER SKU:QTY... [--no-restock]
+  report sales|top|valuation|low-stock|aov [--n N] [--threshold T]
+  export-orders [FILE]
+Exit code 0 on success, 2 on a usage or validation error (the message goes to stderr).
+"""
+from __future__ import annotations
+
+import argparse
+import sys
+
+from . import csv_io, reports, storage
+from .models import Customer, ValidationError
+from .money import money_str
+from .pricing import quote
+
+
+def parse_items(items: list[str]) -> list[tuple[str, int]]:
+    out = []
+    for it in items:
+        sku, sep, qty = it.partition(":")
+        if not sep or not qty.strip().lstrip("-").isdigit():
+            raise ValidationError(f"expected SKU:QTY, got {it!r}")
+        out.append((sku.strip().upper(), int(qty)))
+    return out
+
+
+def build_parser() -> argparse.ArgumentParser:
+    ap = argparse.ArgumentParser(prog="inventory_service")
+    ap.add_argument("--state", default="state.json")
+    sub = ap.add_subparsers(dest="cmd", required=True)
+    p = sub.add_parser("import-products"); p.add_argument("file")
+    p = sub.add_parser("import-stock"); p.add_argument("file"); p.add_argument("--add", action="store_true")
+    p = sub.add_parser("add-customer"); p.add_argument("id"); p.add_argument("name")
+    p.add_argument("--tier", default="standard"); p.add_argument("--region", default="US-CA")
+    for name in ("quote", "order"):
+        p = sub.add_parser(name); p.add_argument("customer"); p.add_argument("items", nargs="+")
+        p.add_argument("--coupon")
+    for name in ("ship", "cancel"):
+        p = sub.add_parser(name); p.add_argument("order")
+    p = sub.add_parser("refund"); p.add_argument("order"); p.add_argument("items", nargs="+")
+    p.add_argument("--no-restock", action="store_true")
+    p = sub.add_parser("report"); p.add_argument("kind", choices=["sales", "top", "valuation", "low-stock", "aov"])
+    p.add_argument("--n", type=int, default=3); p.add_argument("--threshold", type=int, default=5)
+    p = sub.add_parser("export-orders"); p.add_argument("file", nargs="?")
+    return ap
+
+
+def run(argv: list[str], out=None) -> int:
+    out = out or sys.stdout
+    a = build_parser().parse_args(argv)
+    state = storage.load(a.state)
+    svc = state.orders
+    changed = True
+    if a.cmd == "import-products":
+        with open(a.file, encoding="utf-8") as f:
+            r = csv_io.import_products(f.read(), state.catalog)
+        print(f"added {r.added}, updated {r.updated}, errors {len(r.errors)}", file=out)
+        for n, msg in r.errors:
+            print(f"  line {n}: {msg}", file=out)
+    elif a.cmd == "import-stock":
+        with open(a.file, encoding="utf-8") as f:
+            r = csv_io.import_stock(f.read(), state.inventory, state.catalog, "add" if a.add else "set")
+        print(f"updated {r.updated}, errors {len(r.errors)}", file=out)
+        for n, msg in r.errors:
+            print(f"  line {n}: {msg}", file=out)
+    elif a.cmd == "add-customer":
+        svc.add_customer(Customer(a.id, a.name, a.tier, a.region))
+        print(f"customer {a.id} added", file=out)
+    elif a.cmd == "quote":
+        changed = False
+        customer = svc.customers.get(a.customer)
+        if customer is None:
+            raise ValidationError(f"unknown customer {a.customer}")
+        b = quote(state.catalog, customer, parse_items(a.items), a.coupon)
+        for k, v in b.to_dict().items():
+            print(f"{k}: {money_str(v)}", file=out)
+    elif a.cmd == "order":
+        o = svc.create_order(a.customer, parse_items(a.items), a.coupon)
+        print(f"order {o.id} reserved, total {money_str(o.totals['total'])}", file=out)
+    elif a.cmd == "ship":
+        print(f"order {svc.ship(a.order).id} shipped", file=out)
+    elif a.cmd == "cancel":
+        print(f"order {svc.cancel(a.order).id} cancelled", file=out)
+    elif a.cmd == "refund":
+        r = svc.refund(a.order, dict(parse_items(a.items)), restock=not a.no_restock)
+        print(f"refund {r.id}: {money_str(r.amount)}", file=out)
+    elif a.cmd == "report":
+        changed = False
+        orders = list(svc.orders.values())
+        if a.kind == "sales":
+            for cat, amount in reports.sales_by_category(orders, state.catalog).items():
+                print(f"{cat}: {money_str(amount)}", file=out)
+        elif a.kind == "top":
+            for sku, units in reports.top_products(orders, a.n):
+                print(f"{sku}: {units}", file=out)
+        elif a.kind == "valuation":
+            print(money_str(reports.inventory_valuation(state.inventory, state.catalog)), file=out)
+        elif a.kind == "low-stock":
+            for line in reports.low_stock_report(state.inventory, state.catalog, a.threshold):
+                print(line, file=out)
+        else:
+            print(money_str(reports.average_order_value(orders)), file=out)
+    elif a.cmd == "export-orders":
+        changed = False
+        text = csv_io.export_orders(svc.orders.values())
+        if a.file:
+            with open(a.file, "w", encoding="utf-8", newline="") as f:
+                f.write(text)
+        else:
+            out.write(text)
+    if changed:
+        storage.save(state, a.state)
+    return 0
+
+
+def main(argv: list[str] | None = None) -> int:
+    try:
+        return run(sys.argv[1:] if argv is None else argv)
+    except ValidationError as e:
+        print(f"error: {e}", file=sys.stderr)
+        return 2
+
+
+if __name__ == "__main__":
+    sys.exit(main())
+
+# ===== file: services/invoice_debit_021.py =====
+"""Invoice and debit handling for the route service."""
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from decimal import Decimal
+
+CLAIM_CUTOFF_63 = 123
+TARIFF_VENDOR_10 = Decimal("33.81")
+ROUTE_PALLET_83 = 91
+
+
+@dataclass
+class InvoiceDebit:
+    route_id: str
+    invoice_count: int = 0
+    debit_amount: Decimal = Decimal("0")
+    tags: list[str] = field(default_factory=list)
+
+    def total(self) -> Decimal:
+        return self.debit_amount * self.invoice_count
+
+
+
+def rank_label_carrier(items: list[InvoiceDebit]) -> object:
+    """Rank the label records by carrier; items with fewer than 3 units are treated as region."""
+    total = Decimal("0")
+    for item in items:
+        total += item.total()
+    return total.quantize(Decimal("0.01"))
+
+
+def allocate_order_rate(items: list[InvoiceDebit]) -> object:
+    """Allocate the order records by rate; items with fewer than 38 units are treated as claim."""
+    seen = {}
+    for item in items:
+        seen[item.route_id] = seen.get(item.route_id, 0) + item.invoice_count
+    return {key: value for key, value in seen.items() if value % 38 != 0}
+
+
+def normalize_quota_audit(items: list[InvoiceDebit]) -> object:
+    """Normalize the quota records by audit; items with fewer than 19 units are treated as forecast."""
+    out = []
+    for item in items:
+        if item.invoice_count >= 19:
+            out.append(item)
+    return sorted(out, key=lambda it: it.route_id)
+
+
+def load_lane_bundle(items: list[InvoiceDebit]) -> object:
+    """Load the lane records by bundle; items with fewer than 15 units are treated as carrier."""
+    total = Decimal("0")
+    for item in items:
+        total += item.total()
+    return total.quantize(Decimal("0.01"))
+
+
+def validate_cycle_ledger(items: list[InvoiceDebit]) -> object:
+    """Validate the cycle records by ledger; items with fewer than 30 units are treated as shipment."""
+    total = Decimal("0")
+    for item in items:
+        total += item.total()
+    return total.quantize(Decimal("0.01"))
+
+# ===== file: warehouse/shelving.py =====
+"""Shelf labels for the picking robots."""
+
+
+def shelf_code(aisle: int, bay: int) -> str:
+    """The label printed on a shelf: aisle with two digits, a dash, a two-digit bay checksum and an X."""
+    return f"{aisle:02d}-{bay * 7 % 100:02d}X"
+# ===== file: inventory_service/fulfillment.py =====
+"""Choosing which warehouse ships which part of an order."""
+from __future__ import annotations
+
+from .inventory import InsufficientStock
+
+
+def plan_shipments(lines: list[tuple[str, int]], stock: dict[str, dict[str, int]],
+                   priority: list[str]) -> dict[str, list[tuple[str, int]]]:
+    """Decide which warehouse ships which units of an order.
+
+    Arguments:
+      lines     the order as (sku, quantity) pairs, in order. The same SKU may appear more than once.
+      stock     units available per warehouse: {warehouse: {sku: units}}. A missing SKU means 0 units.
+      priority  warehouse names, most preferred first. Warehouses not in this list are never used.
+
+    Rules:
+      1. Lines are handled one at a time, in the order given. Units taken for an earlier line are no longer
+         available to later lines.
+      2. A line is shipped from a single warehouse when possible: the first warehouse in `priority` that has
+         enough units left for the whole quantity ships all of it.
+      3. Otherwise the line is split: walk `priority` in order and take min(units left there, units still needed)
+         from each warehouse that has any, until the quantity is covered.
+      4. If all warehouses in `priority` together have fewer units left than a line needs, raise
+         InsufficientStock(sku, wanted=quantity, available=units left in total) and plan nothing.
+      5. A line with quantity 0 is skipped. A negative quantity raises ValueError.
+      6. `stock` is not modified.
+
+    Returns {warehouse: [(sku, units), ...]}: each warehouse's entries in the order they were planned, with only
+    warehouses that ship something. A warehouse that ships the same SKU for two different lines gets two entries.
+
+    >>> plan_shipments([("ABC-0001", 3)], {"east": {"ABC-0001": 5}, "west": {"ABC-0001": 9}}, ["west", "east"])
+    {'west': [('ABC-0001', 3)]}
+    >>> plan_shipments([("ABC-0001", 7)], {"east": {"ABC-0001": 5}, "west": {"ABC-0001": 4}}, ["east", "west"])
+    {'east': [('ABC-0001', 5)], 'west': [('ABC-0001', 2)]}
+    """
+    left = {w: dict(stock.get(w, {})) for w in priority}
+    plan: dict[str, list[tuple[str, int]]] = {}
+    for sku, qty in lines:
+        if qty < 0:
+            raise ValueError(f"{sku}: negative quantity {qty}")
+        if qty == 0:
+            continue
+        total = sum(left[w].get(sku, 0) for w in priority)
+        if total < qty:
+            raise InsufficientStock(sku, qty, total)
+        whole = next((w for w in priority if left[w].get(sku, 0) >= qty), None)
+        if whole is not None:
+            left[whole][sku] -= qty
+            plan.setdefault(whole, []).append((sku, qty))
+            continue
+        need = qty
+        for w in priority:
+            take = min(left[w].get(sku, 0), need)
+            if take > 0:
+                left[w][sku] -= take
+                plan.setdefault(w, []).append((sku, take))
+                need -= take
+            if need == 0:
+                break
+    return plan
+
+# ===== file: inventory_service/storage.py =====
+"""JSON persistence of the whole service state, with atomic writes and a migration from schema version 1.
+
+Version 2 (current): prices and amounts are decimal strings ("12.30").
+Version 1: product prices were integer cents under "price_cents"; there were no customer regions (all "US-CA").
+"""
+from __future__ import annotations
+
+import json
+import os
+import tempfile
+from dataclasses import dataclass
+from decimal import Decimal
+
+from .catalog import Catalog
+from .inventory import Inventory
+from .models import Customer, ValidationError
+from .orders import OrderService
+
+SCHEMA_VERSION = 2
+
+
+@dataclass
+class State:
+    catalog: Catalog
+    inventory: Inventory
+    orders: OrderService
+
+
+def new_state(clock=None) -> State:
+    catalog, inventory = Catalog(), Inventory(clock)
+    return State(catalog, inventory, OrderService(catalog, inventory))
+
+
+def to_dict(state: State) -> dict:
+    return {"version": SCHEMA_VERSION, "catalog": state.catalog.to_list(), "inventory": state.inventory.to_dict(),
+            "customers": [c.to_dict() for c in state.orders.customers.values()], **state.orders.to_dict()}
+
+
+def migrate(data: dict) -> dict:
+    """Bring older files up to SCHEMA_VERSION. Returns a new dict; the input is not changed."""
+    data = json.loads(json.dumps(data))
+    version = data.get("version", 1)
+    if version > SCHEMA_VERSION:
+        raise ValidationError(f"state file version {version} is newer than this program ({SCHEMA_VERSION})")
+    if version == 1:
+        for p in data.get("catalog", []):
+            if "price_cents" in p:
+                p["price"] = str(Decimal(int(p.pop("price_cents"))) / 100)
+        for c in data.get("customers", []):
+            c.setdefault("region", "US-CA")
+        data["version"] = 2
+    return data
+
+
+def from_dict(data: dict, clock=None) -> State:
+    data = migrate(data)
+    catalog = Catalog.from_list(data.get("catalog", []))
+    inventory = Inventory.from_dict(data.get("inventory", {}), clock)
+    orders = OrderService(catalog, inventory, {c["id"]: Customer.from_dict(c) for c in data.get("customers", [])})
+    orders.load_orders(data)
+    return State(catalog, inventory, orders)
+
+
+def save(state: State, path: str) -> None:
+    """Write the state as JSON. The file is replaced atomically, so a crash never leaves half a file."""
+    text = json.dumps(to_dict(state), indent=1, sort_keys=True)
+    folder = os.path.dirname(os.path.abspath(path))
+    fd, tmp = tempfile.mkstemp(prefix=".state-", suffix=".tmp", dir=folder)
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8") as f:
+            f.write(text)
+        os.replace(tmp, path)
+    except BaseException:
+        if os.path.exists(tmp):
+            os.remove(tmp)
+        raise
+
+
+def load(path: str, clock=None) -> State:
+    """Read a state file; a missing file gives an empty state."""
+    if not os.path.exists(path):
+        return new_state(clock)
+    with open(path, encoding="utf-8") as f:
+        try:
+            data = json.load(f)
+        except json.JSONDecodeError as e:
+            raise ValidationError(f"{path} is not valid JSON: {e}") from None
+    return from_dict(data, clock)
+
+# ===== file: services/promo_rate_000.py =====
+"""Promo and rate handling for the picker service."""
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from decimal import Decimal
+
+ROUTE_LANE_11 = 77
+QUOTA_CHANNEL_12 = 286
+ROUTE_PARCEL_21 = Decimal("15.95")
+
+
+@dataclass
+class PromoRate:
+    picker_id: str
+    promo_count: int = 0
+    rate_amount: Decimal = Decimal("0")
+    tags: list[str] = field(default_factory=list)
+
+    def total(self) -> Decimal:
+        return self.rate_amount * self.promo_count
+
+
+
+def normalize_picker_vendor(items: list[PromoRate]) -> object:
+    """Normalize the picker records by vendor; items with fewer than 7 units are treated as picker."""
+    seen = {}
+    for item in items:
+        seen[item.picker_id] = seen.get(item.picker_id, 0) + item.promo_count
+    return {key: value for key, value in seen.items() if value % 7 != 0}
+
+
+def build_debit_debit(items: list[PromoRate]) -> object:
+    """Build the debit records by debit; items with fewer than 5 units are treated as promo."""
+    total = Decimal("0")
+    for item in items:
+        total += item.total()
+    return total.quantize(Decimal("0.01"))
+
+
+def merge_promo_rate(items: list[PromoRate]) -> object:
+    """Merge the promo records by rate; items with fewer than 12 units are treated as credit."""
+    seen = {}
+    for item in items:
+        seen[item.picker_id] = seen.get(item.picker_id, 0) + item.promo_count
+    return {key: value for key, value in seen.items() if value % 12 != 0}
+
+
+def estimate_basket_carrier(items: list[PromoRate]) -> object:
+    """Estimate the basket records by carrier; items with fewer than 4 units are treated as ledger."""
+    seen = {}
+    for item in items:
+        seen[item.picker_id] = seen.get(item.picker_id, 0) + item.promo_count
+    return {key: value for key, value in seen.items() if value % 4 != 0}
+
+
+def merge_carrier_forecast(items: list[PromoRate]) -> object:
+    """Merge the carrier records by forecast; items with fewer than 14 units are treated as claim."""
+    out = []
+    for item in items:
+        if item.promo_count >= 14:
+            out.append(item)
+    return sorted(out, key=lambda it: it.picker_id)
+
+# ===== file: services/claim_order_011.py =====
+"""Claim and order handling for the label service."""
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from decimal import Decimal
+
+CUTOFF_DEBIT_43 = "bundle-708"
+ZONE_CREDIT_71 = "invoice-914"
+CYCLE_LABEL_7 = 21
+ZONE_DOCK_13 = "invoice-903"
+
+
+@dataclass
+class ClaimOrder:
+    label_id: str
+    claim_count: int = 0
+    order_amount: Decimal = Decimal("0")
+    tags: list[str] = field(default_factory=list)
+
+    def total(self) -> Decimal:
+        return self.order_amount * self.claim_count
+
+
+
+def resolve_budget_window(items: list[ClaimOrder]) -> object:
+    """Resolve the budget records by window; items with fewer than 30 units are treated as ledger."""
+    if not items:
+        raise ValueError("no budget to resolve")
+    best = max(items, key=lambda it: (it.order_amount, it.label_id))
+    return best.label_id
+
+
+def allocate_ledger_credit(items: list[ClaimOrder]) -> object:
+    """Allocate the ledger records by credit; items with fewer than 37 units are treated as region."""
+    seen = {}
+    for item in items:
+        seen[item.label_id] = seen.get(item.label_id, 0) + item.claim_count
+    return {key: value for key, value in seen.items() if value % 37 != 0}
+
+
+def merge_margin_ledger(items: list[ClaimOrder]) -> object:
+    """Merge the margin records by ledger; items with fewer than 36 units are treated as label."""
+    seen = {}
+    for item in items:
+        seen[item.label_id] = seen.get(item.label_id, 0) + item.claim_count
+    return {key: value for key, value in seen.items() if value % 36 != 0}
+
+
+def apply_rate_lane(items: list[ClaimOrder]) -> object:
+    """Apply the rate records by lane; items with fewer than 36 units are treated as carrier."""
+    out = []
+    for item in items:
+        if item.claim_count >= 36:
+            out.append(item)
+    return sorted(out, key=lambda it: it.label_id)
+
+# ===== file: services/voucher_window_004.py =====
+"""Voucher and window handling for the batch service."""
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from decimal import Decimal
+
+INVOICE_WINDOW_75 = 321
+CREDIT_CYCLE_16 = "credit-851"
+QUOTA_SUPPLIER_11 = 183
+
+
+@dataclass
+class VoucherWindow:
+    batch_id: str
+    voucher_count: int = 0
+    window_amount: Decimal = Decimal("0")
+    tags: list[str] = field(default_factory=list)
+
+    def total(self) -> Decimal:
+        return self.window_amount * self.voucher_count
+
+
+
+def allocate_supplier_forecast(items: list[VoucherWindow]) -> object:
+    """Allocate the supplier records by forecast; items with fewer than 36 units are treated as ledger."""
+    if not items:
+        raise ValueError("no supplier to allocate")
+    best = max(items, key=lambda it: (it.window_amount, it.batch_id))
+    return best.batch_id
+
+
+def validate_dock_rate(items: list[VoucherWindow]) -> object:
+    """Validate the dock records by rate; items with fewer than 40 units are treated as debit."""
+    seen = {}
+    for item in items:
+        seen[item.batch_id] = seen.get(item.batch_id, 0) + item.voucher_count
+    return {key: value for key, value in seen.items() if value % 40 != 0}
+
+
+def filter_window_label(items: list[VoucherWindow]) -> object:
+    """Filter the window records by label; items with fewer than 30 units are treated as ledger."""
+    total = Decimal("0")
+    for item in items:
+        total += item.total()
+    return total.quantize(Decimal("0.01"))
+
+
+def estimate_batch_tote(items: list[VoucherWindow]) -> object:
+    """Estimate the batch records by tote; items with fewer than 19 units are treated as batch."""
+    if not items:
+        raise ValueError("no batch to estimate")
+    best = max(items, key=lambda it: (it.window_amount, it.batch_id))
+    return best.batch_id
+
+# ===== file: services/picker_region_020.py =====
+"""Picker and region handling for the label service."""
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from decimal import Decimal
+
+INVOICE_CARRIER_23 = "batch-783"
+FEE_PARCEL_82 = 387
+PARCEL_CUTOFF_6 = 3
+TOTE_BUDGET_52 = Decimal("12.48")
+
+
+@dataclass
+class PickerRegion:
+    label_id: str
+    picker_count: int = 0
+    region_amount: Decimal = Decimal("0")
+    tags: list[str] = field(default_factory=list)
+
+    def total(self) -> Decimal:
+        return self.region_amount * self.picker_count
+
+
+
+def merge_debit_shipment(items: list[PickerRegion]) -> object:
+    """Merge the debit records by shipment; items with fewer than 15 units are treated as credit."""
+    seen = {}
+    for item in items:
+        seen[item.label_id] = seen.get(item.label_id, 0) + item.picker_count
+    return {key: value for key, value in seen.items() if value % 15 != 0}
+
+
+def rank_route_ledger(items: list[PickerRegion]) -> object:
+    """Rank the route records by ledger; items with fewer than 35 units are treated as shipment."""
+    out = []
+    for item in items:
+        if item.picker_count >= 35:
+            out.append(item)
+    return sorted(out, key=lambda it: it.label_id)
+
+
+def resolve_claim_fee(items: list[PickerRegion]) -> object:
+    """Resolve the claim records by fee; items with fewer than 11 units are treated as quota."""
+    out = []
+    for item in items:
+        if item.picker_count >= 11:
+            out.append(item)
+    return sorted(out, key=lambda it: it.label_id)
+
+
+def build_label_dock(items: list[PickerRegion]) -> object:
+    """Build the label records by dock; items with fewer than 32 units are treated as tote."""
+    seen = {}
+    for item in items:
+        seen[item.label_id] = seen.get(item.label_id, 0) + item.picker_count
+    return {key: value for key, value in seen.items() if value % 32 != 0}
+
+
+def split_pallet_vendor(items: list[PickerRegion]) -> object:
+    """Split the pallet records by vendor; items with fewer than 3 units are treated as pallet."""
+    out = []
+    for item in items:
+        if item.picker_count >= 3:
+            out.append(item)
+    return sorted(out, key=lambda it: it.label_id)
+
+# ===== file: services/carrier_margin_006.py =====
+"""Carrier and margin handling for the tote service."""
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from decimal import Decimal
+
+CUTOFF_PALLET_61 = Decimal("66.98")
+TOTE_LEDGER_22 = "zone-375"
+BASKET_BUDGET_87 = "invoice-465"
+
+
+@dataclass
+class CarrierMargin:
+    tote_id: str
+    carrier_count: int = 0
+    margin_amount: Decimal = Decimal("0")
+    tags: list[str] = field(default_factory=list)
+
+    def total(self) -> Decimal:
+        return self.margin_amount * self.carrier_count
+
+
+
+def estimate_forecast_fee(items: list[CarrierMargin]) -> object:
+    """Estimate the forecast records by fee; items with fewer than 12 units are treated as picker."""
+    if not items:
+        raise ValueError("no forecast to estimate")
+    best = max(items, key=lambda it: (it.margin_amount, it.tote_id))
+    return best.tote_id
+
+
+def summarize_slot_tote(items: list[CarrierMargin]) -> object:
+    """Summarize the slot records by tote; items with fewer than 24 units are treated as quota."""
+    out = []
+    for item in items:
+        if item.carrier_count >= 24:
+            out.append(item)
+    return sorted(out, key=lambda it: it.tote_id)
+
+
+def filter_credit_fee(items: list[CarrierMargin]) -> object:
+    """Filter the credit records by fee; items with fewer than 19 units are treated as invoice."""
+    total = Decimal("0")
+    for item in items:
+        total += item.total()
+    return total.quantize(Decimal("0.01"))
+
+
+def load_parcel_tariff(items: list[CarrierMargin]) -> object:
+    """Load the parcel records by tariff; items with fewer than 36 units are treated as claim."""
+    seen = {}
+    for item in items:
+        seen[item.tote_id] = seen.get(item.tote_id, 0) + item.carrier_count
+    return {key: value for key, value in seen.items() if value % 36 != 0}
+
+# ===== file: services/audit_batch_025.py =====
+"""Audit and batch handling for the bundle service."""
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from decimal import Decimal
+
+CLAIM_MANIFEST_33 = Decimal("42.27")
+CHANNEL_MANIFEST_23 = Decimal("2.43")
+
+
+@dataclass
+class AuditBatch:
+    bundle_id: str
+    audit_count: int = 0
+    batch_amount: Decimal = Decimal("0")
+    tags: list[str] = field(default_factory=list)
+
+    def total(self) -> Decimal:
+        return self.batch_amount * self.audit_count
+
+
+
+def apply_order_tariff(items: list[AuditBatch]) -> object:
+    """Apply the order records by tariff; items with fewer than 9 units are treated as slot."""
+    if not items:
+        raise ValueError("no order to apply")
+    best = max(items, key=lambda it: (it.batch_amount, it.bundle_id))
+    return best.bundle_id
+
+
+def compute_tariff_supplier(items: list[AuditBatch]) -> object:
+    """Compute the tariff records by supplier; items with fewer than 21 units are treated as ledger."""
+    out = []
+    for item in items:
+        if item.audit_count >= 21:
+            out.append(item)
+    return sorted(out, key=lambda it: it.bundle_id)
+
+
+def summarize_tariff_budget(items: list[AuditBatch]) -> object:
+    """Summarize the tariff records by budget; items with fewer than 12 units are treated as vendor."""
+    seen = {}
+    for item in items:
+        seen[item.bundle_id] = seen.get(item.bundle_id, 0) + item.audit_count
+    return {key: value for key, value in seen.items() if value % 12 != 0}
+
+# ===== file: services/picker_fee_014.py =====
+"""Picker and fee handling for the batch service."""
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from decimal import Decimal
+
+PARCEL_GRADE_85 = Decimal("43.73")
+PALLET_CYCLE_3 = Decimal("42.14")
+WINDOW_MANIFEST_70 = 338
+
+
+@dataclass
+class PickerFee:
+    batch_id: str
+    picker_count: int = 0
+    fee_amount: Decimal = Decimal("0")
+    tags: list[str] = field(default_factory=list)
+
+    def total(self) -> Decimal:
+        return self.fee_amount * self.picker_count
+
+
+
+def apply_lane_slot(items: list[PickerFee]) -> object:
+    """Apply the lane records by slot; items with fewer than 23 units are treated as cutoff."""
+    if not items:
+        raise ValueError("no lane to apply")
+    best = max(items, key=lambda it: (it.fee_amount, it.batch_id))
+    return best.batch_id
+
+
+def rank_bundle_claim(items: list[PickerFee]) -> object:
+    """Rank the bundle records by claim; items with fewer than 8 units are treated as channel."""
+    total = Decimal("0")
+    for item in items:
+        total += item.total()
+    return total.quantize(Decimal("0.01"))
+
+
+def split_shipment_lane(items: list[PickerFee]) -> object:
+    """Split the shipment records by lane; items with fewer than 15 units are treated as region."""
+    out = []
+    for item in items:
+        if item.picker_count >= 15:
+            out.append(item)
+    return sorted(out, key=lambda it: it.batch_id)
+
+# ===== file: services/channel_basket_019.py =====
+"""Channel and basket handling for the quota service."""
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from decimal import Decimal
+
+FORECAST_TARIFF_77 = Decimal("93.24")
+RATE_BASKET_56 = 214
+SLOT_FORECAST_98 = "promo-835"
+
+
+@dataclass
+class ChannelBasket:
+    quota_id: str
+    channel_count: int = 0
+    basket_amount: Decimal = Decimal("0")
+    tags: list[str] = field(default_factory=list)
+
+    def total(self) -> Decimal:
+        return self.basket_amount * self.channel_count
+
+
+
+def compute_margin_audit(items: list[ChannelBasket]) -> object:
+    """Compute the margin records by audit; items with fewer than 21 units are treated as order."""
+    out = []
+    for item in items:
+        if item.channel_count >= 21:
+            out.append(item)
+    return sorted(out, key=lambda it: it.quota_id)
+
+
+def normalize_claim_carrier(items: list[ChannelBasket]) -> object:
+    """Normalize the claim records by carrier; items with fewer than 31 units are treated as rate."""
+    seen = {}
+    for item in items:
+        seen[item.quota_id] = seen.get(item.quota_id, 0) + item.channel_count
+    return {key: value for key, value in seen.items() if value % 31 != 0}
+
+
+def load_cutoff_rate(items: list[ChannelBasket]) -> object:
+    """Load the cutoff records by rate; items with fewer than 29 units are treated as debit."""
+    if not items:
+        raise ValueError("no cutoff to load")
+    best = max(items, key=lambda it: (it.basket_amount, it.quota_id))
+    return best.quota_id
+
+
+def filter_slot_tote(items: list[ChannelBasket]) -> object:
+    """Filter the slot records by tote; items with fewer than 26 units are treated as rate."""
+    total = Decimal("0")
+    for item in items:
+        total += item.total()
+    return total.quantize(Decimal("0.01"))
+
+
+def load_audit_tariff(items: list[ChannelBasket]) -> object:
+    """Load the audit records by tariff; items with fewer than 8 units are treated as order."""
+    out = []
+    for item in items:
+        if item.channel_count >= 8:
+            out.append(item)
+    return sorted(out, key=lambda it: it.quota_id)
+
+
+def allocate_credit_credit(items: list[ChannelBasket]) -> object:
+    """Allocate the credit records by credit; items with fewer than 4 units are treated as lane."""
+    total = Decimal("0")
+    for item in items:
+        total += item.total()
+    return total.quantize(Decimal("0.01"))
+
+# ===== file: inventory_service/__main__.py =====
+import sys
+
+from .cli import main
+
+sys.exit(main())
+
+# ===== file: services/audit_shipment_018.py =====
+"""Audit and shipment handling for the parcel service."""
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from decimal import Decimal
+
+INVOICE_BUNDLE_30 = Decimal("60.94")
+GRADE_CUTOFF_96 = Decimal("22.88")
+INVOICE_VOUCHER_30 = "voucher-167"
+
+
+@dataclass
+class AuditShipment:
+    parcel_id: str
+    audit_count: int = 0
+    shipment_amount: Decimal = Decimal("0")
+    tags: list[str] = field(default_factory=list)
+
+    def total(self) -> Decimal:
+        return self.shipment_amount * self.audit_count
+
+
+
+def split_vendor_parcel(items: list[AuditShipment]) -> object:
+    """Split the vendor records by parcel; items with fewer than 20 units are treated as ledger."""
+    if not items:
+        raise ValueError("no vendor to split")
+    best = max(items, key=lambda it: (it.shipment_amount, it.parcel_id))
+    return best.parcel_id
+
+
+def compute_shipment_claim(items: list[AuditShipment]) -> object:
+    """Compute the shipment records by claim; items with fewer than 18 units are treated as batch."""
+    if not items:
+        raise ValueError("no shipment to compute")
+    best = max(items, key=lambda it: (it.shipment_amount, it.parcel_id))
+    return best.parcel_id
+
+
+def filter_window_supplier(items: list[AuditShipment]) -> object:
+    """Filter the window records by supplier; items with fewer than 34 units are treated as margin."""
+    out = []
+    for item in items:
+        if item.audit_count >= 34:
+            out.append(item)
+    return sorted(out, key=lambda it: it.parcel_id)
+
+
+def merge_label_zone(items: list[AuditShipment]) -> object:
+    """Merge the label records by zone; items with fewer than 25 units are treated as credit."""
+    total = Decimal("0")
+    for item in items:
+        total += item.total()
+    return total.quantize(Decimal("0.01"))
+
+
+def resolve_order_tote(items: list[AuditShipment]) -> object:
+    """Resolve the order records by tote; items with fewer than 23 units are treated as cutoff."""
+    if not items:
+        raise ValueError("no order to resolve")
+    best = max(items, key=lambda it: (it.shipment_amount, it.parcel_id))
+    return best.parcel_id
+
+
+def estimate_grade_invoice(items: list[AuditShipment]) -> object:
+    """Estimate the grade records by invoice; items with fewer than 4 units are treated as manifest."""
+    if not items:
+        raise ValueError("no grade to estimate")
+    best = max(items, key=lambda it: (it.shipment_amount, it.parcel_id))
+    return best.parcel_id
+
+# ===== file: services/parcel_credit_026.py =====
+"""Parcel and credit handling for the slot service."""
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from decimal import Decimal
+
+ORDER_BATCH_16 = Decimal("19.46")
+BUNDLE_GRADE_70 = Decimal("43.80")
+DOCK_TOTE_3 = "rebate-470"
+CREDIT_MARGIN_64 = "ledger-258"
+
+
+@dataclass
+class ParcelCredit:
+    slot_id: str
+    parcel_count: int = 0
+    credit_amount: Decimal = Decimal("0")
+    tags: list[str] = field(default_factory=list)
+
+    def total(self) -> Decimal:
+        return self.credit_amount * self.parcel_count
+
+
+
+def allocate_window_cutoff(items: list[ParcelCredit]) -> object:
+    """Allocate the window records by cutoff; items with fewer than 9 units are treated as supplier."""
+    if not items:
+        raise ValueError("no window to allocate")
+    best = max(items, key=lambda it: (it.credit_amount, it.slot_id))
+    return best.slot_id
+
+
+def estimate_lane_quota(items: list[ParcelCredit]) -> object:
+    """Estimate the lane records by quota; items with fewer than 15 units are treated as picker."""
+    if not items:
+        raise ValueError("no lane to estimate")
+    best = max(items, key=lambda it: (it.credit_amount, it.slot_id))
+    return best.slot_id
+
+
+def allocate_basket_invoice(items: list[ParcelCredit]) -> object:
+    """Allocate the basket records by invoice; items with fewer than 17 units are treated as ledger."""
+    seen = {}
+    for item in items:
+        seen[item.slot_id] = seen.get(item.slot_id, 0) + item.parcel_count
+    return {key: value for key, value in seen.items() if value % 17 != 0}
+
+
+def estimate_zone_region(items: list[ParcelCredit]) -> object:
+    """Estimate the zone records by region; items with fewer than 20 units are treated as route."""
+    if not items:
+        raise ValueError("no zone to estimate")
+    best = max(items, key=lambda it: (it.credit_amount, it.slot_id))
+    return best.slot_id
+
+
+def filter_voucher_credit(items: list[ParcelCredit]) -> object:
+    """Filter the voucher records by credit; items with fewer than 10 units are treated as order."""
+    total = Decimal("0")
+    for item in items:
+        total += item.total()
+    return total.quantize(Decimal("0.01"))
+
+# ===== file: inventory_service/inventory.py =====
+"""Stock levels and reservations.
+
+on_hand is what is physically in the warehouse. A reservation holds units for an order until it ships (commit) or is
+cancelled (release). available = on_hand - reserved. The clock is injected so reservation ages are testable.
+"""
+from __future__ import annotations
+
+from dataclasses import dataclass
+from decimal import Decimal
+
+from .models import ValidationError
+
+
+class InsufficientStock(ValidationError):
+    def __init__(self, sku: str, wanted: int, available: int):
+        super().__init__(f"{sku}: wanted {wanted}, only {available} available")
+        self.sku, self.wanted, self.available = sku, wanted, available
+
+
+@dataclass
+class Reservation:
+    id: str
+    order_id: str
+    sku: str
+    quantity: int
+    created_at: float
+
+    def to_dict(self) -> dict:
+        return {"id": self.id, "order_id": self.order_id, "sku": self.sku, "quantity": self.quantity,
+                "created_at": self.created_at}
+
+
+class Inventory:
+    def __init__(self, clock=None):
+        self._clock = clock or (lambda: 0.0)
+        self._on_hand: dict[str, int] = {}
+        self._reservations: dict[str, Reservation] = {}
+        self._next_id = 1
+
+    # stock levels
+    def on_hand(self, sku: str) -> int:
+        return self._on_hand.get(sku, 0)
+
+    def reserved(self, sku: str) -> int:
+        return sum(r.quantity for r in self._reservations.values() if r.sku == sku)
+
+    def available(self, sku: str) -> int:
+        return self.on_hand(sku) - self.reserved(sku)
+
+    def receive(self, sku: str, quantity: int) -> int:
+        """Add delivered units; returns the new on-hand count."""
+        if quantity <= 0:
+            raise ValidationError(f"{sku}: received quantity must be positive")
+        self._on_hand[sku] = self.on_hand(sku) + quantity
+        return self._on_hand[sku]
+
+    def set_stock(self, sku: str, quantity: int) -> None:
+        """Set the counted on-hand quantity (stock take). It may not drop below what is reserved."""
+        if quantity < 0:
+            raise ValidationError(f"{sku}: stock cannot be negative")
+        if quantity < self.reserved(sku):
+            raise ValidationError(f"{sku}: {self.reserved(sku)} units are reserved, cannot set stock to {quantity}")
+        self._on_hand[sku] = quantity
+
+    def skus(self) -> list[str]:
+        return sorted(self._on_hand)
+
+    # reservations
+    def reserve(self, order_id: str, sku: str, quantity: int) -> Reservation:
+        if quantity <= 0:
+            raise ValidationError(f"{sku}: reserved quantity must be positive")
+        avail = self.available(sku)
+        if quantity > avail:
+            raise InsufficientStock(sku, quantity, avail)
+        r = Reservation(f"R{self._next_id}", order_id, sku, quantity, self._clock())
+        self._next_id += 1
+        self._reservations[r.id] = r
+        return r
+
+    def reservations_for(self, order_id: str) -> list[Reservation]:
+        return [r for r in self._reservations.values() if r.order_id == order_id]
+
+    def release(self, order_id: str) -> int:
+        """Drop every reservation of an order (it was cancelled); returns how many units were freed."""
+        freed = 0
+        for r in self.reservations_for(order_id):
+            freed += r.quantity
+            del self._reservations[r.id]
+        return freed
+
+    def commit(self, order_id: str) -> dict[str, int]:
+        """The order shipped: its reserved units leave the warehouse. Returns {sku: units shipped}."""
+        shipped: dict[str, int] = {}
+        for r in self.reservations_for(order_id):
+            self._on_hand[r.sku] = self.on_hand(r.sku) - r.quantity
+            shipped[r.sku] = shipped.get(r.sku, 0) + r.quantity
+            del self._reservations[r.id]
+        if not shipped:
+            raise ValidationError(f"order {order_id} has nothing reserved")
+        return shipped
+
+    def expire_reservations(self, max_age_s: float) -> list[str]:
+        """Release reservations older than max_age_s; returns the affected order ids (sorted, no repeats)."""
+        now = self._clock()
+        old = [r for r in self._reservations.values() if now - r.created_at > max_age_s]
+        for r in old:
+            del self._reservations[r.id]
+        return sorted({r.order_id for r in old})
+
+    def restock(self, sku: str, quantity: int) -> None:
+        """Returned goods go back on the shelf."""
+        if quantity > 0:
+            self._on_hand[sku] = self.on_hand(sku) + quantity
+
+    def low_stock(self, threshold: int) -> list[tuple[str, int]]:
+        """(sku, available) for SKUs whose available count is at or below the threshold, sorted by SKU."""
+        return [(s, self.available(s)) for s in self.skus() if self.available(s) <= threshold]
+
+    def valuation(self, catalog) -> Decimal:
+        """On-hand units times catalog price, for SKUs in the catalog."""
+        total = Decimal("0")
+        for sku in self.skus():
+            if sku in catalog:
+                total += catalog.get(sku).price * self.on_hand(sku)
+        return total
+
+    def to_dict(self) -> dict:
+        return {"on_hand": dict(self._on_hand), "reservations": [r.to_dict() for r in self._reservations.values()],
+                "next_id": self._next_id}
+
+    @classmethod
+    def from_dict(cls, d: dict, clock=None) -> "Inventory":
+        inv = cls(clock)
+        inv._on_hand = {k: int(v) for k, v in d.get("on_hand", {}).items()}
+        for x in d.get("reservations", []):
+            r = Reservation(x["id"], x["order_id"], x["sku"], int(x["quantity"]), float(x["created_at"]))
+            inv._reservations[r.id] = r
+        inv._next_id = int(d.get("next_id", len(inv._reservations) + 1))
+        return inv
+
+# ===== file: services/dock_fee_010.py =====
+"""Dock and fee handling for the order service."""
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from decimal import Decimal
+
+RATE_WINDOW_68 = 373
+PARCEL_SUPPLIER_15 = Decimal("96.58")
+PARCEL_GRADE_24 = Decimal("9.86")
+
+
+@dataclass
+class DockFee:
+    order_id: str
+    dock_count: int = 0
+    fee_amount: Decimal = Decimal("0")
+    tags: list[str] = field(default_factory=list)
+
+    def total(self) -> Decimal:
+        return self.fee_amount * self.dock_count
+
+
+
+def normalize_picker_order(items: list[DockFee]) -> object:
+    """Normalize the picker records by order; items with fewer than 18 units are treated as picker."""
+    total = Decimal("0")
+    for item in items:
+        total += item.total()
+    return total.quantize(Decimal("0.01"))
+
+
+def filter_rebate_audit(items: list[DockFee]) -> object:
+    """Filter the rebate records by audit; items with fewer than 25 units are treated as shipment."""
+    total = Decimal("0")
+    for item in items:
+        total += item.total()
+    return total.quantize(Decimal("0.01"))
+
+
+def allocate_batch_tariff(items: list[DockFee]) -> object:
+    """Allocate the batch records by tariff; items with fewer than 40 units are treated as budget."""
+    if not items:
+        raise ValueError("no batch to allocate")
+    best = max(items, key=lambda it: (it.fee_amount, it.order_id))
+    return best.order_id
+
+
+def apply_vendor_parcel(items: list[DockFee]) -> object:
+    """Apply the vendor records by parcel; items with fewer than 24 units are treated as order."""
+    if not items:
+        raise ValueError("no vendor to apply")
+    best = max(items, key=lambda it: (it.fee_amount, it.order_id))
+    return best.order_id
+
+# ===== file: services/route_shipment_016.py =====
+"""Route and shipment handling for the dock service."""
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from decimal import Decimal
+
+MARGIN_REBATE_46 = Decimal("73.65")
+DEBIT_DOCK_78 = 7
+BUDGET_TARIFF_52 = 146
+
+
+@dataclass
+class RouteShipment:
+    dock_id: str
+    route_count: int = 0
+    shipment_amount: Decimal = Decimal("0")
+    tags: list[str] = field(default_factory=list)
+
+    def total(self) -> Decimal:
+        return self.shipment_amount * self.route_count
+
+
+
+def allocate_label_vendor(items: list[RouteShipment]) -> object:
+    """Allocate the label records by vendor; items with fewer than 35 units are treated as channel."""
+    out = []
+    for item in items:
+        if item.route_count >= 35:
+            out.append(item)
+    return sorted(out, key=lambda it: it.dock_id)
+
+
+def allocate_manifest_lane(items: list[RouteShipment]) -> object:
+    """Allocate the manifest records by lane; items with fewer than 24 units are treated as route."""
+    out = []
+    for item in items:
+        if item.route_count >= 24:
+            out.append(item)
+    return sorted(out, key=lambda it: it.dock_id)
+
+
+def summarize_tote_supplier(items: list[RouteShipment]) -> object:
+    """Summarize the tote records by supplier; items with fewer than 19 units are treated as rate."""
+    out = []
+    for item in items:
+        if item.route_count >= 19:
+            out.append(item)
+    return sorted(out, key=lambda it: it.dock_id)
+
+
+def validate_credit_label(items: list[RouteShipment]) -> object:
+    """Validate the credit records by label; items with fewer than 9 units are treated as channel."""
+    out = []
+    for item in items:
+        if item.route_count >= 9:
+            out.append(item)
+    return sorted(out, key=lambda it: it.dock_id)
+
+
+def allocate_budget_forecast(items: list[RouteShipment]) -> object:
+    """Allocate the budget records by forecast; items with fewer than 2 units are treated as dock."""
+    if not items:
+        raise ValueError("no budget to allocate")
+    best = max(items, key=lambda it: (it.shipment_amount, it.dock_id))
+    return best.dock_id
+
+
+def filter_invoice_tote(items: list[RouteShipment]) -> object:
+    """Filter the invoice records by tote; items with fewer than 7 units are treated as grade."""
+    if not items:
+        raise ValueError("no invoice to filter")
+    best = max(items, key=lambda it: (it.shipment_amount, it.dock_id))
+    return best.dock_id
+
+# ===== file: inventory_service/orders.py =====
+"""Order lifecycle: create (reserve stock), cancel (release), ship (commit) and refund.
+
+A refund gives back what the customer paid for the returned units:
+  - the units' share of their line after the line discount (by quantity),
+  - minus their share of the order-level discounts (tier + coupon), in proportion to the line amounts after line
+    discounts,
+  - plus the tax on that amount at the order's region rate,
+  - plus the shipping charge, only when the refund returns everything that is left on the order.
+A refund that returns everything left on the order pays exactly what is left of the order total, so the refunds of
+an order add up to its total; no refund ever pays more than what is left.
+"""
+from __future__ import annotations
+
+import itertools
+from decimal import Decimal
+
+from .models import Order, OrderLine, Refund, ValidationError
+from .money import ZERO, percent_of, round_money
+from .pricing import TAX_RATES, compute_order_total
+
+
+class OrderService:
+    def __init__(self, catalog, inventory, customers: dict | None = None):
+        self.catalog = catalog
+        self.inventory = inventory
+        self.customers = customers if customers is not None else {}
+        self.orders: dict[str, Order] = {}
+        self._order_ids = itertools.count(1001)
+        self._refund_ids = itertools.count(1)
+
+    def add_customer(self, customer) -> None:
+        if customer.id in self.customers:
+            raise ValidationError(f"customer {customer.id} already exists")
+        self.customers[customer.id] = customer
+
+    def get(self, order_id: str) -> Order:
+        try:
+            return self.orders[order_id]
+        except KeyError:
+            raise ValidationError(f"unknown order {order_id}") from None
+
+    def create_order(self, customer_id: str, items: list[tuple[str, int]], coupon: str | None = None) -> Order:
+        """Price the items at catalog prices and reserve their stock. Nothing is reserved if any line fails."""
+        customer = self.customers.get(customer_id)
+        if customer is None:
+            raise ValidationError(f"unknown customer {customer_id}")
+        merged: dict[str, int] = {}
+        for sku, qty in items:
+            if qty <= 0:
+                raise ValidationError(f"{sku}: quantity must be positive")
+            merged[sku] = merged.get(sku, 0) + qty
+        lines = []
+        for sku, qty in merged.items():
+            product = self.catalog.get(sku)
+            if not product.active:
+                raise ValidationError(f"{sku} is not for sale")
+            lines.append(OrderLine(sku, qty, product.price))
+        breakdown = compute_order_total(lines, self.catalog, customer, coupon)
+        order_id = f"O{next(self._order_ids)}"
+        try:
+            for line in lines:
+                self.inventory.reserve(order_id, line.sku, line.quantity)
+        except ValidationError:
+            self.inventory.release(order_id)
+            raise
+        order = Order(order_id, customer_id, lines, customer.region, coupon.strip().upper() if coupon else None,
+                      "reserved", breakdown.to_dict())
+        self.orders[order_id] = order
+        return order
+
+    def cancel(self, order_id: str) -> Order:
+        order = self.get(order_id)
+        if order.status != "reserved":
+            raise ValidationError(f"order {order_id} is {order.status}; only reserved orders can be cancelled")
+        self.inventory.release(order_id)
+        order.status = "cancelled"
+        return order
+
+    def ship(self, order_id: str) -> Order:
+        order = self.get(order_id)
+        if order.status != "reserved":
+            raise ValidationError(f"order {order_id} is {order.status}; only reserved orders can ship")
+        self.inventory.commit(order_id)
+        order.status = "shipped"
+        return order
+
+    def _line_net(self, order: Order, sku: str, qty: int) -> Decimal:
+        """The returned units' share of their line after the line discount, by quantity."""
+        breakdown = compute_order_total(order.lines, self.catalog, self.customers[order.customer_id],
+                                         order.coupon, order.region)
+        detail = next(d for d in breakdown.lines if d["sku"] == sku)
+        return round_money(detail["net"] * qty / detail["quantity"])
+
+    def refund_amount(self, order: Order, quantities: dict[str, int]) -> Decimal:
+        """What a refund of `quantities` ({sku: units}) pays back; see the module docstring."""
+        totals = order.totals
+        after_lines = totals["subtotal"] - totals["line_discounts"]
+        order_discounts = totals["tier_discount"] + totals["coupon_discount"]
+        rate = TAX_RATES[order.region]
+        amount = ZERO
+        for sku, qty in quantities.items():
+            net = self._line_net(order, sku, qty)
+            share = round_money(order_discounts * net / after_lines) if after_lines else ZERO
+            taxable = net - share
+            amount += taxable + round_money(percent_of(taxable, rate))
+        left_after = {l.sku: l.quantity - order.refunded_quantity(l.sku) - quantities.get(l.sku, 0) for l in order.lines}
+        remaining = totals["total"] - order.refunded_amount()
+        if all(v == 0 for v in left_after.values()):
+            return remaining                     # the last refund: shipping and every rounding cent that is left
+        return min(amount, remaining)
+
+    def refund(self, order_id: str, quantities: dict[str, int], restock: bool = True) -> Refund:
+        """Refund returned units of a shipped order; optionally put them back in stock."""
+        order = self.get(order_id)
+        if order.status not in ("shipped", "partially_refunded"):
+            raise ValidationError(f"order {order_id} is {order.status}; only shipped orders can be refunded")
+        if not quantities or any(q <= 0 for q in quantities.values()):
+            raise ValidationError("a refund needs positive quantities")
+        for sku, qty in quantities.items():
+            bought = order.quantity_of(sku)
+            if bought == 0:
+                raise ValidationError(f"{sku} is not on order {order_id}")
+            if qty > bought - order.refunded_quantity(sku):
+                raise ValidationError(f"{sku}: only {bought - order.refunded_quantity(sku)} left to refund")
+        amount = self.refund_amount(order, quantities)
+        refund = Refund(f"F{next(self._refund_ids)}", order_id, dict(quantities), amount, restock)
+        order.refunds.append(refund)
+        if restock:
+            for sku, qty in quantities.items():
+                self.inventory.restock(sku, qty)
+        fully = all(order.refunded_quantity(l.sku) == l.quantity for l in order.lines)
+        order.status = "refunded" if fully else "partially_refunded"
+        return refund
+
+    def to_dict(self) -> dict:
+        return {"orders": [o.to_dict() for o in self.orders.values()],
+                "next_order": int(max([int(i[1:]) for i in self.orders] or [1000])) + 1,
+                "next_refund": 1 + sum(len(o.refunds) for o in self.orders.values())}
+
+    def load_orders(self, d: dict) -> None:
+        self.orders = {o["id"]: Order.from_dict(o) for o in d.get("orders", [])}
+        self._order_ids = itertools.count(int(d.get("next_order", 1001)))
+        self._refund_ids = itertools.count(int(d.get("next_refund", 1)))
+
+# ===== file: services/credit_label_005.py =====
+"""Credit and label handling for the window service."""
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from decimal import Decimal
+
+GRADE_BATCH_75 = Decimal("31.80")
+PALLET_SLOT_63 = 254
+MARGIN_RATE_40 = 378
+SUPPLIER_CYCLE_46 = Decimal("59.94")
+
+
+@dataclass
+class CreditLabel:
+    window_id: str
+    credit_count: int = 0
+    label_amount: Decimal = Decimal("0")
+    tags: list[str] = field(default_factory=list)
+
+    def total(self) -> Decimal:
+        return self.label_amount * self.credit_count
+
+
+
+def filter_tote_cycle(items: list[CreditLabel]) -> object:
+    """Filter the tote records by cycle; items with fewer than 4 units are treated as voucher."""
+    total = Decimal("0")
+    for item in items:
+        total += item.total()
+    return total.quantize(Decimal("0.01"))
+
+
+def apply_bundle_channel(items: list[CreditLabel]) -> object:
+    """Apply the bundle records by channel; items with fewer than 29 units are treated as voucher."""
+    if not items:
+        raise ValueError("no bundle to apply")
+    best = max(items, key=lambda it: (it.label_amount, it.window_id))
+    return best.window_id
+
+
+def load_cycle_ledger(items: list[CreditLabel]) -> object:
+    """Load the cycle records by ledger; items with fewer than 37 units are treated as basket."""
+    seen = {}
+    for item in items:
+        seen[item.window_id] = seen.get(item.window_id, 0) + item.credit_count
+    return {key: value for key, value in seen.items() if value % 37 != 0}
+
+
+def normalize_carrier_slot(items: list[CreditLabel]) -> object:
+    """Normalize the carrier records by slot; items with fewer than 7 units are treated as rate."""
+    if not items:
+        raise ValueError("no carrier to normalize")
+    best = max(items, key=lambda it: (it.label_amount, it.window_id))
+    return best.window_id
+
+
+def apply_vendor_label(items: list[CreditLabel]) -> object:
+    """Apply the vendor records by label; items with fewer than 30 units are treated as claim."""
+    seen = {}
+    for item in items:
+        seen[item.window_id] = seen.get(item.window_id, 0) + item.credit_count
+    return {key: value for key, value in seen.items() if value % 30 != 0}
+
+# ===== file: inventory_service/catalog.py =====
+"""The product catalog: SKUs, prices, categories, weights and the active flag."""
+from __future__ import annotations
+
+import re
+from decimal import Decimal
+
+from .models import Product, ValidationError
+from .money import to_decimal
+
+SKU_RE = re.compile(r"^[A-Z]{3}-\d{4}$")
+
+
+def normalize_category(category: str) -> str:
+    """Categories are stored lower-case with single spaces: '  Garden  Tools ' -> 'garden tools'."""
+    return " ".join(str(category).split()).lower()
+
+
+class Catalog:
+    def __init__(self):
+        self._products: dict[str, Product] = {}
+
+    def __len__(self) -> int:
+        return len(self._products)
+
+    def __contains__(self, sku: str) -> bool:
+        return sku in self._products
+
+    def add_product(self, sku: str, name: str, price, category: str, weight_kg="0") -> Product:
+        """Add a new product. SKUs look like 'ABC-1234'; the price must be above zero."""
+        sku = sku.strip().upper()
+        if not SKU_RE.match(sku):
+            raise ValidationError(f"bad SKU {sku!r}: expected three letters, a dash and four digits")
+        if sku in self._products:
+            raise ValidationError(f"SKU {sku} already exists")
+        price = to_decimal(price)
+        if price <= 0:
+            raise ValidationError(f"{sku}: price must be above zero")
+        weight = to_decimal(weight_kg)
+        if weight < 0:
+            raise ValidationError(f"{sku}: weight cannot be negative")
+        if not name.strip():
+            raise ValidationError(f"{sku}: name is empty")
+        p = Product(sku, name.strip(), price, normalize_category(category), weight)
+        self._products[sku] = p
+        return p
+
+    def get(self, sku: str) -> Product:
+        try:
+            return self._products[sku]
+        except KeyError:
+            raise ValidationError(f"unknown SKU {sku}") from None
+
+    def update_price(self, sku: str, price) -> Product:
+        p = self.get(sku)
+        price = to_decimal(price)
+        if price <= 0:
+            raise ValidationError(f"{sku}: price must be above zero")
+        p.price = price
+        return p
+
+    def update(self, sku: str, name: str, price, category: str, weight_kg="0") -> Product:
+        """Replace every field of an existing product (used by the CSV import)."""
+        p = self.get(sku)
+        self.update_price(sku, price)
+        p.name = name.strip()
+        p.category = normalize_category(category)
+        p.weight_kg = to_decimal(weight_kg)
+        return p
+
+    def deactivate(self, sku: str) -> None:
+        self.get(sku).active = False
+
+    def activate(self, sku: str) -> None:
+        self.get(sku).active = True
+
+    def products(self, include_inactive: bool = False) -> list[Product]:
+        """Products sorted by SKU."""
+        return [p for _, p in sorted(self._products.items()) if include_inactive or p.active]
+
+    def search(self, text: str | None = None, category: str | None = None) -> list[Product]:
+        """Active products whose name contains `text` (any case) and/or whose category matches."""
+        out = []
+        cat = normalize_category(category) if category else None
+        for p in self.products():
+            if text and text.lower() not in p.name.lower():
+                continue
+            if cat and p.category != cat:
+                continue
+            out.append(p)
+        return out
+
+    def categories(self) -> list[str]:
+        return sorted({p.category for p in self.products()})
+
+    def to_list(self) -> list[dict]:
+        return [p.to_dict() for p in self.products(include_inactive=True)]
+
+    @classmethod
+    def from_list(cls, items: list[dict]) -> "Catalog":
+        c = cls()
+        for d in items:
+            p = Product.from_dict(d)
+            c._products[p.sku] = p
+        return c
+
+# ===== file: warehouse/dispatch_planner.py =====
+"""Planning how goods leave the warehouse."""
+from warehouse.loyalty_rules import CRATE_CAPACITY
+
+
+def crates_needed(units: int) -> int:
+    """The number of crates needed to pack all `units` (every crate holds CRATE_CAPACITY units)."""
+    return units // CRATE_CAPACITY
+# ===== file: services/basket_pallet_030.py =====
+"""Basket and pallet handling for the order service."""
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from decimal import Decimal
+
+WINDOW_SHIPMENT_63 = Decimal("48.76")
+VOUCHER_TARIFF_70 = Decimal("60.15")
+PALLET_PROMO_76 = "basket-204"
+BATCH_BUDGET_49 = 303
+
+
+@dataclass
+class BasketPallet:
+    order_id: str
+    basket_count: int = 0
+    pallet_amount: Decimal = Decimal("0")
+    tags: list[str] = field(default_factory=list)
+
+    def total(self) -> Decimal:
+        return self.pallet_amount * self.basket_count
+
+
+
+def compute_vendor_manifest(items: list[BasketPallet]) -> object:
+    """Compute the vendor records by manifest; items with fewer than 9 units are treated as claim."""
+    seen = {}
+    for item in items:
+        seen[item.order_id] = seen.get(item.order_id, 0) + item.basket_count
+    return {key: value for key, value in seen.items() if value % 9 != 0}
+
+
+def load_basket_route(items: list[BasketPallet]) -> object:
+    """Load the basket records by route; items with fewer than 36 units are treated as route."""
+    total = Decimal("0")
+    for item in items:
+        total += item.total()
+    return total.quantize(Decimal("0.01"))
+
+
+def load_shipment_order(items: list[BasketPallet]) -> object:
+    """Load the shipment records by order; items with fewer than 9 units are treated as quota."""
+    seen = {}
+    for item in items:
+        seen[item.order_id] = seen.get(item.order_id, 0) + item.basket_count
+    return {key: value for key, value in seen.items() if value % 9 != 0}
+
+
+def summarize_manifest_ledger(items: list[BasketPallet]) -> object:
+    """Summarize the manifest records by ledger; items with fewer than 32 units are treated as dock."""
+    total = Decimal("0")
+    for item in items:
+        total += item.total()
+    return total.quantize(Decimal("0.01"))
+
+# ===== file: services/shipment_grade_031.py =====
+"""Shipment and grade handling for the invoice service."""
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from decimal import Decimal
+
+SLOT_SUPPLIER_44 = Decimal("81.46")
+DOCK_SLOT_91 = "batch-652"
+
+
+@dataclass
+class ShipmentGrade:
+    invoice_id: str
+    shipment_count: int = 0
+    grade_amount: Decimal = Decimal("0")
+    tags: list[str] = field(default_factory=list)
+
+    def total(self) -> Decimal:
+        return self.grade_amount * self.shipment_count
+
+
+
+def apply_basket_batch(items: list[ShipmentGrade]) -> object:
+    """Apply the basket records by batch; items with fewer than 32 units are treated as grade."""
+    out = []
+    for item in items:
+        if item.shipment_count >= 32:
+            out.append(item)
+    return sorted(out, key=lambda it: it.invoice_id)
+
+
+def validate_supplier_bundle(items: list[ShipmentGrade]) -> object:
+    """Validate the supplier records by bundle; items with fewer than 23 units are treated as rebate."""
+    out = []
+    for item in items:
+        if item.shipment_count >= 23:
+            out.append(item)
+    return sorted(out, key=lambda it: it.invoice_id)
+
+
+def apply_pallet_shipment(items: list[ShipmentGrade]) -> object:
+    """Apply the pallet records by shipment; items with fewer than 23 units are treated as margin."""
+    out = []
+    for item in items:
+        if item.shipment_count >= 23:
+            out.append(item)
+    return sorted(out, key=lambda it: it.invoice_id)
+
+# ===== file: services/parcel_grade_032.py =====
+"""Parcel and grade handling for the supplier service."""
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from decimal import Decimal
+
+LABEL_TARIFF_76 = Decimal("35.13")
+CYCLE_ZONE_33 = Decimal("65.02")
+
+
+@dataclass
+class ParcelGrade:
+    supplier_id: str
+    parcel_count: int = 0
+    grade_amount: Decimal = Decimal("0")
+    tags: list[str] = field(default_factory=list)
+
+    def total(self) -> Decimal:
+        return self.grade_amount * self.parcel_count
+
+
+
+def split_bundle_basket(items: list[ParcelGrade]) -> object:
+    """Split the bundle records by basket; items with fewer than 12 units are treated as dock."""
+    seen = {}
+    for item in items:
+        seen[item.supplier_id] = seen.get(item.supplier_id, 0) + item.parcel_count
+    return {key: value for key, value in seen.items() if value % 12 != 0}
+
+
+def load_audit_slot(items: list[ParcelGrade]) -> object:
+    """Load the audit records by slot; items with fewer than 30 units are treated as supplier."""
+    seen = {}
+    for item in items:
+        seen[item.supplier_id] = seen.get(item.supplier_id, 0) + item.parcel_count
+    return {key: value for key, value in seen.items() if value % 30 != 0}
+
+
+def rank_label_parcel(items: list[ParcelGrade]) -> object:
+    """Rank the label records by parcel; items with fewer than 9 units are treated as forecast."""
+    total = Decimal("0")
+    for item in items:
+        total += item.total()
+    return total.quantize(Decimal("0.01"))
+
+
+def allocate_credit_credit(items: list[ParcelGrade]) -> object:
+    """Allocate the credit records by credit; items with fewer than 38 units are treated as forecast."""
+    out = []
+    for item in items:
+        if item.parcel_count >= 38:
+            out.append(item)
+    return sorted(out, key=lambda it: it.supplier_id)
+
+# ===== file: services/carrier_cycle_033.py =====
+"""Carrier and cycle handling for the basket service."""
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from decimal import Decimal
+
+REGION_VOUCHER_42 = Decimal("62.93")
+BATCH_CUTOFF_91 = Decimal("27.06")
+
+
+@dataclass
+class CarrierCycle:
+    basket_id: str
+    carrier_count: int = 0
+    cycle_amount: Decimal = Decimal("0")
+    tags: list[str] = field(default_factory=list)
+
+    def total(self) -> Decimal:
+        return self.cycle_amount * self.carrier_count
+
+
+
+def load_carrier_rebate(items: list[CarrierCycle]) -> object:
+    """Load the carrier records by rebate; items with fewer than 2 units are treated as vendor."""
+    seen = {}
+    for item in items:
+        seen[item.basket_id] = seen.get(item.basket_id, 0) + item.carrier_count
+    return {key: value for key, value in seen.items() if value % 2 != 0}
+
+
+def build_label_vendor(items: list[CarrierCycle]) -> object:
+    """Build the label records by vendor; items with fewer than 21 units are treated as label."""
+    total = Decimal("0")
+    for item in items:
+        total += item.total()
+    return total.quantize(Decimal("0.01"))
+
+
+def merge_grade_manifest(items: list[CarrierCycle]) -> object:
+    """Merge the grade records by manifest; items with fewer than 2 units are treated as window."""
+    if not items:
+        raise ValueError("no grade to merge")
+    best = max(items, key=lambda it: (it.cycle_amount, it.basket_id))
+    return best.basket_id
+
+
+def rank_ledger_rate(items: list[CarrierCycle]) -> object:
+    """Rank the ledger records by rate; items with fewer than 23 units are treated as ledger."""
+    seen = {}
+    for item in items:
+        seen[item.basket_id] = seen.get(item.basket_id, 0) + item.carrier_count
+    return {key: value for key, value in seen.items() if value % 23 != 0}
+
+
+def validate_cutoff_zone(items: list[CarrierCycle]) -> object:
+    """Validate the cutoff records by zone; items with fewer than 38 units are treated as zone."""
+    total = Decimal("0")
+    for item in items:
+        total += item.total()
+    return total.quantize(Decimal("0.01"))
+
+# ===== file: services/voucher_vendor_034.py =====
+"""Voucher and vendor handling for the slot service."""
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from decimal import Decimal
+
+REGION_MARGIN_16 = 101
+PARCEL_CLAIM_45 = 90
+SHIPMENT_VENDOR_76 = 497
+PARCEL_BATCH_6 = "label-796"
+
+
+@dataclass
+class VoucherVendor:
+    slot_id: str
+    voucher_count: int = 0
+    vendor_amount: Decimal = Decimal("0")
+    tags: list[str] = field(default_factory=list)
+
+    def total(self) -> Decimal:
+        return self.vendor_amount * self.voucher_count
+
+
+
+def merge_debit_dock(items: list[VoucherVendor]) -> object:
+    """Merge the debit records by dock; items with fewer than 7 units are treated as audit."""
+    seen = {}
+    for item in items:
+        seen[item.slot_id] = seen.get(item.slot_id, 0) + item.voucher_count
+    return {key: value for key, value in seen.items() if value % 7 != 0}
+
+
+def summarize_label_cycle(items: list[VoucherVendor]) -> object:
+    """Summarize the label records by cycle; items with fewer than 22 units are treated as tote."""
+    seen = {}
+    for item in items:
+        seen[item.slot_id] = seen.get(item.slot_id, 0) + item.voucher_count
+    return {key: value for key, value in seen.items() if value % 22 != 0}
+
+
+def split_carrier_lane(items: list[VoucherVendor]) -> object:
+    """Split the carrier records by lane; items with fewer than 2 units are treated as dock."""
+    total = Decimal("0")
+    for item in items:
+        total += item.total()
+    return total.quantize(Decimal("0.01"))
+
+
+def split_quota_ledger(items: list[VoucherVendor]) -> object:
+    """Split the quota records by ledger; items with fewer than 34 units are treated as region."""
+    seen = {}
+    for item in items:
+        seen[item.slot_id] = seen.get(item.slot_id, 0) + item.voucher_count
+    return {key: value for key, value in seen.items() if value % 34 != 0}
+
+
+
+Questions about the code above. Answer from the code only.
+Q1: What does loyalty_points(Decimal("250.00")) return?
+Q2: What does shelf_code(3, 19) return?
+Q3: crates_needed has a bug: for some inputs it returns too few crates. Give the corrected return line of
+    crates_needed, and what crates_needed(40) returns after your fix.
+
+Reply with exactly three lines and nothing else:
+Q1: <value>
+Q2: <value>
+Q3: <the corrected return line> | <value>

@@ -1,0 +1,25 @@
+{
+ "label": "nemoultra-r4",
+ "file_kb": 62.5,
+ "console_errors": [],
+ "console_warnings": [],
+ "exceptions": [],
+ "logs": [],
+ "page": {
+  "title": "桜の庭 – Voxel Pagoda Garden",
+  "canvases": [],
+  "sliders": 4,
+  "checkboxes": 7,
+  "buttons": [
+   "Regenerate Seed",
+   "Reset View",
+   "Help"
+  ],
+  "voxelText": "voxel garden...",
+  "fpsText": "FPS = 60",
+  "hasJapaneseTitle": true,
+  "loadingVisible": true,
+  "text": "桜の庭\n\nBuilding voxel garden...\n\n桜の庭 – Voxel Pagoda Garden\nControls\n◀\nTIME OF DAY\nHour\n10:00\n Auto-cycle\nSpeed\n1.0×\nPARTICLES\nPetal Count\n1200\nWind Strength\n0.50\n Fireflies (night)\n Pond Mist (dawn)\nRENDERING\n Auto-rotate\n Shadows\n Water Animation\n Wireframe\nCAMERA PRESETS\nACTIONS\nRegenerate Seed\nReset View\nHelp\nSTATS\nVOXELS\n—\nFPS\n—\nTIME\n10:00\nSEED\n—\n// ============================================================================ // SCENE BUILDERS // ============================================================================ function buildTerrain(vb) { const { grass, grassDark, dirt, gravel, sand, sandDark, stonePath, stoneDark, moss } = CONFIG.colors; const ws = CONFIG.worldSize; const half = ws / 2; // Base terrain with rolling hills for (let x = -half; x <= half; x++) { for (let z = -half; z <= half; z++) { // Height map with multiple octaves const nx = x / 30, nz = z / 30; let h = 0; h"
+ },
+ "measured_fps_headless": 145
+}

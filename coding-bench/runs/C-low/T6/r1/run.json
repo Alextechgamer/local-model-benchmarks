@@ -1,0 +1,93 @@
+{
+ "model": "C",
+ "prompt_variant": "default",
+ "reasoning_effort": "low",
+ "task": "T6",
+ "rep": 1,
+ "t0": 1794261075.0103166,
+ "t1": 1794263775.7552953,
+ "wall_s": 2700.7,
+ "exit_code": 1,
+ "killed": "time limit",
+ "prompt_chars": 1067,
+ "cmd": [
+  "C:\\Users\\user\\AppData\\Roaming\\npm\\node_modules\\opencode-ai\\bin\\opencode.exe",
+  "run",
+  "--pure",
+  "-m",
+  "strata/deepseek",
+  "--format",
+  "json",
+  "<README on stdin>"
+ ],
+ "steps": 5,
+ "tool_calls": 11,
+ "tokens": {
+  "input": 10818,
+  "output": 610,
+  "reasoning": 0,
+  "cache_read": 32984,
+  "cache_write": 0
+ },
+ "ran_visible_tests": false,
+ "pytest_calls": 0,
+ "tokens_per_step": [
+  {
+   "output": 110,
+   "reasoning": 0
+  },
+  {
+   "output": 209,
+   "reasoning": 0
+  },
+  {
+   "output": 168,
+   "reasoning": 0
+  },
+  {
+   "output": 123,
+   "reasoning": 0
+  }
+ ],
+ "peeked_outside": [],
+ "errors": [],
+ "final_text": "",
+ "engine_idle_wait_s": 35.0,
+ "nan_drops": 0,
+ "thinking_per_request": [
+  74,
+  18,
+  23,
+  26,
+  25,
+  9452
+ ],
+ "thinking_total": 9618,
+ "thinking_max": 9452,
+ "engine": {
+  "turns": 6,
+  "prompt_tokens": 64972,
+  "cached_tokens": 50786,
+  "fresh_tokens": 14186,
+  "first_turn": {
+   "prompt": 846,
+   "cached": 538,
+   "fresh": 308,
+   "prompt_ms": 43288,
+   "prompt_tok_s": 7.1,
+   "generated": 81,
+   "gen_ms": 32043,
+   "decode_tok_s": 2.53,
+   "drafts_kept": 38,
+   "drafts": 66
+  },
+  "ttft_first_s": 43.3,
+  "ttft_median_s": 56.2,
+  "ttft_total_s": 304.6,
+  "output_tokens": 10146,
+  "decode_tok_s": 4.24,
+  "drafts_kept": 5294,
+  "drafts": 7373
+ },
+ "disk_E_read_GB": 2478.1
+}

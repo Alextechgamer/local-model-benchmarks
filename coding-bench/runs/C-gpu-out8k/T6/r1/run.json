@@ -1,0 +1,102 @@
+{
+ "model": "C-gpu",
+ "prompt_variant": "default",
+ "reasoning_effort": "medium",
+ "output_limit": 8192,
+ "task": "T6",
+ "rep": 1,
+ "t0": 1794270048.0303378,
+ "t1": 1794272749.019942,
+ "wall_s": 2701.0,
+ "exit_code": 1,
+ "killed": "time limit",
+ "prompt_chars": 1067,
+ "cmd": [
+  "C:\\Users\\user\\AppData\\Roaming\\npm\\node_modules\\opencode-ai\\bin\\opencode.exe",
+  "run",
+  "--pure",
+  "-m",
+  "strata/deepseek",
+  "--format",
+  "json",
+  "<README on stdin>"
+ ],
+ "nan_restarts": [],
+ "restart_s_total": 0,
+ "wall_s_excl_restarts": 2701.0,
+ "steps": 6,
+ "tool_calls": 12,
+ "tokens": {
+  "input": 13091,
+  "output": 6736,
+  "reasoning": 0,
+  "cache_read": 43349,
+  "cache_write": 0
+ },
+ "ran_visible_tests": false,
+ "pytest_calls": 0,
+ "tokens_per_step": [
+  {
+   "output": 95,
+   "reasoning": 0
+  },
+  {
+   "output": 107,
+   "reasoning": 0
+  },
+  {
+   "output": 213,
+   "reasoning": 0
+  },
+  {
+   "output": 178,
+   "reasoning": 0
+  },
+  {
+   "output": 6143,
+   "reasoning": 0
+  }
+ ],
+ "peeked_outside": [],
+ "errors": [],
+ "final_text": "I'll start by exploring the codebase, especially `reports.py` and the fixtures.",
+ "engine_idle_wait_s": 35.0,
+ "nan_drops": 0,
+ "thinking_per_request": [
+  96,
+  6,
+  0,
+  14,
+  34,
+  5484,
+  4747
+ ],
+ "thinking_total": 10381,
+ "thinking_max": 5484,
+ "engine": {
+  "turns": 7,
+  "prompt_tokens": 83252,
+  "cached_tokens": 69010,
+  "fresh_tokens": 14242,
+  "first_turn": {
+   "prompt": 846,
+   "cached": 0,
+   "fresh": 846,
+   "prompt_ms": 93879,
+   "prompt_tok_s": 9.0,
+   "generated": 105,
+   "gen_ms": 33110,
+   "decode_tok_s": 3.17,
+   "drafts_kept": 48,
+   "drafts": 71
+  },
+  "ttft_first_s": 93.9,
+  "ttft_median_s": 62.8,
+  "ttft_total_s": 373.8,
+  "output_tokens": 11593,
+  "decode_tok_s": 4.99,
+  "drafts_kept": 6159,
+  "drafts": 8581
+ },
+ "disk_E_read_GB": 2460.6
+}

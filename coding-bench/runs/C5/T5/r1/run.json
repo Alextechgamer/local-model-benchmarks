@@ -1,0 +1,63 @@
+{
+ "model": "C5",
+ "prompt_variant": "default",
+ "task": "T5",
+ "rep": 1,
+ "t0": 1794238249.56067,
+ "t1": 1794239339.7580674,
+ "wall_s": 1090.2,
+ "exit_code": 0,
+ "killed": null,
+ "prompt_chars": 1063,
+ "cmd": [
+  "C:\\Users\\user\\AppData\\Roaming\\npm\\node_modules\\opencode-ai\\bin\\opencode.exe",
+  "run",
+  "--pure",
+  "-m",
+  "strata/deepseek",
+  "--format",
+  "json",
+  "<README on stdin>"
+ ],
+ "steps": 11,
+ "tool_calls": 17,
+ "tokens": {
+  "input": 13168,
+  "output": 3588,
+  "reasoning": 0,
+  "cache_read": 180072,
+  "cache_write": 0
+ },
+ "ran_visible_tests": true,
+ "pytest_calls": 2,
+ "peeked_outside": [],
+ "errors": [],
+ "final_text": "Cause: `refund_amount` charged tax on the pre-discount line net, not the post-discount taxable amount. For the ticket, the first 2 chairs refunded 68.85 + 7.25% of 76.50 = 74.40 instead of 68.85 + 7.25% of 68.85 = 73.84.\n\nFixed in `inventory_service/orders.py:105` (`percent_of(taxable, rate)`), added a regression test. All 31 tests pass.",
+ "nan_drops": 0,
+ "engine": {
+  "turns": 12,
+  "prompt_tokens": 194100,
+  "cached_tokens": 180931,
+  "fresh_tokens": 13169,
+  "first_turn": {
+   "prompt": 860,
+   "cached": 859,
+   "fresh": 1,
+   "prompt_ms": 695,
+   "prompt_tok_s": 1.4,
+   "generated": 152,
+   "gen_ms": 36808,
+   "decode_tok_s": 4.13,
+   "drafts_kept": 72,
+   "drafts": 107
+  },
+  "ttft_first_s": 0.7,
+  "ttft_median_s": 11.1,
+  "ttft_total_s": 277.9,
+  "output_tokens": 3740,
+  "decode_tok_s": 4.66,
+  "drafts_kept": 2494,
+  "drafts": 3169
+ },
+ "disk_E_read_GB": 982.5
+}

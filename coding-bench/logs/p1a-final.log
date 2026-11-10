@@ -1,0 +1,13 @@
+﻿>>> A-v045-final
+{"event": "start", "pid": 32312, "free_gb": 50.4, "cmd": ["C:\\Users\\user\\Strata\\.venv\\Scripts\\python.exe", "E:\\strata-tests\\coding-bench\\tools\\strata-v0.1.45\\serve\\server.py", "--engine", "strata", "--config", "E:\\strata-tests\\coding-bench\\configs\\tune\\A-v045-final.json", "--port", "8080"], "env": [], "tag": "A-v045-final", "t": 1792481409.2286217}
+{"event": "loaded", "load_s": 20.5, "tag": "A-v045-final", "t": 1792481429.770264}
+warmup {'error': None, 'prompt_tokens': 16139, 'completion_tokens': 512, 'ttft_s': 10.527902126312256}
+{"run": 1, "error": null, "prompt_tokens": 16136, "completion_tokens": 512, "ttft_s": 9.935662508010864, "prompt_tps": 1624.0487221652272, "output_tps": 68.08497064371002, "peak_vram_dedicated_mb": 18756.0, "peak_vram_shared_mb": 28582.0}
+{"run": 2, "error": null, "prompt_tokens": 16140, "completion_tokens": 512, "ttft_s": 9.9581139087677, "prompt_tps": 1620.788850967994, "output_tps": 68.21472535137617, "peak_vram_dedicated_mb": 18756.0, "peak_vram_shared_mb": 28582.0}
+{"run": 3, "error": null, "prompt_tokens": 16140, "completion_tokens": 512, "ttft_s": 9.983734130859375, "prompt_tps": 1616.629588533595, "output_tps": 69.62358392144272, "peak_vram_dedicated_mb": 18756.0, "peak_vram_shared_mb": 28582.0}
+SUMMARY {"tag": "A-v045-final", "n": 3, "median_ttft_s": 9.9581139087677, "median_prompt_tps": 1620.788850967994, "median_output_tps": 68.21472535137617, "max_vram_shared_mb": 28582.0, "max_vram_dedicated_mb": 18756.0, "completion_tokens": [512, 512, 512], "errors": []}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "A-v045-final", "rep": 1, "wall_s": 9.5, "smoke_version": 2}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "A-v045-final", "rep": 2, "wall_s": 9.0, "smoke_version": 2}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "A-v045-final", "rep": 3, "wall_s": 10.2, "smoke_version": 2}
+SMOKE A-v045-final {"tool_call": 3, "tool_typed": 3, "tool_result": 3, "code": 3} of 3
+{"event": "kept", "pid": 32312, "tag": "A-v045-final", "t": 1792481529.7902944}

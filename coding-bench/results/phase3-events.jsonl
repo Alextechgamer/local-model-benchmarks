@@ -1,0 +1,68 @@
+{"event": "cache_check", "model": "B", "usage": {"completion_tokens": 3, "prompt_tokens": 2735, "total_tokens": 2738, "prompt_tokens_details": {"cached_tokens": 2711}}, "t": 1792483612.6813452}
+{"event": "power_start", "session": "p3-A-20261020-010736", "model": "A", "t": 1792483656.3868651}
+{"event": "power_start", "session": "p3-A-20261020-011324", "model": "A", "t": 1792484005.1977024}
+{"event": "server_ready", "model": "A", "pid": 26516, "load_s": 21.6, "free_gb": 50.9, "t": 1792484027.4447925}
+{"event": "cache_check", "model": "A", "usage": {"prompt_tokens": 2750, "completion_tokens": 3, "total_tokens": 2753, "prompt_tokens_details": {"cached_tokens": 2723}}, "t": 1792484031.380666}
+{"event": "run_start", "model": "A", "task": "T1", "rep": 1, "power_session": "p3-A-20261020-011324", "t": 1792484031.7399912}
+{"event": "run_end", "model": "A", "task": "T1", "rep": 1, "t": 1792484083.695196}
+{"event": "run_start", "model": "A", "task": "T2", "rep": 1, "power_session": "p3-A-20261020-011324", "t": 1792484083.9911222}
+{"event": "run_end", "model": "A", "task": "T2", "rep": 1, "t": 1792484676.3140905}
+{"event": "run_start", "model": "A", "task": "T3", "rep": 1, "power_session": "p3-A-20261020-011324", "t": 1792484676.7456038}
+{"event": "run_end", "model": "A", "task": "T3", "rep": 1, "t": 1792484763.8766446}
+{"event": "run_start", "model": "A", "task": "T4", "rep": 1, "power_session": "p3-A-20261020-011324", "t": 1792484764.2006578}
+{"event": "run_end", "model": "A", "task": "T4", "rep": 1, "t": 1792484851.1379247}
+{"event": "run_start", "model": "A", "task": "T5", "rep": 1, "power_session": "p3-A-20261020-011324", "t": 1792484851.4138746}
+{"event": "run_end", "model": "A", "task": "T5", "rep": 1, "t": 1792484928.3407722}
+{"event": "run_start", "model": "A", "task": "T6", "rep": 1, "power_session": "p3-A-20261020-011324", "t": 1792484928.683894}
+{"event": "run_end", "model": "A", "task": "T6", "rep": 1, "t": 1792485398.245483}
+{"event": "run_start", "model": "A", "task": "T1", "rep": 2, "power_session": "p3-A-20261020-011324", "t": 1792485398.6632442}
+{"event": "run_end", "model": "A", "task": "T1", "rep": 2, "t": 1792485455.6277401}
+{"event": "run_start", "model": "A", "task": "T2", "rep": 2, "power_session": "p3-A-20261020-011324", "t": 1792485455.9374835}
+{"event": "run_end", "model": "A", "task": "T2", "rep": 2, "t": 1792485763.0526154}
+{"event": "run_start", "model": "A", "task": "T3", "rep": 2, "power_session": "p3-A-20261020-011324", "t": 1792485763.4573975}
+{"event": "run_end", "model": "A", "task": "T3", "rep": 2, "t": 1792485855.4615104}
+{"event": "run_start", "model": "A", "task": "T4", "rep": 2, "power_session": "p3-A-20261020-011324", "t": 1792485855.7644565}
+{"event": "run_end", "model": "A", "task": "T4", "rep": 2, "t": 1792485927.7073195}
+{"event": "run_start", "model": "A", "task": "T5", "rep": 2, "power_session": "p3-A-20261020-011324", "t": 1792485928.0297723}
+{"event": "run_end", "model": "A", "task": "T5", "rep": 2, "t": 1792486024.9802976}
+{"event": "run_start", "model": "A", "task": "T6", "rep": 2, "power_session": "p3-A-20261020-011324", "t": 1792486025.3220854}
+{"event": "run_end", "model": "A", "task": "T6", "rep": 2, "t": 1792486364.75895}
+{"event": "server_stopped", "pid": 26516, "t": 1792486364.8501942}
+{"event": "power_stop", "session": "p3-A-20261020-011324", "model": "A", "t": 1792486365.130575}
+{"event": "power_start", "session": "p3-B-20261020-015341", "model": "B", "t": 1792486421.7663574}
+{"event": "server_ready", "model": "B", "pid": 23920, "load_s": 10.9, "free_gb": 50.9, "t": 1792486433.734361}
+{"event": "cache_check", "model": "B", "usage": {"completion_tokens": 3, "prompt_tokens": 2735, "total_tokens": 2738, "prompt_tokens_details": {"cached_tokens": 2711}}, "t": 1792486438.6606717}
+{"event": "run_start", "model": "B", "task": "T1", "rep": 1, "power_session": "p3-B-20261020-015341", "t": 1792486439.0247114}
+{"event": "run_end", "model": "B", "task": "T1", "rep": 1, "t": 1792486621.009769}
+{"event": "run_start", "model": "B", "task": "T2", "rep": 1, "power_session": "p3-B-20261020-015341", "t": 1792486622.0533104}
+{"event": "run_end", "model": "B", "task": "T2", "rep": 1, "t": 1792487484.5090473}
+{"event": "run_start", "model": "B", "task": "T3", "rep": 1, "power_session": "p3-B-20261020-015341", "t": 1792487485.8463104}
+{"event": "run_end", "model": "B", "task": "T3", "rep": 1, "t": 1792487577.9403374}
+{"event": "run_start", "model": "B", "task": "T4", "rep": 1, "power_session": "p3-B-20261020-015341", "t": 1792487578.526619}
+{"event": "run_end", "model": "B", "task": "T4", "rep": 1, "t": 1792487755.502078}
+{"event": "run_start", "model": "B", "task": "T5", "rep": 1, "power_session": "p3-B-20261020-015341", "t": 1792487756.7209573}
+{"event": "run_end", "model": "B", "task": "T5", "rep": 1, "t": 1792487833.6343312}
+{"event": "run_start", "model": "B", "task": "T6", "rep": 1, "power_session": "p3-B-20261020-015341", "t": 1792487834.279822}
+{"event": "run_end", "model": "B", "task": "T6", "rep": 1, "t": 1792488199.0055387}
+{"event": "run_start", "model": "B", "task": "T1", "rep": 2, "power_session": "p3-B-20261020-015341", "t": 1792488200.088962}
+{"event": "run_end", "model": "B", "task": "T1", "rep": 2, "t": 1792488261.9945943}
+{"event": "run_start", "model": "B", "task": "T2", "rep": 2, "power_session": "p3-B-20261020-015341", "t": 1792488262.7635984}
+{"event": "run_end", "model": "B", "task": "T2", "rep": 2, "t": 1792488440.1206267}
+{"event": "run_start", "model": "B", "task": "T3", "rep": 2, "power_session": "p3-B-20261020-015341", "t": 1792488440.9471276}
+{"event": "run_end", "model": "B", "task": "T3", "rep": 2, "t": 1792488532.8917809}
+{"event": "run_start", "model": "B", "task": "T4", "rep": 2, "power_session": "p3-B-20261020-015341", "t": 1792488533.5510404}
+{"event": "run_end", "model": "B", "task": "T4", "rep": 2, "t": 1792488630.4539044}
+{"event": "run_start", "model": "B", "task": "T5", "rep": 2, "power_session": "p3-B-20261020-015341", "t": 1792488631.7033243}
+{"event": "run_end", "model": "B", "task": "T5", "rep": 2, "t": 1792488718.6652427}
+{"event": "run_start", "model": "B", "task": "T6", "rep": 2, "power_session": "p3-B-20261020-015341", "t": 1792488719.5901177}
+{"event": "run_end", "model": "B", "task": "T6", "rep": 2, "t": 1792489124.2501612}
+{"event": "server_stopped", "pid": 23920, "t": 1792489124.3384242}
+{"event": "power_stop", "session": "p3-B-20261020-015341", "model": "B", "t": 1792489124.598809}
+{"event": "p4_power_start", "session": "p4-A-20261020-023914", "model": "A", "t": 1792489155.1487718}
+{"event": "server_ready", "model": "A", "pid": 31008, "load_s": 21.5, "free_gb": 50.7, "t": 1792489177.4353914}
+{"event": "server_stopped", "pid": 31008, "t": 1792491111.749141}
+{"event": "p4_power_stop", "session": "p4-A-20261020-023914", "model": "A", "t": 1792491112.0358708}
+{"event": "p4_power_start", "session": "p4-B-20261020-031222", "model": "B", "t": 1792491142.5953238}
+{"event": "server_ready", "model": "B", "pid": 6908, "load_s": 11.0, "free_gb": 51.0, "t": 1792491154.3174038}
+{"event": "server_stopped", "pid": 6908, "t": 1792492806.0125117}
+{"event": "p4_power_stop", "session": "p4-B-20261020-031222", "model": "B", "t": 1792492806.2800586}

@@ -1,0 +1,32 @@
+{
+ "label": "nemolight-r4",
+ "file_kb": 46.4,
+ "console_errors": [
+  "Failed to load resource: the server responded with a status of 404 ()"
+ ],
+ "console_warnings": [],
+ "exceptions": [],
+ "logs": [],
+ "page": {
+  "title": "桜の庭 – Voxel Pagoda Garden",
+  "canvases": [],
+  "sliders": 4,
+  "checkboxes": 6,
+  "buttons": [
+   "×",
+   "Overview",
+   "Pagoda",
+   "Pond",
+   "Torii",
+   "Blossoms",
+   "Regenerate Seed",
+   "Reset View"
+  ],
+  "voxelText": "Voxels: loading...",
+  "fpsText": null,
+  "hasJapaneseTitle": true,
+  "loadingVisible": true,
+  "text": "桜の庭 – Voxel Pagoda Garden\n桜の庭 -\nVoxels: loading...\nFPS: -\nTime:\n06:00\nTime of Day\nPlay\nPetal Density\nWind\nToggles\nShadows\nFireflies\nWater\nWireframe\nPreset Camera\nOverview Pagoda Pond Torii Blossoms\nRegenerate Seed Reset View\nSpace: Auto-rotate | 1-5: Preset cameras | N: Day/Night toggle\n桜の庭 – Voxel Pagoda Garden\nLoading garden..."
+ },
+ "measured_fps_headless": 144
+}

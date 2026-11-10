@@ -1,0 +1,42 @@
+{
+ "label": "local2",
+ "file_kb": 52.3,
+ "console_errors": [
+  "THREE.Object3D.add: object not an instance of THREE.Object3D. Vector3"
+ ],
+ "console_warnings": [],
+ "exceptions": [
+  "TypeError: Cannot read properties of undefined (reading 'elements')\n    at Vector3.setFromMatrixPosition (https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js:4486:15)\n    at DirectionalLightShadow.updateMatrices (https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js:44321:17)\n    at WebGLShadowMap.render (https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js:2242"
+ ],
+ "logs": [
+  "[桜の庭] voxels built: 16500 (seed 20261005) target 16500"
+ ],
+ "page": {
+  "title": "桜の庭 – Voxel Pagoda Garden",
+  "canvases": [
+   [
+    1600,
+    900
+   ]
+  ],
+  "sliders": 4,
+  "checkboxes": 6,
+  "buttons": [
+   "▾",
+   "?",
+   "Overview",
+   "Pagoda",
+   "Pond",
+   "Torii",
+   "Blossoms",
+   "Regenerate seed",
+   "Reset view"
+  ],
+  "voxelText": "voxels 16500",
+  "fpsText": "fps 0",
+  "hasJapaneseTitle": true,
+  "loadingVisible": false,
+  "text": "桜の庭\n– Voxel Pagoda Garden –\n桜の庭 · controls\n▾\nTIME OF DAY\nhour\ncycle speed\nplay\nATMOSPHERE\npetal density\nwind strength\nTOGGLES\nauto-rotate\nshadows\nfireflies\nwater ripple\nwireframe\nhelp\n?\nCAMERAS\nOverview\nPagoda\nPond\nTorii\nBlossoms\nGARDEN\nRegenerate seed\nReset view\nvoxels 16500 · fps 0 · time 00:00"
+ },
+ "measured_fps_headless": 135
+}

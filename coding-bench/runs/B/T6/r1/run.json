@@ -1,0 +1,35 @@
+{
+ "model": "B",
+ "task": "T6",
+ "rep": 1,
+ "t0": 1792487834.5390823,
+ "t1": 1792488189.6182888,
+ "wall_s": 355.1,
+ "exit_code": 0,
+ "killed": null,
+ "prompt_chars": 1067,
+ "cmd": [
+  "C:\\Users\\user\\AppData\\Roaming\\npm\\node_modules\\opencode-ai\\bin\\opencode.exe",
+  "run",
+  "--pure",
+  "-m",
+  "llamacpp/qwen38-27b",
+  "--format",
+  "json",
+  "<README on stdin>"
+ ],
+ "steps": 15,
+ "tool_calls": 21,
+ "tokens": {
+  "input": 29312,
+  "output": 16563,
+  "reasoning": 0,
+  "cache_read": 362592,
+  "cache_write": 0
+ },
+ "ran_visible_tests": true,
+ "pytest_calls": 4,
+ "peeked_outside": [],
+ "errors": [],
+ "final_text": "Done. Wrote `tests/test_reports.py` with 32 tests covering all six functions:\n\n- **`units_sold`**: no refund, partial, multiple refunds, fully refunded, unknown SKU\n- **`sales_by_category`**: kept-units math, status filtering (reserved/cancelled excluded), zero-kept lines omitted, category sorting, half-up rounding, empty input\n- **`top_products`**: ranking, tie-break by SKU, fully-refunded exclusion, `n` semantics (0, negative, larger than SKU count, default 3)\n- **`inventory_valuation`**: active-only vs `include_inactive`, on-hand (not available), unknown SKUs ignored, rounding, empty\n- **`low_stock_report`**: threshold boundary (`<=`), available-vs-on-hand, line format, SKU ordering, inactive products omitted\n- **`average_order_value`**: empty \u2192 0.00, status filtering, refund subtraction, denominator, rounding\n\nAll 62 tests pass, and a 27-mutation self-check confirmed every injected bug (status-set changes, operator flips, removed rounding/sorting, threshold bound, on_hand/available swap, `n` off-by-one, etc.) kills at least one test. No modules were modified."
+}

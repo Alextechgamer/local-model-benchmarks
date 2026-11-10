@@ -1,0 +1,76 @@
+{
+ "sample_tokens_per_generated_module": 523.4,
+ "real_code_tokens": 12873,
+ "prompts": {
+  "8k": {
+   "target_tokens": 8000,
+   "tokens": 8146,
+   "files": 13,
+   "fact_depth": {
+    "fact_10": 0.106,
+    "fact_50": 0.462,
+    "fact_90": 0.923
+   }
+  },
+  "32k": {
+   "target_tokens": 32000,
+   "tokens": 31809,
+   "files": 51,
+   "fact_depth": {
+    "fact_10": 0.131,
+    "fact_50": 0.5,
+    "fact_90": 0.913
+   }
+  },
+  "64k": {
+   "target_tokens": 64000,
+   "tokens": 63924,
+   "files": 110,
+   "fact_depth": {
+    "fact_10": 0.094,
+    "fact_50": 0.469,
+    "fact_90": 0.897
+   }
+  },
+  "96k": {
+   "target_tokens": 95000,
+   "tokens": 94737,
+   "files": 166,
+   "fact_depth": {
+    "fact_10": 0.089,
+    "fact_50": 0.49,
+    "fact_90": 0.903
+   }
+  },
+  "128k": {
+   "target_tokens": 127000,
+   "tokens": 125166,
+   "files": 222,
+   "fact_depth": {
+    "fact_10": 0.092,
+    "fact_50": 0.481,
+    "fact_90": 0.899
+   }
+  },
+  "200k": {
+   "target_tokens": 199000,
+   "tokens": 198658,
+   "files": 356,
+   "fact_depth": {
+    "fact_10": 0.104,
+    "fact_50": 0.49,
+    "fact_90": 0.901
+   }
+  },
+  "250k": {
+   "target_tokens": 249000,
+   "tokens": 248912,
+   "files": 448,
+   "fact_depth": {
+    "fact_10": 0.092,
+    "fact_50": 0.48,
+    "fact_90": 0.887
+   }
+  }
+ }
+}

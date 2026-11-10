@@ -1,0 +1,43 @@
+{
+ "label": "luna-r2",
+ "file_kb": 38.9,
+ "console_errors": [],
+ "console_warnings": [],
+ "exceptions": [],
+ "logs": [
+  "Pagoda garden: 16,902 voxels (seed 2026)"
+ ],
+ "page": {
+  "title": "桜の庭 – Voxel Pagoda Garden",
+  "canvases": [
+   [
+    1600,
+    900
+   ]
+  ],
+  "sliders": 4,
+  "checkboxes": 0,
+  "buttons": [
+   "⌃",
+   "▶",
+   "Auto-rotate",
+   "Shadows",
+   "Fireflies",
+   "Water ripple",
+   "Wireframe",
+   "Overview",
+   "Pagoda",
+   "Pond",
+   "Torii",
+   "Blossoms",
+   "↻  Regenerate seed",
+   "Reset view"
+  ],
+  "voxelText": "VOXELS\n144",
+  "fpsText": "FPS\n16",
+  "hasJapaneseTitle": true,
+  "loadingVisible": false,
+  "text": "桜の庭\nVOXEL PAGODA GARDEN\n✿GARDEN CONTROLS\n⌃\n16,902\nVOXELS\n144\nFPS\n16:00\nGARDEN TIME\nTime of day\n16:00\n▶\nMidnight\nSunrise · Sunset\nMidnight\nCycle speed\n1×\nPetal density\n1,000\nWind strength\n0.55\nATMOSPHERE & SCENE\nAuto-rotate\nShadows\nFireflies\nWater ripple\nWireframe\nLOOK AROUND\nOverview\nPagoda\nPond\nTorii\nBlossoms\n↻  Regenerate seed\nReset view\nSeed 2026 · 16,902 voxels\n? Help\nDRAG TO ORBIT   ·   SCROLL TO EXPLORE"
+ },
+ "measured_fps_headless": 145
+}

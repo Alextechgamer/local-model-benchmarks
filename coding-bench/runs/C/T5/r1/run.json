@@ -1,0 +1,63 @@
+{
+ "model": "C",
+ "prompt_variant": "default",
+ "task": "T5",
+ "rep": 1,
+ "t0": 1794229064.7454748,
+ "t1": 1794230565.0052564,
+ "wall_s": 1500.3,
+ "exit_code": 0,
+ "killed": null,
+ "prompt_chars": 1063,
+ "cmd": [
+  "C:\\Users\\user\\AppData\\Roaming\\npm\\node_modules\\opencode-ai\\bin\\opencode.exe",
+  "run",
+  "--pure",
+  "-m",
+  "strata/deepseek",
+  "--format",
+  "json",
+  "<README on stdin>"
+ ],
+ "steps": 13,
+ "tool_calls": 19,
+ "tokens": {
+  "input": 14811,
+  "output": 3547,
+  "reasoning": 0,
+  "cache_read": 220388,
+  "cache_write": 0
+ },
+ "ran_visible_tests": true,
+ "pytest_calls": 3,
+ "peeked_outside": [],
+ "errors": [],
+ "final_text": "Cause: `refund_amount` taxed the pre-order-discount `net` rather than the discounted `taxable` amount, over-refunding orders with tier/coupon discounts (`inventory_service/orders.py:105`).\n\nFixed to `percent_of(taxable, rate)`, and added a regression test for the ticket example. Now each $73.84 refund sums to $147.68; `python -m pytest` passes (31 tests).",
+ "nan_drops": 0,
+ "engine": {
+  "turns": 14,
+  "prompt_tokens": 236059,
+  "cached_tokens": 220926,
+  "fresh_tokens": 15133,
+  "first_turn": {
+   "prompt": 860,
+   "cached": 538,
+   "fresh": 322,
+   "prompt_ms": 49785,
+   "prompt_tok_s": 6.5,
+   "generated": 426,
+   "gen_ms": 113163,
+   "decode_tok_s": 3.76,
+   "drafts_kept": 273,
+   "drafts": 359
+  },
+  "ttft_first_s": 49.8,
+  "ttft_median_s": 27.6,
+  "ttft_total_s": 443.5,
+  "output_tokens": 3973,
+  "decode_tok_s": 3.8,
+  "drafts_kept": 2588,
+  "drafts": 3426
+ },
+ "disk_E_read_GB": 1408.9
+}

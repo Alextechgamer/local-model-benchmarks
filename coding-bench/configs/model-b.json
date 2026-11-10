@@ -1,0 +1,17 @@
+{
+  "model": "B: Qwen3.8-27B IQ4_XS (bartowski) on llama.cpp",
+  "locked": "2026-10-20, after Phase 1 (results/tuning.json)",
+  "exe": "E:\\strata-tests\\coding-bench\\tools\\llama-b11748-vulkan-x64\\llama-server.exe",
+  "build": "llama.cpp b11748 (official release, win-vulkan-x64)",
+  "port": 8090,
+  "env": {},
+  "args": [
+    "-m", "C:\\models\\qwen38\\Qwen\\Qwen3.8-27B\\Qwen3.8-27B-IQ4_XS.gguf",
+    "-ngl", "99", "-c", "98304", "-np", "1", "-fa", "on",
+    "-ctk", "q4_0", "-ctv", "q4_0", "-b", "2048", "-ub", "512", "-fit", "off",
+    "--spec-type", "draft-mtp", "--spec-draft-n-max", "3", "--spec-draft-sampling", "probabilistic",
+    "--temp", "1.0", "--top-k", "20", "--top-p", "0.95", "--min-p", "0", "--presence-penalty", "0", "--repeat-penalty", "1.0",
+    "--reasoning-format", "deepseek", "--reasoning-budget", "8192", "--reasoning-effort", "medium",
+    "--host", "127.0.0.1", "--port", "8090"
+  ]
+}

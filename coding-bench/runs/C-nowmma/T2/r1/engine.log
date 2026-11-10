@@ -1,0 +1,11 @@
+ds4 slots: saved a 15948-token conversation (0.04 GB in RAM in 0.0 s); 3 in RAM, 23 in C:\Users\user\AppData\Local\Strata\launch\ds4-slots
+maya ds4 serve: prompt 1558 tokens = 0 reused + 1558 read in 62556 ms (24.9 tok/s), 89 generated in 63469 ms (1.40 tok/s); CPU lane 10.9% of the experts
+maya ds4 serve: drafts 43 of 62 kept; per position (kept / reached): 1: 22/28 79% 2: 11/15 73% 3: 5/7 71% 4: 3/3 100% 5: 2/3 67%
+ds4 slots: saved a 1647-token conversation (0.02 GB in RAM in 0.0 s); 4 in RAM, 23 in C:\Users\user\AppData\Local\Strata\launch\ds4-slots
+ds4 slots: took back a 5836-token conversation at token 5836 of 29035 from the folder (0.1 s); 1013 new tokens to read
+maya ds4 serve: prompt 6849 tokens = 5836 reused + 1013 read in 52088 ms (19.4 tok/s), 61 generated in 18910 ms (3.23 tok/s); CPU lane 10.7% of the experts
+maya ds4 serve: drafts 48 of 64 kept; per position (kept / reached): 1: 12/13 92% 2: 10/12 83% 3: 9/10 90% 4: 9/9 100% 5: 8/9 89%
+maya ds4 serve: prompt 7276 tokens = 6910 reused + 366 read in 24109 ms (15.2 tok/s), 66 generated in 10057 ms (6.56 tok/s); CPU lane 10.7% of the experts
+maya ds4 serve: drafts 52 of 56 kept; per position (kept / reached): 1: 12/12 100% 2: 11/12 92% 3: 10/11 91% 4: 10/10 100% 5: 9/9 100%
+maya ds4 serve: prompt 20275 tokens = 7342 reused + 12933 read in 77671 ms (166.5 tok/s), 83 generated in 25265 ms (3.29 tok/s); CPU lane 8.5% of the experts
+maya ds4 serve: drafts 19 of 46 kept; per position (kept / reached): 1: 9/18 50% 2: 5/6 83% 3: 3/4 75% 4: 2/3 67% 5: 0/2 0%

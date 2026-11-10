@@ -1,0 +1,60 @@
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "B-backend-vk10752", "rep": 1, "wall_s": 11.4}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "B-backend-vk10752", "rep": 2, "wall_s": 13.0}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "B-backend-vk10752", "rep": 3, "wall_s": 16.5}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "B-backend-vk11748", "rep": 1, "wall_s": 14.2}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "B-backend-vk11748", "rep": 2, "wall_s": 10.4}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "B-backend-vk11748", "rep": 3, "wall_s": 10.7}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "B-backend-rocm11748", "rep": 1, "wall_s": 10.9}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "B-backend-rocm11748", "rep": 2, "wall_s": 12.5}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "B-backend-rocm11748", "rep": 3, "wall_s": 10.4}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "B-backend-lemonade1350", "rep": 1, "wall_s": 13.1}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "B-backend-lemonade1350", "rep": 2, "wall_s": 12.2}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "B-backend-lemonade1350", "rep": 3, "wall_s": 11.5}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "B-backend-bee048", "rep": 1, "wall_s": 10.0}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "B-backend-bee048", "rep": 2, "wall_s": 11.4}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "B-backend-bee048", "rep": 3, "wall_s": 10.4}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "B-kv-q8_0", "rep": 1, "wall_s": 13.0}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "B-kv-q8_0", "rep": 2, "wall_s": 20.3}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "B-kv-q8_0", "rep": 3, "wall_s": 13.4}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "B-mtp-n3-prob", "rep": 1, "wall_s": 9.5}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "B-mtp-n3-prob", "rep": 2, "wall_s": 9.6}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "B-mtp-n3-prob", "rep": 3, "wall_s": 14.7}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "B-mtp-n3-nommvq", "rep": 1, "wall_s": 11.7}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "B-mtp-n3-nommvq", "rep": 2, "wall_s": 11.2}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "B-mtp-n3-nommvq", "rep": 3, "wall_s": 11.7}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "B-mtp-n3-ngram", "rep": 1, "wall_s": 10.4}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "B-mtp-n3-ngram", "rep": 2, "wall_s": 10.8}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "B-mtp-n3-ngram", "rep": 3, "wall_s": 12.1}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "B-rocm98k-ub256-n3", "rep": 1, "wall_s": 12.9}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "B-rocm98k-ub256-n3", "rep": 2, "wall_s": 12.8}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "B-rocm98k-ub256-n3", "rep": 3, "wall_s": 10.3}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code_error": "AssertionError: ", "code": false, "tag": "A-v039-base", "rep": 1, "wall_s": 10.4}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code_error": "AssertionError: ", "code": false, "tag": "A-v039-base", "rep": 2, "wall_s": 10.9}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code_error": "AssertionError: ", "code": false, "tag": "A-v039-base", "rep": 3, "wall_s": 11.5}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code_error": "AssertionError: ", "code_failed_line": "                                           ^^^^^^^^^^^^^^^^^^^^^^^", "code_answer": "```python\ndef merge_intervals(intervals):\n    if not intervals:\n        return []\n    intervals.sort(key=lambda x: x[0])\n    merged = [list(intervals[0])]\n    for start, end in intervals[1:]:\n        if start <= merged[-1][1]:\n            merged[-1][1] = max(merged[-1][1], end)\n        else:\n            merged.append([start, end])\n    return merged\n```", "code": false, "tag": "A-v045-base", "rep": 1, "wall_s": 10.4}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code_error": "AssertionError: ", "code_failed_line": "                                           ^^^^^^^^^^^^^^^^^^^^^^^", "code_answer": "```python\ndef merge_intervals(intervals):\n    if not intervals:\n        return []\n    intervals.sort(key=lambda x: x[0])\n    merged = [intervals[0][:]]\n    for start, end in intervals[1:]:\n        if start <= merged[-1][1]:\n            merged[-1][1] = max(merged[-1][1], end)\n        else:\n            merged.append([start, end])\n    return merged\n```", "code": false, "tag": "A-v045-base", "rep": 2, "wall_s": 12.6}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code_error": "AssertionError: ", "code_failed_line": "                                           ^^^^^^^^^^^^^^^^^^^^^^^", "code_answer": "```python\ndef merge_intervals(intervals):\n    if not intervals:\n        return []\n    intervals.sort(key=lambda x: x[0])\n    merged = [list(intervals[0])]\n    for start, end in intervals[1:]:\n        if start <= merged[-1][1]:\n            merged[-1][1] = max(merged[-1][1], end)\n        else:\n            merged.append([start, end])\n    return merged\n```", "code": false, "tag": "A-v045-base", "rep": 3, "wall_s": 9.6}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "A-v045-r1792", "rep": 1, "wall_s": 15.1, "smoke_version": 2}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "A-v045-r1792", "rep": 2, "wall_s": 10.0, "smoke_version": 2}
+{"tool_call": true, "tool_result": true, "tool_typed": false, "code": true, "tag": "A-v045-r1792", "rep": 3, "wall_s": 14.5, "smoke_version": 2}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "A-v045-r1792-kvq4", "rep": 1, "wall_s": 13.9, "smoke_version": 2}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "A-v045-r1792-kvq4", "rep": 2, "wall_s": 16.0, "smoke_version": 2}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "A-v045-r1792-kvq4", "rep": 3, "wall_s": 13.9, "smoke_version": 2}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "A-v045-r1792-minp07", "rep": 1, "wall_s": 10.4, "smoke_version": 2}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "A-v045-r1792-minp07", "rep": 2, "wall_s": 11.8, "smoke_version": 2}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "A-v045-r1792-minp07", "rep": 3, "wall_s": 9.1, "smoke_version": 2}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "A-v045-r1792-adaptasync", "rep": 1, "wall_s": 11.0, "smoke_version": 2}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "A-v045-r1792-adaptasync", "rep": 2, "wall_s": 13.1, "smoke_version": 2}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "A-v045-r1792-adaptasync", "rep": 3, "wall_s": 16.1, "smoke_version": 2}
+{"tool_call": false, "tool_result": true, "tool_typed": true, "code": true, "tag": "A-v045-r1792-cpushare", "rep": 1, "wall_s": 14.5, "smoke_version": 2}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "A-v045-r1792-cpushare", "rep": 2, "wall_s": 10.7, "smoke_version": 2}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "A-v045-r1792-cpushare", "rep": 3, "wall_s": 12.8, "smoke_version": 2}
+{"tool_call": true, "tool_result": false, "tool_typed": true, "code": true, "tag": "A-v045-r1792-coupled", "rep": 1, "wall_s": 10.8, "smoke_version": 2}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "A-v045-r1792-coupled", "rep": 2, "wall_s": 16.6, "smoke_version": 2}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "A-v045-r1792-coupled", "rep": 3, "wall_s": 15.1, "smoke_version": 2}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "A-v045-final", "rep": 1, "wall_s": 9.5, "smoke_version": 2}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "A-v045-final", "rep": 2, "wall_s": 9.0, "smoke_version": 2}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "A-v045-final", "rep": 3, "wall_s": 10.2, "smoke_version": 2}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "B-final", "rep": 1, "wall_s": 12.8, "smoke_version": 2}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "B-final", "rep": 2, "wall_s": 15.1, "smoke_version": 2}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "B-final", "rep": 3, "wall_s": 16.8, "smoke_version": 2}

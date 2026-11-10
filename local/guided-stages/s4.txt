@@ -1,0 +1,9 @@
+STAGE 4 of 5 - light, time and particles. Read pagoda.html first, then add:
+- A time-of-day value `timeOfDay` (0-24 hours, start at 10) and a function applyTime(t) that drives: the sun position on an arc and its colour/intensity, hemisphere and low ambient light, background colour, fog colour and density (scene.fog), and the intensity of all warm point lights. Noon is bright blue sky; sunrise (about 6) and sunset (about 18) have orange tones; night (20-5) is deep blue and dark but still readable.
+- Directional sun with shadows: PCFSoft, 2048x2048 shadow map, shadow camera bounds fitted to the garden; voxels cast and receive shadows.
+- Warm THREE.PointLight inside the pagoda (2-3 lights) and one at each stone lantern, intensity high at night and near zero at noon. Emissive window/lantern voxels must visibly glow at night.
+- Stars: about 1,500 THREE.Points on a large sky sphere, opacity 0 by day and 1 at night.
+- Falling cherry petals: 1,200 petals (THREE.Points with a pink round sprite drawn on a canvas texture, size about 0.6, or a small InstancedMesh), spawned over the whole garden up to height 35, drifting down with wind sway and rotation, respawning at the top when they reach the ground. Variables `petalCount` (active count) and `windStrength` control them. They must be clearly visible by day.
+- Fireflies: 150 softly pulsing yellow-green points near the pond and grass, visible only at night.
+- A faint mist layer over the pond around dawn (5-8 h): a few large transparent planes or points, opacity tied to time.
+No per-frame allocations in the animation loop (reuse vectors and typed arrays).

@@ -1,0 +1,15 @@
+ds4 slots: saved a 24192-token conversation (0.05 GB in RAM in 0.0 s); 4 in RAM, 32 in C:\Users\user\AppData\Local\Strata\launch\ds4-slots
+ds4 slots: took back a 538-token conversation at token 538 of 1647 from the folder (0.0 s); 308 new tokens to read
+maya ds4 serve: prompt 846 tokens = 538 reused + 308 read in 35229 ms (8.7 tok/s), 137 generated in 35998 ms (3.81 tok/s); CPU lane 32.3% of the experts
+maya ds4 serve: drafts 69 of 95 kept; per position (kept / reached): 1: 33/42 79% 2: 21/25 84% 3: 8/11 73% 4: 5/6 83% 5: 2/3 67%
+ds4 slots: took back a 5836-token conversation at token 5836 of 27212 from the folder (0.1 s); 301 new tokens to read
+maya ds4 serve: prompt 6137 tokens = 5836 reused + 301 read in 33696 ms (8.9 tok/s), 62 generated in 19628 ms (3.16 tok/s); CPU lane 32.2% of the experts
+maya ds4 serve: drafts 49 of 63 kept; per position (kept / reached): 1: 12/13 92% 2: 10/12 83% 3: 9/10 90% 4: 9/9 100% 5: 9/9 100%
+maya ds4 serve: prompt 6558 tokens = 6199 reused + 359 read in 24638 ms (14.6 tok/s), 105 generated in 18603 ms (5.64 tok/s); CPU lane 32.1% of the experts
+maya ds4 serve: drafts 86 of 92 kept; per position (kept / reached): 1: 19/19 100% 2: 19/19 100% 3: 18/18 100% 4: 16/18 89% 5: 14/16 88%
+maya ds4 serve: prompt 8313 tokens = 6663 reused + 1650 read in 54622 ms (30.2 tok/s), 255 generated in 36942 ms (6.90 tok/s); CPU lane 31.4% of the experts
+maya ds4 serve: drafts 208 of 225 kept; per position (kept / reached): 1: 45/46 98% 2: 44/45 98% 3: 42/43 98% 4: 40/42 95% 5: 37/38 97%
+maya ds4 serve: prompt 15963 tokens = 8567 reused + 7396 read in 57738 ms (128.1 tok/s), 122 generated in 30176 ms (4.04 tok/s); CPU lane 28.4% of the experts
+maya ds4 serve: drafts 94 of 124 kept; per position (kept / reached): 1: 24/28 86% 2: 22/23 96% 3: 18/21 86% 4: 16/17 94% 5: 14/16 88%
+maya ds4 serve: prompt 19230 tokens = 16085 reused + 3145 read in 57559 ms (54.6 tok/s), 9259 generated in 2294976 ms (4.03 tok/s); CPU lane 39.7% of the experts
+maya ds4 serve: drafts 5035 of 6947 kept; per position (kept / reached): 1: 2111/2775 76% 2: 1215/1480 82% 3: 802/901 89% 4: 548/601 91% 5: 359/400 90%

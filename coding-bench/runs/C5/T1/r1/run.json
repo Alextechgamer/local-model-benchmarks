@@ -1,0 +1,63 @@
+{
+ "model": "C5",
+ "prompt_variant": "default",
+ "task": "T1",
+ "rep": 1,
+ "t0": 1794236780.6206057,
+ "t1": 1794237310.7258868,
+ "wall_s": 530.1,
+ "exit_code": 0,
+ "killed": null,
+ "prompt_chars": 691,
+ "cmd": [
+  "C:\\Users\\user\\AppData\\Roaming\\npm\\node_modules\\opencode-ai\\bin\\opencode.exe",
+  "run",
+  "--pure",
+  "-m",
+  "strata/deepseek",
+  "--format",
+  "json",
+  "<README on stdin>"
+ ],
+ "steps": 7,
+ "tool_calls": 15,
+ "tokens": {
+  "input": 13534,
+  "output": 1391,
+  "reasoning": 0,
+  "cache_read": 84588,
+  "cache_write": 0
+ },
+ "ran_visible_tests": true,
+ "pytest_calls": 2,
+ "peeked_outside": [],
+ "errors": [],
+ "final_text": "All 30 tests pass.\n\nFixed bugs:\n- `Inventory.release` returned early inside the loop (`inventory_service/inventory.py:89`).\n- CSV import treated an empty optional `weight_kg` as invalid instead of using its default (`inventory_service/csv_io.py:60`).\n- Bulk discount used `>` instead of `>=` for the 10-unit threshold (`inventory_service/pricing.py:90`).",
+ "nan_drops": 0,
+ "engine": {
+  "turns": 8,
+  "prompt_tokens": 98863,
+  "cached_tokens": 85126,
+  "fresh_tokens": 13737,
+  "first_turn": {
+   "prompt": 741,
+   "cached": 538,
+   "fresh": 203,
+   "prompt_ms": 26435,
+   "prompt_tok_s": 7.7,
+   "generated": 59,
+   "gen_ms": 19560,
+   "decode_tok_s": 3.02,
+   "drafts_kept": 33,
+   "drafts": 39
+  },
+  "ttft_first_s": 26.4,
+  "ttft_median_s": 26.4,
+  "ttft_total_s": 225.4,
+  "output_tokens": 1450,
+  "decode_tok_s": 4.88,
+  "drafts_kept": 1075,
+  "drafts": 1261
+ },
+ "disk_E_read_GB": 521.8
+}

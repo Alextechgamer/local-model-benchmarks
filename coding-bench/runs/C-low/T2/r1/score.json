@@ -1,0 +1,37 @@
+{
+ "task": "T2",
+ "source_dir": "E:\\strata-dsv41\\pagoda\\coding-bench\\runs\\C-low\\T2\\r1\\work",
+ "label": "C-low-T2-r1",
+ "scored_at": "2026-11-09T13:51:12.572878",
+ "package_changed": true,
+ "tests_changed": false,
+ "visible": {
+  "total": 32,
+  "passed": 30,
+  "failed": 2,
+  "returncode": 1,
+  "timed_out": false,
+  "seconds": 1.2
+ },
+ "hidden": {
+  "total": 28,
+  "passed": 23,
+  "failed": 5,
+  "task_total": 12,
+  "task_passed": 9,
+  "keep_total": 16,
+  "keep_passed": 14,
+  "failures": [
+   "test_keep_pricing_totals[C2-items3-FLAT5-100.01]",
+   "test_keep_pricing_totals[C5-items4-BIG25-193.29]",
+   "test_task_breakdown_in_jpy_with_fixed_coupon",
+   "test_task_cli_quote_and_order_in_eur",
+   "test_task_export_has_currency_column"
+  ],
+  "returncode": 1,
+  "timed_out": false,
+  "seconds": 0.9,
+  "output_tail": ":\n        from inventory_service.pricing import compute_order_total\n        cat, *_ = world()\n>       b = compute_order_total(lines(cat, (\"KIT-0002\", 2), (\"TOO-0001\", 1)), cat, customer(\"C6\"), \"FLAT5\",\n                                currency=\"JPY\")\n\ntest_t2_currency.py:50: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n..\\model\\inventory_service\\pricing.py:133: in compute_order_total\n    subtotal = convert(subtotal, code)\n               ^^^^^^^^^^^^^^^^^^^^^^^\n..\\model\\inventory_service\\currency.py:27: in convert\n    code = normalize(currency)\n           ^^^^^^^^^^^^^^^^^^^\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\ncurrency = 'FLAT5'\n\n    def normalize(currency) -> str:\n        \"\"\"Return the upper-case currency code, accepting surrounding spaces.\"\"\"\n        code = str(currency).strip().upper()\n        if code not in RATES:\n>           raise UnsupportedCurrency(f\"unsupported currency {currency!r}\")\nE           inventory_service.currency.UnsupportedCurrency: unsupported currency 'FLAT5'\n\n..\\model\\inventory_service\\currency.py:21: UnsupportedCurrency\n____________________ test_task_cli_quote_and_order_in_eur _____________________\n\ntmp_path = WindowsPath('C:/Users/user/AppData/Local/Temp/pytest-of-user/pytest-308/test_task_cli_quote_and_order_0')\ncapsys = <_pytest.capture.CaptureFixture object at 0x00000258398DB750>\n\n    def test_task_cli_quote_and_order_in_eur(tmp_path, capsys):\n        from inventory_service.cli import main\n        st = _cli_state(tmp_path)\n        assert main([\"--state\", st, \"quote\", \"C3\", \"LIT-0001:3\", \"--currency\", \"EUR\"]) == 0\n        out = capsys.readouterr().out\n>       assert \"total: 96.21 EUR\" in out and \"tax: 13.89 EUR\" in out\nE       AssertionError: assert ('total: 96.21 EUR' in 'subtotal: 96.00\\nline_discounts: 7.68\\ntier_discount: 8.83\\ncoupon_discount: 0.00\\ntaxable: 79.49\\ntax: 15.10\\nshipping: 9.99\\ntotal: 104.58\\n')\n\ntest_t2_currency.py:120: AssertionError\n____________________ test_task_export_has_currency_column _____________________\n\n    def test_task_export_has_currency_column():\n        from inventory_service.csv_io import export_orders\n        cat, inv, svc, _ = world()\n        svc.create_order(\"C4\", [(\"TOO-0002\", 2)])\n>       svc.create_order(\"C6\", [(\"KIT-0002\", 2), (\"TOO-0001\", 1)], \"FLAT5\", currency=\"JPY\")\n\ntest_t2_currency.py:137: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n..\\model\\inventory_service\\orders.py:59: in create_order\n    breakdown = compute_order_total(lines, self.catalog, customer, coupon, currency=currency)\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n..\\model\\inventory_service\\pricing.py:133: in compute_order_total\n    subtotal = convert(subtotal, code)\n               ^^^^^^^^^^^^^^^^^^^^^^^\n..\\model\\inventory_service\\currency.py:27: in convert\n    code = normalize(currency)\n           ^^^^^^^^^^^^^^^^^^^\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\ncurrency = 'FLAT5'\n\n    def normalize(currency) -> str:\n        \"\"\"Return the upper-case currency code, accepting surrounding spaces.\"\"\"\n        code = str(currency).strip().upper()\n        if code not in RATES:\n>           raise UnsupportedCurrency(f\"unsupported currency {currency!r}\")\nE           inventory_service.currency.UnsupportedCurrency: unsupported currency 'FLAT5'\n\n..\\model\\inventory_service\\currency.py:21: UnsupportedCurrency\n=========================== short test summary info ===========================\nFAILED test_keep_regress.py::test_keep_pricing_totals[C2-items3-FLAT5-100.01]\nFAILED test_keep_regress.py::test_keep_pricing_totals[C5-items4-BIG25-193.29]\nFAILED test_t2_currency.py::test_task_breakdown_in_jpy_with_fixed_coupon - in...\nFAILED test_t2_currency.py::test_task_cli_quote_and_order_in_eur - AssertionE...\nFAILED test_t2_currency.py::test_task_export_has_currency_column - inventory_...\n5 failed, 23 passed in 0.32s\n"
+ },
+ "score": 0.8214285714285714
+}

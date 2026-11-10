@@ -1,0 +1,463 @@
+[strata] sampling defaults from the config: temperature=1.0, top_p=0.95, top_k=20, min_p=0.0
+loading the model (the first start takes a minute or two) ...
+[strata] starting the engine: reading the model's weights ...
+[strata] loading the experts into RAM (about 30 GB) and locking part of them for the GPU.
+         YOUR PC CAN BE SLOW OR STOP RESPONDING FOR 1-3 MINUTES NOW - this is normal.
+         Please wait and don't close this window; the browser opens when it is ready.
+[strata] experts loaded: 23.42 GiB at 2.88 GiB/s (18 s so far)
+[strata] filling the GPU's expert cache (5247 experts, 9.97 GiB of VRAM) ...
+[strata] almost ready ...
+[strata] thinking budget: 8192 tokens (reasoning_budget_tokens; a request can set its own)
+ready: http://127.0.0.1:8080/v1  (OpenAI: /v1/chat/completions, Anthropic: /v1/messages, context 262144 tokens)
+       open http://127.0.0.1:8080/ in a browser to chat; close this window to stop the model
+[strata] done: 2 tokens in 0 s (27.0 tok/s) (stop, cancel=False), expert cache 60.4% hit (+22.8% of the routed experts over PCIe)
+[strata] done: 3 tokens in 0 s (23.3 tok/s) (stop, cancel=False), expert cache 64.4% hit (+20.7% of the routed experts over PCIe)
+[strata] reading the prompt: 8,181 of 8,186 tokens, 6 s so far
+[strata] thinking: 46 of budget 2048 (max 4096) tokens, 61.2 tok/s, 7 s
+[strata] thinking: 112 of budget 2048 (max 4096) tokens, 63.4 tok/s, 8 s
+[strata] thinking: 186 of budget 2048 (max 4096) tokens, 66.3 tok/s, 9 s
+[strata] thinking: 267 of budget 2048 (max 4096) tokens, 69.5 tok/s, 10 s
+[strata] thinking: 356 of budget 2048 (max 4096) tokens, 73.5 tok/s, 11 s
+[strata] thinking: 424 of budget 2048 (max 4096) tokens, 72.0 tok/s, 12 s
+[strata] thinking: 508 of budget 2048 (max 4096) tokens, 73.7 tok/s, 13 s
+[strata] thinking: 597 of budget 2048 (max 4096) tokens, 75.5 tok/s, 14 s
+[strata] done: 662 tokens in 14 s (76.7 tok/s) (stop, cancel=False), expert cache 86.7% hit (+9.2% of the routed experts over PCIe)
+[strata] reading the prompt: 8,186 of 8,191 tokens, 5 s so far
+[strata] thinking: 56 of budget 2048 (max 4096) tokens, 72.8 tok/s, 6 s
+[strata] thinking: 144 of budget 2048 (max 4096) tokens, 79.4 tok/s, 7 s
+[strata] thinking: 240 of budget 2048 (max 4096) tokens, 84.9 tok/s, 8 s
+[strata] thinking: 323 of budget 2048 (max 4096) tokens, 84.3 tok/s, 9 s
+[strata] thinking: 392 of budget 2048 (max 4096) tokens, 80.7 tok/s, 10 s
+[strata] thinking: 474 of budget 2048 (max 4096) tokens, 80.8 tok/s, 11 s
+[strata] thinking: 551 of budget 2048 (max 4096) tokens, 80.0 tok/s, 12 s
+[strata] done: 592 tokens in 13 s (80.4 tok/s) (stop, cancel=False), expert cache 90.1% hit (+6.7% of the routed experts over PCIe)
+[strata] reading the prompt: 8,181 of 8,186 tokens, 5 s so far
+[strata] thinking: 58 of budget 2048 (max 4096) tokens, 75.0 tok/s, 6 s
+[strata] thinking: 157 of budget 2048 (max 4096) tokens, 87.7 tok/s, 7 s
+[strata] thinking: 259 of budget 2048 (max 4096) tokens, 91.6 tok/s, 8 s
+[strata] thinking: 342 of budget 2048 (max 4096) tokens, 88.8 tok/s, 9 s
+[strata] thinking: 431 of budget 2048 (max 4096) tokens, 88.2 tok/s, 10 s
+[strata] thinking: 501 of budget 2048 (max 4096) tokens, 84.9 tok/s, 11 s
+[strata] thinking: 565 of budget 2048 (max 4096) tokens, 81.8 tok/s, 12 s
+[strata] thinking: 638 of budget 2048 (max 4096) tokens, 80.5 tok/s, 13 s
+[strata] thinking: 724 of budget 2048 (max 4096) tokens, 80.9 tok/s, 14 s
+[strata] done: 775 tokens in 15 s (80.5 tok/s) (stop, cancel=False), expert cache 89.3% hit (+7.3% of the routed experts over PCIe)
+[strata] reading the prompt: 16,384 of 31,854 tokens, 10 s so far
+[strata] reading the prompt: 31,849 of 31,854 tokens, 20 s so far
+[strata] thinking: 40 of budget 2048 (max 4096) tokens, 62.3 tok/s, 21 s
+[strata] thinking: 125 of budget 2048 (max 4096) tokens, 75.5 tok/s, 22 s
+[strata] thinking: 205 of budget 2048 (max 4096) tokens, 77.0 tok/s, 23 s
+[strata] thinking: 302 of budget 2048 (max 4096) tokens, 81.9 tok/s, 24 s
+[strata] thinking: 377 of budget 2048 (max 4096) tokens, 79.7 tok/s, 25 s
+[strata] thinking: 446 of budget 2048 (max 4096) tokens, 77.7 tok/s, 26 s
+[strata] thinking: 514 of budget 2048 (max 4096) tokens, 75.9 tok/s, 27 s
+[strata] thinking: 604 of budget 2048 (max 4096) tokens, 77.5 tok/s, 28 s
+[strata] thinking: 668 of budget 2048 (max 4096) tokens, 75.8 tok/s, 29 s
+[strata] thinking: 757 of budget 2048 (max 4096) tokens, 77.1 tok/s, 30 s
+[strata] answering: 830 of max 4096 tokens, 76.6 tok/s, 31 s
+[strata] done: 843 tokens in 31 s (76.8 tok/s) (stop, cancel=False), expert cache 89.5% hit (+7.2% of the routed experts over PCIe)
+[strata] reading the prompt: 16,384 of 31,852 tokens, 10 s so far
+[strata] reading the prompt: 31,847 of 31,852 tokens, 19 s so far
+[strata] thinking: 40 of budget 2048 (max 4096) tokens, 62.1 tok/s, 20 s
+[strata] thinking: 120 of budget 2048 (max 4096) tokens, 72.8 tok/s, 21 s
+[strata] thinking: 210 of budget 2048 (max 4096) tokens, 77.5 tok/s, 23 s
+[strata] thinking: 311 of budget 2048 (max 4096) tokens, 83.4 tok/s, 24 s
+[strata] thinking: 390 of budget 2048 (max 4096) tokens, 81.7 tok/s, 25 s
+[strata] thinking: 466 of budget 2048 (max 4096) tokens, 80.6 tok/s, 26 s
+[strata] thinking: 535 of budget 2048 (max 4096) tokens, 78.7 tok/s, 27 s
+[strata] thinking: 615 of budget 2048 (max 4096) tokens, 78.7 tok/s, 28 s
+[strata] thinking: 696 of budget 2048 (max 4096) tokens, 78.9 tok/s, 29 s
+[strata] done: 765 tokens in 30 s (79.0 tok/s) (stop, cancel=False), expert cache 88.6% hit (+8.0% of the routed experts over PCIe)
+[strata] reading the prompt: 16,384 of 31,852 tokens, 10 s so far
+[strata] reading the prompt: 31,847 of 31,852 tokens, 19 s so far
+[strata] thinking: 46 of budget 2048 (max 4096) tokens, 69.0 tok/s, 21 s
+[strata] thinking: 128 of budget 2048 (max 4096) tokens, 75.4 tok/s, 22 s
+[strata] thinking: 206 of budget 2048 (max 4096) tokens, 75.6 tok/s, 23 s
+[strata] thinking: 300 of budget 2048 (max 4096) tokens, 80.1 tok/s, 24 s
+[strata] thinking: 372 of budget 2048 (max 4096) tokens, 78.1 tok/s, 25 s
+[strata] thinking: 429 of budget 2048 (max 4096) tokens, 74.3 tok/s, 26 s
+[strata] thinking: 508 of budget 2048 (max 4096) tokens, 75.0 tok/s, 27 s
+[strata] thinking: 579 of budget 2048 (max 4096) tokens, 74.1 tok/s, 28 s
+[strata] thinking: 652 of budget 2048 (max 4096) tokens, 73.8 tok/s, 29 s
+[strata] answering: 724 of max 4096 tokens, 73.3 tok/s, 30 s
+[strata] done: 757 tokens in 30 s (73.5 tok/s) (stop, cancel=False), expert cache 89.7% hit (+7.1% of the routed experts over PCIe)
+[strata] reading the prompt: 16,384 of 63,967 tokens, 10 s so far
+[strata] reading the prompt: 16,384 of 63,967 tokens, 20 s so far
+[strata] reading the prompt: 32,768 of 63,967 tokens, 30 s so far
+[strata] reading the prompt: 49,152 of 63,967 tokens, 41 s so far
+[strata] thinking: 33 of budget 2048 (max 4096) tokens, 60.3 tok/s, 42 s
+[strata] thinking: 100 of budget 2048 (max 4096) tokens, 64.6 tok/s, 43 s
+[strata] thinking: 188 of budget 2048 (max 4096) tokens, 73.6 tok/s, 44 s
+[strata] thinking: 283 of budget 2048 (max 4096) tokens, 78.3 tok/s, 45 s
+[strata] thinking: 365 of budget 2048 (max 4096) tokens, 78.8 tok/s, 46 s
+[strata] thinking: 453 of budget 2048 (max 4096) tokens, 80.3 tok/s, 47 s
+[strata] thinking: 530 of budget 2048 (max 4096) tokens, 79.2 tok/s, 48 s
+[strata] thinking: 601 of budget 2048 (max 4096) tokens, 78.0 tok/s, 49 s
+[strata] thinking: 677 of budget 2048 (max 4096) tokens, 77.7 tok/s, 50 s
+[strata] thinking: 749 of budget 2048 (max 4096) tokens, 77.1 tok/s, 51 s
+[strata] answering: 826 of max 4096 tokens, 76.6 tok/s, 52 s
+[strata] done: 833 tokens in 52 s (76.9 tok/s) (stop, cancel=False), expert cache 88.7% hit (+7.9% of the routed experts over PCIe)
+[strata] reading the prompt: 16,384 of 63,968 tokens, 10 s so far
+[strata] reading the prompt: 16,384 of 63,968 tokens, 20 s so far
+[strata] reading the prompt: 32,768 of 63,968 tokens, 30 s so far
+[strata] reading the prompt: 49,152 of 63,968 tokens, 41 s so far
+[strata] thinking: 37 of budget 2048 (max 4096) tokens, 70.2 tok/s, 42 s
+[strata] thinking: 113 of budget 2048 (max 4096) tokens, 73.6 tok/s, 43 s
+[strata] thinking: 220 of budget 2048 (max 4096) tokens, 85.7 tok/s, 44 s
+[strata] thinking: 301 of budget 2048 (max 4096) tokens, 84.3 tok/s, 45 s
+[strata] thinking: 399 of budget 2048 (max 4096) tokens, 87.2 tok/s, 46 s
+[strata] thinking: 456 of budget 2048 (max 4096) tokens, 81.6 tok/s, 47 s
+[strata] thinking: 526 of budget 2048 (max 4096) tokens, 79.4 tok/s, 48 s
+[strata] thinking: 601 of budget 2048 (max 4096) tokens, 78.6 tok/s, 49 s
+[strata] thinking: 679 of budget 2048 (max 4096) tokens, 78.3 tok/s, 50 s
+[strata] done: 759 tokens in 51 s (78.7 tok/s) (stop, cancel=False), expert cache 89.6% hit (+7.2% of the routed experts over PCIe)
+[strata] reading the prompt: 16,384 of 63,968 tokens, 10 s so far
+[strata] reading the prompt: 16,384 of 63,968 tokens, 20 s so far
+[strata] reading the prompt: 32,768 of 63,968 tokens, 30 s so far
+[strata] reading the prompt: 49,152 of 63,968 tokens, 41 s so far
+[strata] thinking: 32 of budget 2048 (max 4096) tokens, 62.2 tok/s, 42 s
+[strata] thinking: 106 of budget 2048 (max 4096) tokens, 69.7 tok/s, 43 s
+[strata] thinking: 186 of budget 2048 (max 4096) tokens, 73.7 tok/s, 44 s
+[strata] thinking: 274 of budget 2048 (max 4096) tokens, 77.7 tok/s, 45 s
+[strata] thinking: 355 of budget 2048 (max 4096) tokens, 78.0 tok/s, 46 s
+[strata] thinking: 431 of budget 2048 (max 4096) tokens, 77.0 tok/s, 47 s
+[strata] thinking: 508 of budget 2048 (max 4096) tokens, 76.7 tok/s, 48 s
+[strata] thinking: 581 of budget 2048 (max 4096) tokens, 76.1 tok/s, 49 s
+[strata] done: 648 tokens in 50 s (75.6 tok/s) (stop, cancel=False), expert cache 89.3% hit (+7.5% of the routed experts over PCIe)
+[strata] reading the prompt: 16,384 of 94,777 tokens, 10 s so far
+[strata] reading the prompt: 16,384 of 94,777 tokens, 20 s so far
+[strata] reading the prompt: 32,768 of 94,777 tokens, 30 s so far
+[strata] reading the prompt: 49,152 of 94,777 tokens, 41 s so far
+[strata] reading the prompt: 65,536 of 94,777 tokens, 42 s so far
+[strata] reading the prompt: 65,536 of 94,777 tokens, 52 s so far
+[strata] reading the prompt: 81,920 of 94,777 tokens, 54 s so far
+[strata] reading the prompt: 94,772 of 94,777 tokens, 64 s so far
+[strata] thinking: 46 of budget 2048 (max 4096) tokens, 73.1 tok/s, 65 s
+[strata] thinking: 135 of budget 2048 (max 4096) tokens, 81.4 tok/s, 66 s
+[strata] thinking: 232 of budget 2048 (max 4096) tokens, 87.0 tok/s, 67 s
+[strata] thinking: 310 of budget 2048 (max 4096) tokens, 84.1 tok/s, 68 s
+[strata] thinking: 401 of budget 2048 (max 4096) tokens, 85.5 tok/s, 69 s
+[strata] thinking: 472 of budget 2048 (max 4096) tokens, 82.9 tok/s, 70 s
+[strata] thinking: 537 of budget 2048 (max 4096) tokens, 79.7 tok/s, 71 s
+[strata] thinking: 604 of budget 2048 (max 4096) tokens, 77.9 tok/s, 72 s
+[strata] thinking: 678 of budget 2048 (max 4096) tokens, 77.2 tok/s, 73 s
+[strata] thinking: 753 of budget 2048 (max 4096) tokens, 76.7 tok/s, 74 s
+[strata] answering: 828 of max 4096 tokens, 76.3 tok/s, 75 s
+[strata] done: 837 tokens in 75 s (76.3 tok/s) (stop, cancel=False), expert cache 88.9% hit (+7.7% of the routed experts over PCIe)
+[strata] reading the prompt: 16,384 of 94,781 tokens, 10 s so far
+[strata] reading the prompt: 16,384 of 94,781 tokens, 20 s so far
+[strata] reading the prompt: 32,768 of 94,781 tokens, 30 s so far
+[strata] reading the prompt: 49,152 of 94,781 tokens, 41 s so far
+[strata] reading the prompt: 65,536 of 94,781 tokens, 42 s so far
+[strata] reading the prompt: 65,536 of 94,781 tokens, 52 s so far
+[strata] reading the prompt: 81,920 of 94,781 tokens, 54 s so far
+[strata] reading the prompt: 94,776 of 94,781 tokens, 64 s so far
+[strata] thinking: 45 of budget 2048 (max 4096) tokens, 71.6 tok/s, 65 s
+[strata] thinking: 128 of budget 2048 (max 4096) tokens, 78.4 tok/s, 66 s
+[strata] thinking: 205 of budget 2048 (max 4096) tokens, 76.3 tok/s, 67 s
+[strata] thinking: 295 of budget 2048 (max 4096) tokens, 79.8 tok/s, 68 s
+[strata] thinking: 369 of budget 2048 (max 4096) tokens, 78.0 tok/s, 69 s
+[strata] thinking: 448 of budget 2048 (max 4096) tokens, 77.7 tok/s, 70 s
+[strata] thinking: 515 of budget 2048 (max 4096) tokens, 76.0 tok/s, 71 s
+[strata] thinking: 598 of budget 2048 (max 4096) tokens, 76.7 tok/s, 72 s
+[strata] thinking: 677 of budget 2048 (max 4096) tokens, 76.8 tok/s, 73 s
+[strata] done: 741 tokens in 74 s (77.1 tok/s) (stop, cancel=False), expert cache 89.1% hit (+7.5% of the routed experts over PCIe)
+[strata] reading the prompt: 16,384 of 94,781 tokens, 10 s so far
+[strata] reading the prompt: 16,384 of 94,781 tokens, 20 s so far
+[strata] reading the prompt: 32,768 of 94,781 tokens, 30 s so far
+[strata] reading the prompt: 49,152 of 94,781 tokens, 41 s so far
+[strata] reading the prompt: 65,536 of 94,781 tokens, 42 s so far
+[strata] reading the prompt: 65,536 of 94,781 tokens, 52 s so far
+[strata] reading the prompt: 81,920 of 94,781 tokens, 54 s so far
+[strata] reading the prompt: 94,776 of 94,781 tokens, 64 s so far
+[strata] thinking: 46 of budget 2048 (max 4096) tokens, 71.3 tok/s, 65 s
+[strata] thinking: 134 of budget 2048 (max 4096) tokens, 79.5 tok/s, 66 s
+[strata] thinking: 211 of budget 2048 (max 4096) tokens, 78.5 tok/s, 67 s
+[strata] thinking: 289 of budget 2048 (max 4096) tokens, 78.2 tok/s, 68 s
+[strata] thinking: 377 of budget 2048 (max 4096) tokens, 80.1 tok/s, 69 s
+[strata] thinking: 451 of budget 2048 (max 4096) tokens, 78.5 tok/s, 70 s
+[strata] thinking: 521 of budget 2048 (max 4096) tokens, 77.0 tok/s, 71 s
+[strata] thinking: 607 of budget 2048 (max 4096) tokens, 77.9 tok/s, 72 s
+[strata] answering: 681 of max 4096 tokens, 77.3 tok/s, 73 s
+[strata] done: 707 tokens in 73 s (77.6 tok/s) (stop, cancel=False), expert cache 88.7% hit (+7.8% of the routed experts over PCIe)
+[strata] reading the prompt: 16,384 of 125,213 tokens, 10 s so far
+[strata] reading the prompt: 16,384 of 125,213 tokens, 20 s so far
+[strata] reading the prompt: 32,768 of 125,213 tokens, 30 s so far
+[strata] reading the prompt: 49,152 of 125,213 tokens, 41 s so far
+[strata] reading the prompt: 65,536 of 125,213 tokens, 42 s so far
+[strata] reading the prompt: 65,536 of 125,213 tokens, 52 s so far
+[strata] reading the prompt: 81,920 of 125,213 tokens, 54 s so far
+[strata] reading the prompt: 81,920 of 125,213 tokens, 64 s so far
+[strata] reading the prompt: 98,304 of 125,213 tokens, 66 s so far
+[strata] reading the prompt: 98,304 of 125,213 tokens, 76 s so far
+[strata] reading the prompt: 114,688 of 125,213 tokens, 79 s so far
+[strata] reading the prompt: 125,208 of 125,213 tokens, 88 s so far
+[strata] thinking: 46 of budget 2048 (max 4096) tokens, 73.5 tok/s, 89 s
+[strata] thinking: 121 of budget 2048 (max 4096) tokens, 74.1 tok/s, 90 s
+[strata] thinking: 213 of budget 2048 (max 4096) tokens, 80.6 tok/s, 91 s
+[strata] thinking: 291 of budget 2048 (max 4096) tokens, 79.3 tok/s, 92 s
+[strata] thinking: 365 of budget 2048 (max 4096) tokens, 78.0 tok/s, 93 s
+[strata] thinking: 462 of budget 2048 (max 4096) tokens, 81.2 tok/s, 94 s
+[strata] thinking: 535 of budget 2048 (max 4096) tokens, 79.4 tok/s, 95 s
+[strata] thinking: 608 of budget 2048 (max 4096) tokens, 78.5 tok/s, 96 s
+[strata] thinking: 691 of budget 2048 (max 4096) tokens, 78.8 tok/s, 97 s
+[strata] thinking: 773 of budget 2048 (max 4096) tokens, 79.0 tok/s, 98 s
+[strata] thinking: 857 of budget 2048 (max 4096) tokens, 79.1 tok/s, 99 s
+[strata] answering: 922 of max 4096 tokens, 77.9 tok/s, 100 s
+[strata] done: 947 tokens in 100 s (78.0 tok/s) (stop, cancel=False), expert cache 90.6% hit (+6.4% of the routed experts over PCIe)
+[strata] reading the prompt: 16,384 of 125,206 tokens, 10 s so far
+[strata] reading the prompt: 16,384 of 125,206 tokens, 20 s so far
+[strata] reading the prompt: 32,768 of 125,206 tokens, 30 s so far
+[strata] reading the prompt: 49,152 of 125,206 tokens, 41 s so far
+[strata] reading the prompt: 65,536 of 125,206 tokens, 42 s so far
+[strata] reading the prompt: 65,536 of 125,206 tokens, 52 s so far
+[strata] reading the prompt: 81,920 of 125,206 tokens, 54 s so far
+[strata] reading the prompt: 81,920 of 125,206 tokens, 64 s so far
+[strata] reading the prompt: 98,304 of 125,206 tokens, 66 s so far
+[strata] reading the prompt: 98,304 of 125,206 tokens, 76 s so far
+[strata] reading the prompt: 114,688 of 125,206 tokens, 79 s so far
+[strata] reading the prompt: 125,201 of 125,206 tokens, 88 s so far
+[strata] thinking: 39 of budget 2048 (max 4096) tokens, 59.4 tok/s, 89 s
+[strata] thinking: 132 of budget 2048 (max 4096) tokens, 78.2 tok/s, 90 s
+[strata] thinking: 212 of budget 2048 (max 4096) tokens, 77.6 tok/s, 91 s
+[strata] thinking: 305 of budget 2048 (max 4096) tokens, 80.9 tok/s, 92 s
+[strata] thinking: 370 of budget 2048 (max 4096) tokens, 77.3 tok/s, 93 s
+[strata] thinking: 441 of budget 2048 (max 4096) tokens, 76.0 tok/s, 94 s
+[strata] thinking: 512 of budget 2048 (max 4096) tokens, 75.0 tok/s, 95 s
+[strata] thinking: 586 of budget 2048 (max 4096) tokens, 74.7 tok/s, 96 s
+[strata] done: 670 tokens in 97 s (75.4 tok/s) (stop, cancel=False), expert cache 89.0% hit (+7.7% of the routed experts over PCIe)
+[strata] reading the prompt: 16,384 of 125,207 tokens, 10 s so far
+[strata] reading the prompt: 16,384 of 125,207 tokens, 20 s so far
+[strata] reading the prompt: 32,768 of 125,207 tokens, 30 s so far
+[strata] reading the prompt: 49,152 of 125,207 tokens, 41 s so far
+[strata] reading the prompt: 65,536 of 125,207 tokens, 42 s so far
+[strata] reading the prompt: 65,536 of 125,207 tokens, 52 s so far
+[strata] reading the prompt: 81,920 of 125,207 tokens, 54 s so far
+[strata] reading the prompt: 81,920 of 125,207 tokens, 64 s so far
+[strata] reading the prompt: 98,304 of 125,207 tokens, 66 s so far
+[strata] reading the prompt: 98,304 of 125,207 tokens, 77 s so far
+[strata] reading the prompt: 114,688 of 125,207 tokens, 79 s so far
+[strata] reading the prompt: 125,202 of 125,207 tokens, 88 s so far
+[strata] thinking: 45 of budget 2048 (max 4096) tokens, 67.8 tok/s, 89 s
+[strata] thinking: 126 of budget 2048 (max 4096) tokens, 74.2 tok/s, 90 s
+[strata] thinking: 219 of budget 2048 (max 4096) tokens, 80.4 tok/s, 91 s
+[strata] thinking: 305 of budget 2048 (max 4096) tokens, 81.9 tok/s, 92 s
+[strata] thinking: 390 of budget 2048 (max 4096) tokens, 81.8 tok/s, 93 s
+[strata] thinking: 468 of budget 2048 (max 4096) tokens, 80.4 tok/s, 94 s
+[strata] thinking: 528 of budget 2048 (max 4096) tokens, 77.0 tok/s, 95 s
+[strata] thinking: 614 of budget 2048 (max 4096) tokens, 77.8 tok/s, 96 s
+[strata] thinking: 686 of budget 2048 (max 4096) tokens, 77.0 tok/s, 97 s
+[strata] done: 747 tokens in 98 s (76.5 tok/s) (stop, cancel=False), expert cache 89.0% hit (+7.6% of the routed experts over PCIe)
+[strata] reading the prompt: 16,384 of 198,702 tokens, 10 s so far
+[strata] reading the prompt: 16,384 of 198,702 tokens, 20 s so far
+[strata] reading the prompt: 32,768 of 198,702 tokens, 30 s so far
+[strata] reading the prompt: 49,152 of 198,702 tokens, 41 s so far
+[strata] reading the prompt: 65,536 of 198,702 tokens, 42 s so far
+[strata] reading the prompt: 65,536 of 198,702 tokens, 52 s so far
+[strata] reading the prompt: 81,920 of 198,702 tokens, 54 s so far
+[strata] reading the prompt: 81,920 of 198,702 tokens, 64 s so far
+[strata] reading the prompt: 98,304 of 198,702 tokens, 66 s so far
+[strata] reading the prompt: 98,304 of 198,702 tokens, 77 s so far
+[strata] reading the prompt: 114,688 of 198,702 tokens, 79 s so far
+[strata] reading the prompt: 114,688 of 198,702 tokens, 89 s so far
+[strata] reading the prompt: 131,072 of 198,702 tokens, 92 s so far
+[strata] reading the prompt: 131,072 of 198,702 tokens, 102 s so far
+[strata] reading the prompt: 147,456 of 198,702 tokens, 106 s so far
+[strata] reading the prompt: 147,456 of 198,702 tokens, 116 s so far
+[strata] reading the prompt: 163,840 of 198,702 tokens, 120 s so far
+[strata] reading the prompt: 163,840 of 198,702 tokens, 130 s so far
+[strata] reading the prompt: 180,224 of 198,702 tokens, 135 s so far
+[strata] reading the prompt: 180,224 of 198,702 tokens, 145 s so far
+[strata] reading the prompt: 196,608 of 198,702 tokens, 150 s so far
+[strata] reading the prompt: 198,697 of 198,702 tokens, 153 s so far
+[strata] thinking: 36 of budget 2048 (max 4096) tokens, 56.8 tok/s, 154 s
+[strata] thinking: 110 of budget 2048 (max 4096) tokens, 67.2 tok/s, 155 s
+[strata] thinking: 190 of budget 2048 (max 4096) tokens, 71.7 tok/s, 156 s
+[strata] thinking: 272 of budget 2048 (max 4096) tokens, 73.7 tok/s, 158 s
+[strata] thinking: 359 of budget 2048 (max 4096) tokens, 76.5 tok/s, 159 s
+[strata] thinking: 423 of budget 2048 (max 4096) tokens, 73.8 tok/s, 160 s
+[strata] thinking: 491 of budget 2048 (max 4096) tokens, 72.4 tok/s, 161 s
+[strata] thinking: 558 of budget 2048 (max 4096) tokens, 71.4 tok/s, 162 s
+[strata] thinking: 645 of budget 2048 (max 4096) tokens, 72.9 tok/s, 163 s
+[strata] thinking: 727 of budget 2048 (max 4096) tokens, 73.8 tok/s, 164 s
+[strata] done: 775 tokens in 164 s (73.4 tok/s) (stop, cancel=False), expert cache 89.4% hit (+7.4% of the routed experts over PCIe)
+[strata] reading the prompt: 16,384 of 198,704 tokens, 10 s so far
+[strata] reading the prompt: 16,384 of 198,704 tokens, 20 s so far
+[strata] reading the prompt: 32,768 of 198,704 tokens, 30 s so far
+[strata] reading the prompt: 49,152 of 198,704 tokens, 41 s so far
+[strata] reading the prompt: 65,536 of 198,704 tokens, 42 s so far
+[strata] reading the prompt: 65,536 of 198,704 tokens, 53 s so far
+[strata] reading the prompt: 81,920 of 198,704 tokens, 54 s so far
+[strata] reading the prompt: 81,920 of 198,704 tokens, 64 s so far
+[strata] reading the prompt: 98,304 of 198,704 tokens, 66 s so far
+[strata] reading the prompt: 98,304 of 198,704 tokens, 77 s so far
+[strata] reading the prompt: 114,688 of 198,704 tokens, 79 s so far
+[strata] reading the prompt: 114,688 of 198,704 tokens, 89 s so far
+[strata] reading the prompt: 131,072 of 198,704 tokens, 92 s so far
+[strata] reading the prompt: 131,072 of 198,704 tokens, 103 s so far
+[strata] reading the prompt: 147,456 of 198,704 tokens, 106 s so far
+[strata] reading the prompt: 147,456 of 198,704 tokens, 116 s so far
+[strata] reading the prompt: 163,840 of 198,704 tokens, 120 s so far
+[strata] reading the prompt: 163,840 of 198,704 tokens, 130 s so far
+[strata] reading the prompt: 180,224 of 198,704 tokens, 135 s so far
+[strata] reading the prompt: 180,224 of 198,704 tokens, 145 s so far
+[strata] reading the prompt: 196,608 of 198,704 tokens, 150 s so far
+[strata] reading the prompt: 198,699 of 198,704 tokens, 154 s so far
+[strata] thinking: 36 of budget 2048 (max 4096) tokens, 58.5 tok/s, 155 s
+[strata] thinking: 111 of budget 2048 (max 4096) tokens, 67.3 tok/s, 156 s
+[strata] thinking: 193 of budget 2048 (max 4096) tokens, 72.1 tok/s, 157 s
+[strata] thinking: 272 of budget 2048 (max 4096) tokens, 74.0 tok/s, 158 s
+[strata] thinking: 345 of budget 2048 (max 4096) tokens, 73.3 tok/s, 159 s
+[strata] thinking: 427 of budget 2048 (max 4096) tokens, 74.4 tok/s, 160 s
+[strata] thinking: 509 of budget 2048 (max 4096) tokens, 75.5 tok/s, 161 s
+[strata] thinking: 581 of budget 2048 (max 4096) tokens, 75.0 tok/s, 162 s
+[strata] answering: 649 of max 4096 tokens, 73.8 tok/s, 163 s
+[strata] done: 650 tokens in 163 s (73.9 tok/s) (stop, cancel=False), expert cache 90.6% hit (+6.5% of the routed experts over PCIe)
+[strata] reading the prompt: 16,384 of 198,699 tokens, 10 s so far
+[strata] reading the prompt: 16,384 of 198,699 tokens, 20 s so far
+[strata] reading the prompt: 32,768 of 198,699 tokens, 30 s so far
+[strata] reading the prompt: 49,152 of 198,699 tokens, 41 s so far
+[strata] reading the prompt: 65,536 of 198,699 tokens, 42 s so far
+[strata] reading the prompt: 65,536 of 198,699 tokens, 53 s so far
+[strata] reading the prompt: 81,920 of 198,699 tokens, 54 s so far
+[strata] reading the prompt: 81,920 of 198,699 tokens, 64 s so far
+[strata] reading the prompt: 98,304 of 198,699 tokens, 67 s so far
+[strata] reading the prompt: 98,304 of 198,699 tokens, 77 s so far
+[strata] reading the prompt: 114,688 of 198,699 tokens, 79 s so far
+[strata] reading the prompt: 114,688 of 198,699 tokens, 89 s so far
+[strata] reading the prompt: 131,072 of 198,699 tokens, 93 s so far
+[strata] reading the prompt: 131,072 of 198,699 tokens, 103 s so far
+[strata] reading the prompt: 147,456 of 198,699 tokens, 106 s so far
+[strata] reading the prompt: 147,456 of 198,699 tokens, 116 s so far
+[strata] reading the prompt: 163,840 of 198,699 tokens, 120 s so far
+[strata] reading the prompt: 163,840 of 198,699 tokens, 131 s so far
+[strata] reading the prompt: 180,224 of 198,699 tokens, 135 s so far
+[strata] reading the prompt: 180,224 of 198,699 tokens, 145 s so far
+[strata] reading the prompt: 196,608 of 198,699 tokens, 150 s so far
+[strata] reading the prompt: 198,694 of 198,699 tokens, 154 s so far
+[strata] thinking: 43 of budget 2048 (max 4096) tokens, 64.6 tok/s, 155 s
+[strata] thinking: 122 of budget 2048 (max 4096) tokens, 72.4 tok/s, 156 s
+[strata] thinking: 208 of budget 2048 (max 4096) tokens, 76.8 tok/s, 157 s
+[strata] thinking: 300 of budget 2048 (max 4096) tokens, 80.9 tok/s, 158 s
+[strata] thinking: 374 of budget 2048 (max 4096) tokens, 79.2 tok/s, 159 s
+[strata] thinking: 463 of budget 2048 (max 4096) tokens, 80.7 tok/s, 160 s
+[strata] thinking: 537 of budget 2048 (max 4096) tokens, 79.5 tok/s, 161 s
+[strata] thinking: 614 of budget 2048 (max 4096) tokens, 78.7 tok/s, 162 s
+[strata] thinking: 680 of budget 2048 (max 4096) tokens, 77.1 tok/s, 163 s
+[strata] thinking: 764 of budget 2048 (max 4096) tokens, 77.8 tok/s, 164 s
+[strata] thinking: 853 of budget 2048 (max 4096) tokens, 78.7 tok/s, 165 s
+[strata] answering: 933 of max 4096 tokens, 78.7 tok/s, 166 s
+[strata] done: 949 tokens in 166 s (78.5 tok/s) (stop, cancel=False), expert cache 90.3% hit (+6.8% of the routed experts over PCIe)
+[strata] reading the prompt: 16,384 of 248,953 tokens, 10 s so far
+[strata] reading the prompt: 16,384 of 248,953 tokens, 20 s so far
+[strata] reading the prompt: 32,768 of 248,953 tokens, 30 s so far
+[strata] reading the prompt: 49,152 of 248,953 tokens, 41 s so far
+[strata] reading the prompt: 65,536 of 248,953 tokens, 42 s so far
+[strata] reading the prompt: 65,536 of 248,953 tokens, 53 s so far
+[strata] reading the prompt: 81,920 of 248,953 tokens, 54 s so far
+[strata] reading the prompt: 81,920 of 248,953 tokens, 64 s so far
+[strata] reading the prompt: 98,304 of 248,953 tokens, 67 s so far
+[strata] reading the prompt: 98,304 of 248,953 tokens, 77 s so far
+[strata] reading the prompt: 114,688 of 248,953 tokens, 79 s so far
+[strata] reading the prompt: 114,688 of 248,953 tokens, 90 s so far
+[strata] reading the prompt: 131,072 of 248,953 tokens, 93 s so far
+[strata] reading the prompt: 131,072 of 248,953 tokens, 103 s so far
+[strata] reading the prompt: 147,456 of 248,953 tokens, 106 s so far
+[strata] reading the prompt: 147,456 of 248,953 tokens, 116 s so far
+[strata] reading the prompt: 163,840 of 248,953 tokens, 120 s so far
+[strata] reading the prompt: 163,840 of 248,953 tokens, 131 s so far
+[strata] reading the prompt: 180,224 of 248,953 tokens, 135 s so far
+[strata] reading the prompt: 180,224 of 248,953 tokens, 145 s so far
+[strata] reading the prompt: 196,608 of 248,953 tokens, 150 s so far
+[strata] reading the prompt: 196,608 of 248,953 tokens, 160 s so far
+[strata] reading the prompt: 212,992 of 248,953 tokens, 166 s so far
+[strata] reading the prompt: 212,992 of 248,953 tokens, 176 s so far
+[strata] reading the prompt: 229,376 of 248,953 tokens, 182 s so far
+[strata] reading the prompt: 229,376 of 248,953 tokens, 192 s so far
+[strata] reading the prompt: 245,760 of 248,953 tokens, 198 s so far
+[strata] reading the prompt: 248,948 of 248,953 tokens, 202 s so far
+[strata] thinking: 40 of budget 2048 (max 4096) tokens, 62.9 tok/s, 203 s
+[strata] thinking: 119 of budget 2048 (max 4096) tokens, 72.0 tok/s, 204 s
+[strata] thinking: 198 of budget 2048 (max 4096) tokens, 73.5 tok/s, 205 s
+[strata] thinking: 284 of budget 2048 (max 4096) tokens, 76.5 tok/s, 206 s
+[strata] thinking: 356 of budget 2048 (max 4096) tokens, 75.6 tok/s, 207 s
+[strata] thinking: 422 of budget 2048 (max 4096) tokens, 73.5 tok/s, 208 s
+[strata] answering: 498 of max 4096 tokens, 73.4 tok/s, 209 s
+[strata] done: 506 tokens in 209 s (73.5 tok/s) (stop, cancel=False), expert cache 90.5% hit (+6.5% of the routed experts over PCIe)
+[strata] reading the prompt: 16,384 of 248,957 tokens, 10 s so far
+[strata] reading the prompt: 16,384 of 248,957 tokens, 20 s so far
+[strata] reading the prompt: 32,768 of 248,957 tokens, 30 s so far
+[strata] reading the prompt: 49,152 of 248,957 tokens, 41 s so far
+[strata] reading the prompt: 65,536 of 248,957 tokens, 43 s so far
+[strata] reading the prompt: 65,536 of 248,957 tokens, 53 s so far
+[strata] reading the prompt: 81,920 of 248,957 tokens, 54 s so far
+[strata] reading the prompt: 81,920 of 248,957 tokens, 64 s so far
+[strata] reading the prompt: 98,304 of 248,957 tokens, 67 s so far
+[strata] reading the prompt: 98,304 of 248,957 tokens, 77 s so far
+[strata] reading the prompt: 114,688 of 248,957 tokens, 79 s so far
+[strata] reading the prompt: 114,688 of 248,957 tokens, 90 s so far
+[strata] reading the prompt: 131,072 of 248,957 tokens, 93 s so far
+[strata] reading the prompt: 131,072 of 248,957 tokens, 103 s so far
+[strata] reading the prompt: 147,456 of 248,957 tokens, 106 s so far
+[strata] reading the prompt: 147,456 of 248,957 tokens, 116 s so far
+[strata] reading the prompt: 163,840 of 248,957 tokens, 120 s so far
+[strata] reading the prompt: 163,840 of 248,957 tokens, 131 s so far
+[strata] reading the prompt: 180,224 of 248,957 tokens, 135 s so far
+[strata] reading the prompt: 180,224 of 248,957 tokens, 145 s so far
+[strata] reading the prompt: 196,608 of 248,957 tokens, 150 s so far
+[strata] reading the prompt: 196,608 of 248,957 tokens, 160 s so far
+[strata] reading the prompt: 212,992 of 248,957 tokens, 166 s so far
+[strata] reading the prompt: 212,992 of 248,957 tokens, 176 s so far
+[strata] reading the prompt: 229,376 of 248,957 tokens, 182 s so far
+[strata] reading the prompt: 229,376 of 248,957 tokens, 192 s so far
+[strata] reading the prompt: 245,760 of 248,957 tokens, 198 s so far
+[strata] reading the prompt: 248,952 of 248,957 tokens, 202 s so far
+[strata] thinking: 39 of budget 2048 (max 4096) tokens, 61.5 tok/s, 203 s
+[strata] thinking: 113 of budget 2048 (max 4096) tokens, 69.1 tok/s, 204 s
+[strata] thinking: 202 of budget 2048 (max 4096) tokens, 76.2 tok/s, 205 s
+[strata] thinking: 281 of budget 2048 (max 4096) tokens, 76.8 tok/s, 206 s
+[strata] thinking: 372 of budget 2048 (max 4096) tokens, 79.7 tok/s, 207 s
+[strata] thinking: 439 of budget 2048 (max 4096) tokens, 76.8 tok/s, 208 s
+[strata] thinking: 513 of budget 2048 (max 4096) tokens, 76.3 tok/s, 209 s
+[strata] thinking: 587 of budget 2048 (max 4096) tokens, 75.7 tok/s, 210 s
+[strata] answering: 664 of max 4096 tokens, 75.8 tok/s, 211 s
+[strata] done: 672 tokens in 211 s (75.8 tok/s) (stop, cancel=False), expert cache 90.4% hit (+6.6% of the routed experts over PCIe)
+[strata] reading the prompt: 16,384 of 248,957 tokens, 10 s so far
+[strata] reading the prompt: 16,384 of 248,957 tokens, 20 s so far
+[strata] reading the prompt: 32,768 of 248,957 tokens, 30 s so far
+[strata] reading the prompt: 49,152 of 248,957 tokens, 41 s so far
+[strata] reading the prompt: 65,536 of 248,957 tokens, 42 s so far
+[strata] reading the prompt: 65,536 of 248,957 tokens, 53 s so far
+[strata] reading the prompt: 81,920 of 248,957 tokens, 54 s so far
+[strata] reading the prompt: 81,920 of 248,957 tokens, 64 s so far
+[strata] reading the prompt: 98,304 of 248,957 tokens, 67 s so far
+[strata] reading the prompt: 98,304 of 248,957 tokens, 77 s so far
+[strata] reading the prompt: 114,688 of 248,957 tokens, 79 s so far
+[strata] reading the prompt: 114,688 of 248,957 tokens, 90 s so far
+[strata] reading the prompt: 131,072 of 248,957 tokens, 93 s so far
+[strata] reading the prompt: 131,072 of 248,957 tokens, 103 s so far
+[strata] reading the prompt: 147,456 of 248,957 tokens, 106 s so far
+[strata] reading the prompt: 147,456 of 248,957 tokens, 116 s so far
+[strata] reading the prompt: 163,840 of 248,957 tokens, 120 s so far
+[strata] reading the prompt: 163,840 of 248,957 tokens, 131 s so far
+[strata] reading the prompt: 180,224 of 248,957 tokens, 135 s so far
+[strata] reading the prompt: 180,224 of 248,957 tokens, 145 s so far
+[strata] reading the prompt: 196,608 of 248,957 tokens, 150 s so far
+[strata] reading the prompt: 196,608 of 248,957 tokens, 160 s so far
+[strata] reading the prompt: 212,992 of 248,957 tokens, 166 s so far
+[strata] reading the prompt: 212,992 of 248,957 tokens, 176 s so far
+[strata] reading the prompt: 229,376 of 248,957 tokens, 182 s so far
+[strata] reading the prompt: 229,376 of 248,957 tokens, 192 s so far
+[strata] reading the prompt: 245,760 of 248,957 tokens, 198 s so far
+[strata] reading the prompt: 248,952 of 248,957 tokens, 202 s so far
+[strata] thinking: 35 of budget 2048 (max 4096) tokens, 56.8 tok/s, 203 s
+[strata] thinking: 113 of budget 2048 (max 4096) tokens, 68.4 tok/s, 204 s
+[strata] thinking: 199 of budget 2048 (max 4096) tokens, 74.8 tok/s, 205 s
+[strata] thinking: 279 of budget 2048 (max 4096) tokens, 76.2 tok/s, 206 s
+[strata] thinking: 370 of budget 2048 (max 4096) tokens, 79.0 tok/s, 207 s
+[strata] thinking: 430 of budget 2048 (max 4096) tokens, 75.5 tok/s, 208 s
+[strata] thinking: 502 of budget 2048 (max 4096) tokens, 74.6 tok/s, 209 s
+[strata] thinking: 577 of budget 2048 (max 4096) tokens, 74.5 tok/s, 210 s
+[strata] thinking: 641 of budget 2048 (max 4096) tokens, 73.3 tok/s, 211 s
+[strata] thinking: 711 of budget 2048 (max 4096) tokens, 72.4 tok/s, 212 s
+[strata] done: 758 tokens in 213 s (73.0 tok/s) (stop, cancel=False), expert cache 89.3% hit (+7.5% of the routed experts over PCIe)

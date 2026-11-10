@@ -1,0 +1,35 @@
+{
+ "model": "B",
+ "task": "T5",
+ "rep": 1,
+ "t0": 1792487756.9900663,
+ "t1": 1792487832.008782,
+ "wall_s": 75.0,
+ "exit_code": 0,
+ "killed": null,
+ "prompt_chars": 1063,
+ "cmd": [
+  "C:\\Users\\user\\AppData\\Roaming\\npm\\node_modules\\opencode-ai\\bin\\opencode.exe",
+  "run",
+  "--pure",
+  "-m",
+  "llamacpp/qwen38-27b",
+  "--format",
+  "json",
+  "<README on stdin>"
+ ],
+ "steps": 8,
+ "tool_calls": 11,
+ "tokens": {
+  "input": 8561,
+  "output": 3288,
+  "reasoning": 0,
+  "cache_read": 99351,
+  "cache_write": 0
+ },
+ "ran_visible_tests": true,
+ "pytest_calls": 1,
+ "peeked_outside": [],
+ "errors": [],
+ "final_text": "Fixed. The bug was at `inventory_service/orders.py:105` \u2014 the refund tax was computed on the line net **before** subtracting the refund's share of order-level (tier/coupon) discounts, instead of on the discounted taxable amount. That's why only discounted orders were affected.\n\nOne-line fix: `percent_of(net, rate)` \u2192 `percent_of(taxable, rate)`.\n\nTicket scenario now refunds 73.84 + 73.84 = 147.68 (order total), and all 30 tests pass."
+}

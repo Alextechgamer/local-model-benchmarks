@@ -1,0 +1,52 @@
+{
+ "exe": "E:\\strata-tests\\coding-bench\\tools\\strata-v0.1.45\\engine\\strata.exe",
+ "args": [
+  "--pack",
+  "C:\\Users\\user\\Strata-data\\packs\\coder-iq1_m",
+  "--native",
+  "C:\\Users\\user\\Strata-data\\models\\coder-IQ1_M\\Qwen3.8-Flash-Next-GSQ-RCO-IQ1_M-00001-of-00002.gguf",
+  "--ple-gguf",
+  "C:\\Users\\user\\Strata-data\\models\\coder-IQ1_M\\Qwen3.8-Flash-Next-GSQ-RCO-IQ1_M-00002-of-00002.gguf",
+  "--expert-profile",
+  "E:\\strata-tests\\coding-bench\\tools\\strata-v0.1.45\\data\\expert-profile-coder.bin",
+  "--expert-cache",
+  "auto",
+  "--prefill",
+  "auto",
+  "--spec",
+  "4",
+  "--spec-min-p",
+  "0.5",
+  "--mtp",
+  "C:\\Users\\user\\Strata-data\\mtp\\rt",
+  "--max-context",
+  "262144",
+  "--kv",
+  "int8",
+  "--kv-resident",
+  "32768",
+  "--vram-reserve-mib",
+  "1024"
+ ],
+ "cwd": "E:\\strata-tests\\coding-bench\\tools\\strata-v0.1.45",
+ "tokenizer": "C:\\Users\\user\\Strata-data\\packs\\coder-iq1_m\\tokenizer",
+ "model_name": "qwen3.8-flash-next-coder-iq1_m",
+ "log": "E:\\strata-tests\\coding-bench\\logs\\server\\A-v045-notable.engine.log",
+ "lib_dirs": [
+  "E:\\strata-tests\\coding-bench\\tools\\strata-v0.1.45\\engine\\rocm\\bin"
+ ],
+ "port": 8080,
+ "backend": "hip",
+ "env": {
+  "STRATA_SH_STREAM": "0",
+  "HIP_VISIBLE_DEVICES": "0"
+ },
+ "fit_max_tokens": true,
+ "reasoning_budget_tokens": 8192,
+ "sampling": {
+  "temperature": 1,
+  "top_p": 0.95,
+  "top_k": 20,
+  "min_p": 0
+ }
+}

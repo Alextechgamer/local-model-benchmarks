@@ -1,0 +1,39 @@
+{
+ "label": "muse-r3",
+ "file_kb": 41.3,
+ "console_errors": [],
+ "console_warnings": [],
+ "exceptions": [],
+ "logs": [
+  "voxel count: 17231 (opaque 17151 + glow 80)"
+ ],
+ "page": {
+  "title": "Voxel Pagoda Garden",
+  "canvases": [
+   [
+    1600,
+    900
+   ]
+  ],
+  "sliders": 4,
+  "checkboxes": 5,
+  "buttons": [
+   "–",
+   "⏸ Pause time",
+   "🌙 Night",
+   "Overview",
+   "Pagoda",
+   "Pond",
+   "Torii",
+   "Blossoms",
+   "🎲 Regenerate seed",
+   "Reset view"
+  ],
+  "voxelText": "voxels: 17,231",
+  "fpsText": "fps\n15",
+  "hasJapaneseTitle": true,
+  "loadingVisible": false,
+  "text": "Building voxel garden…\n桜の庭 – Voxel Pagoda Garden\n\nThree.js · InstancedMesh · seeded voxels\n\n–\n🌸 Garden Controls\nglass panel · all settings live\nTime of day 15.2h\nCycle speed 0.40 h/s\nPetal density 1100\nWind strength 0.6\n⏸ Pause time\n🌙 Night\nOverview\nPagoda\nPond\nTorii\nBlossoms\nAuto-rotate\nShadows\nFireflies\nWater animation\nWireframe mode\n🎲 Regenerate seed\nReset view\nvoxels: 17,231\n131 fps\n15.2h\nSeed: 7 · ⌨ shortcuts (?)"
+ },
+ "measured_fps_headless": 132
+}

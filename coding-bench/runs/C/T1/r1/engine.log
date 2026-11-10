@@ -1,0 +1,15 @@
+ds4 slots: saved a 20444-token conversation (0.04 GB in RAM in 0.0 s); 4 in RAM, 28 in C:\Users\user\AppData\Local\Strata\launch\ds4-slots
+ds4 slots: took back a 538-token conversation at token 538 of 1647 from the folder (0.0 s); 203 new tokens to read
+maya ds4 serve: prompt 741 tokens = 538 reused + 203 read in 30114 ms (6.7 tok/s), 103 generated in 70780 ms (1.46 tok/s); CPU lane 3.3% of the experts
+maya ds4 serve: drafts 51 of 74 kept; per position (kept / reached): 1: 27/32 84% 2: 15/22 68% 3: 6/8 75% 4: 3/3 100% 5: 0/1 0%
+ds4 slots: took back a 6031-token conversation at token 6031 of 15948 from the folder (0.1 s); 1 new tokens to read
+maya ds4 serve: prompt 6032 tokens = 6031 reused + 1 read in 406 ms (2.5 tok/s), 98 generated in 23724 ms (4.13 tok/s); CPU lane 3.6% of the experts
+maya ds4 serve: drafts 77 of 92 kept; per position (kept / reached): 1: 18/20 90% 2: 18/18 100% 3: 15/16 94% 4: 14/15 93% 5: 12/14 86%
+maya ds4 serve: prompt 7420 tokens = 6129 reused + 1291 read in 50537 ms (25.5 tok/s), 161 generated in 30584 ms (5.26 tok/s); CPU lane 3.9% of the experts
+maya ds4 serve: drafts 131 of 148 kept; per position (kept / reached): 1: 29/30 97% 2: 28/29 97% 3: 27/28 96% 4: 25/26 96% 5: 22/25 88%
+maya ds4 serve: prompt 13024 tokens = 7581 reused + 5443 read in 62059 ms (87.7 tok/s), 631 generated in 201215 ms (3.14 tok/s); CPU lane 5.0% of the experts
+maya ds4 serve: drafts 459 of 546 kept; per position (kept / reached): 1: 125/149 84% 2: 106/107 99% 3: 83/89 93% 4: 76/80 95% 5: 69/72 96%
+maya ds4 serve: prompt 13691 tokens = 13654 reused + 37 read in 6531 ms (5.7 tok/s), 43 generated in 7261 ms (5.92 tok/s); CPU lane 5.1% of the experts
+maya ds4 serve: drafts 35 of 35 kept; per position (kept / reached): 1: 7/7 100% 2: 7/7 100% 3: 7/7 100% 4: 7/7 100% 5: 7/7 100%
+maya ds4 serve: prompt 13763 tokens = 13733 reused + 30 read in 5967 ms (5.0 tok/s), 102 generated in 37140 ms (2.75 tok/s); CPU lane 5.4% of the experts
+maya ds4 serve: drafts 65 of 83 kept; per position (kept / reached): 1: 24/29 83% 2: 18/19 95% 3: 13/15 87% 4: 7/9 78% 5: 3/3 100%

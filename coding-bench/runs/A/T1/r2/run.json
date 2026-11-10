@@ -1,0 +1,35 @@
+{
+ "model": "A",
+ "task": "T1",
+ "rep": 2,
+ "t0": 1792485398.942489,
+ "t1": 1792485453.960851,
+ "wall_s": 55.0,
+ "exit_code": 0,
+ "killed": null,
+ "prompt_chars": 691,
+ "cmd": [
+  "C:\\Users\\user\\AppData\\Roaming\\npm\\node_modules\\opencode-ai\\bin\\opencode.exe",
+  "run",
+  "--pure",
+  "-m",
+  "strata/coder",
+  "--format",
+  "json",
+  "<README on stdin>"
+ ],
+ "steps": 13,
+ "tool_calls": 12,
+ "tokens": {
+  "input": 16013,
+  "output": 1525,
+  "reasoning": 0,
+  "cache_read": 135840,
+  "cache_write": 0
+ },
+ "ran_visible_tests": true,
+ "pytest_calls": 2,
+ "peeked_outside": [],
+ "errors": [],
+ "final_text": "All 30 tests pass. Fixed 3 bugs:\n\n1. **`inventory.py:89`** `release()` \u2014 the `return freed` was inside the `for` loop, so it returned after the first reservation line. Moved it to loop level.\n2. **`csv_io.py:60`** `import_products()` \u2014 an optional column present but empty wasn't defaulted, so `\"\"` reached the Decimal parser. Changed the check to use the default for missing **or** empty values.\n3. **`pricing.py:90`** `compute_order_total()` \u2014 bulk discount used `>` the threshold, but the rule is \"quantity >= 10\". Changed to `>=`."
+}

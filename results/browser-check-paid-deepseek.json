@@ -1,0 +1,40 @@
+{
+ "label": "deepseek",
+ "file_kb": 53.4,
+ "console_errors": [],
+ "console_warnings": [],
+ "exceptions": [],
+ "logs": [
+  "[Voxel Pagoda Garden] voxel count = 16521 | opaque = 16072 | emissive = 84 | water = 365",
+  "[Voxel Pagoda Garden] voxel count = 16521 | opaque = 16072 | emissive = 84 | water = 365"
+ ],
+ "page": {
+  "title": "桜の庭 – Voxel Pagoda Garden",
+  "canvases": [
+   [
+    1600,
+    900
+   ]
+  ],
+  "sliders": 4,
+  "checkboxes": 5,
+  "buttons": [
+   "–",
+   "▶ Play cycle",
+   "Overview",
+   "Pagoda",
+   "Pond",
+   "Torii",
+   "Blossoms",
+   "Reset",
+   "↻ Regenerate seed",
+   "? Shortcuts"
+  ],
+  "voxelText": "Voxels\n16,521",
+  "fpsText": "FPS\n133",
+  "hasJapaneseTitle": true,
+  "loadingVisible": true,
+  "text": "桜の庭 – Voxel Pagoda Garden\nPagoda Garden\n–\nTIME OF DAY\nHour\n8.50\n▶ Play cycle\n0.6 h/s\nWEATHER & LIFE\nPetal density\n900\nWind strength\n1.0\nTOGGLES\nAuto-rotate\nShadows\nFireflies\nWater animation\nWireframe\nCAMERAS\nOverview\nPagoda\nPond\nTorii\nBlossoms\nReset\nGARDEN\n↻ Regenerate seed\n? Shortcuts\nLIVE\nVoxels\n16,521\nFPS\n133\nTime\n8.50 h\nSeed\n20240405\nBuilding the voxel garden…\nplacing terrain, pagoda, trees…"
+ },
+ "measured_fps_headless": 135
+}

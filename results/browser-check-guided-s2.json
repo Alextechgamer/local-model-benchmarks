@@ -1,0 +1,28 @@
+{
+ "label": "g-s2",
+ "file_kb": 17.1,
+ "console_errors": [],
+ "console_warnings": [],
+ "exceptions": [],
+ "logs": [
+  "garden voxels: 10594"
+ ],
+ "page": {
+  "title": "Voxel Pagoda Garden",
+  "canvases": [
+   [
+    1600,
+    900
+   ]
+  ],
+  "sliders": 0,
+  "checkboxes": 0,
+  "buttons": [],
+  "voxelText": "voxels: 10594",
+  "fpsText": null,
+  "hasJapaneseTitle": false,
+  "loadingVisible": false,
+  "text": "voxels: 10594"
+ },
+ "measured_fps_headless": 136
+}

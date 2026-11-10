@@ -1,0 +1,45 @@
+power logging started: gpu pid 22952, cpu pid 27624, mem pid 34128
+{"event": "power_start", "session": "p3-B-20261020-015341", "model": "B", "t": 1792486421.7663574}
+{"event": "server_ready", "model": "B", "pid": 23920, "load_s": 10.9, "free_gb": 50.9, "t": 1792486433.734361}
+{"event": "cache_check", "model": "B", "usage": {"completion_tokens": 3, "prompt_tokens": 2735, "total_tokens": 2738, "prompt_tokens_details": {"cached_tokens": 2711}}, "t": 1792486438.6606717}
+{"event": "run_start", "model": "B", "task": "T1", "rep": 1, "power_session": "p3-B-20261020-015341", "t": 1792486439.0247114}
+{"run": "B-T1-r1", "wall_s": 180.1, "steps": 12, "killed": null, "ran_tests": true, "peeked": 0, "score": "{\"task\": \"T1\", \"label\": \"B-T1-r1\", \"score\": 1.0, \"package_changed\": true, \"tests_changed\": false, \"visible\": \"30/30\", \"hidden\": \"25/25 (task 7/7, keep 18/18)\"}"}
+{"event": "run_end", "model": "B", "task": "T1", "rep": 1, "t": 1792486621.009769}
+{"event": "run_start", "model": "B", "task": "T2", "rep": 1, "power_session": "p3-B-20261020-015341", "t": 1792486622.0533104}
+{"run": "B-T2-r1", "wall_s": 860.3, "steps": 48, "killed": null, "ran_tests": true, "peeked": 0, "score": "{\"task\": \"T2\", \"label\": \"B-T2-r1\", \"score\": 1.0, \"package_changed\": true, \"tests_changed\": true, \"visible\": \"64/64\", \"hidden\": \"28/28 (task 12/12, keep 16/16)\"}"}
+{"event": "run_end", "model": "B", "task": "T2", "rep": 1, "t": 1792487484.5090473}
+{"event": "run_start", "model": "B", "task": "T3", "rep": 1, "power_session": "p3-B-20261020-015341", "t": 1792487485.8463104}
+{"run": "B-T3-r1", "wall_s": 90.0, "steps": 6, "killed": null, "ran_tests": true, "peeked": 0, "score": "{\"task\": \"T3\", \"label\": \"B-T3-r1\", \"score\": 0.96, \"package_changed\": true, \"tests_changed\": false, \"visible\": \"31/31\", \"hidden\": \"24/25 (task 1/1, keep 23/24)\"}"}
+{"event": "run_end", "model": "B", "task": "T3", "rep": 1, "t": 1792487577.9403374}
+{"event": "run_start", "model": "B", "task": "T4", "rep": 1, "power_session": "p3-B-20261020-015341", "t": 1792487578.526619}
+{"run": "B-T4-r1", "wall_s": 175.0, "steps": 15, "killed": null, "ran_tests": true, "peeked": 0, "score": "{\"task\": \"T4\", \"label\": \"B-T4-r1\", \"score\": 1.0, \"package_changed\": true, \"tests_changed\": true, \"visible\": \"44/44\", \"hidden\": \"28/28 (task 13/13, keep 15/15)\"}"}
+{"event": "run_end", "model": "B", "task": "T4", "rep": 1, "t": 1792487755.502078}
+{"event": "run_start", "model": "B", "task": "T5", "rep": 1, "power_session": "p3-B-20261020-015341", "t": 1792487756.7209573}
+{"run": "B-T5-r1", "wall_s": 75.0, "steps": 8, "killed": null, "ran_tests": true, "peeked": 0, "score": "{\"task\": \"T5\", \"label\": \"B-T5-r1\", \"score\": 1.0, \"package_changed\": true, \"tests_changed\": false, \"visible\": \"30/30\", \"hidden\": \"21/21 (task 5/5, keep 16/16)\"}"}
+{"event": "run_end", "model": "B", "task": "T5", "rep": 1, "t": 1792487833.6343312}
+{"event": "run_start", "model": "B", "task": "T6", "rep": 1, "power_session": "p3-B-20261020-015341", "t": 1792487834.279822}
+{"run": "B-T6-r1", "wall_s": 355.1, "steps": 15, "killed": null, "ran_tests": true, "peeked": 0, "score": "{\"task\": \"T6\", \"label\": \"B-T6-r1\", \"score\": 1.0, \"package_changed\": true, \"tests_changed\": true, \"visible\": \"62/62\", \"mutation\": \"10/10 killed\"}"}
+{"event": "run_end", "model": "B", "task": "T6", "rep": 1, "t": 1792488199.0055387}
+{"event": "run_start", "model": "B", "task": "T1", "rep": 2, "power_session": "p3-B-20261020-015341", "t": 1792488200.088962}
+{"run": "B-T1-r2", "wall_s": 60.0, "steps": 7, "killed": null, "ran_tests": true, "peeked": 0, "score": "{\"task\": \"T1\", \"label\": \"B-T1-r2\", \"score\": 1.0, \"package_changed\": true, \"tests_changed\": false, \"visible\": \"30/30\", \"hidden\": \"25/25 (task 7/7, keep 18/18)\"}"}
+{"event": "run_end", "model": "B", "task": "T1", "rep": 2, "t": 1792488261.9945943}
+{"event": "run_start", "model": "B", "task": "T2", "rep": 2, "power_session": "p3-B-20261020-015341", "t": 1792488262.7635984}
+{"run": "B-T2-r2", "wall_s": 175.1, "steps": 10, "killed": null, "ran_tests": true, "peeked": 0, "score": "{\"task\": \"T2\", \"label\": \"B-T2-r2\", \"score\": 0.6785714285714286, \"package_changed\": true, \"tests_changed\": false, \"visible\": \"31/32\", \"hidden\": \"19/28 (task 3/12, keep 16/16)\"}"}
+{"event": "run_end", "model": "B", "task": "T2", "rep": 2, "t": 1792488440.1206267}
+{"event": "run_start", "model": "B", "task": "T3", "rep": 2, "power_session": "p3-B-20261020-015341", "t": 1792488440.9471276}
+{"run": "B-T3-r2", "wall_s": 90.0, "steps": 7, "killed": null, "ran_tests": true, "peeked": 0, "score": "{\"task\": \"T3\", \"label\": \"B-T3-r2\", \"score\": 1.0, \"package_changed\": true, \"tests_changed\": false, \"visible\": \"31/31\", \"hidden\": \"25/25 (task 1/1, keep 24/24)\"}"}
+{"event": "run_end", "model": "B", "task": "T3", "rep": 2, "t": 1792488532.8917809}
+{"event": "run_start", "model": "B", "task": "T4", "rep": 2, "power_session": "p3-B-20261020-015341", "t": 1792488533.5510404}
+{"run": "B-T4-r2", "wall_s": 95.0, "steps": 14, "killed": null, "ran_tests": true, "peeked": 0, "score": "{\"task\": \"T4\", \"label\": \"B-T4-r2\", \"score\": 1.0, \"package_changed\": true, \"tests_changed\": true, \"visible\": \"43/43\", \"hidden\": \"28/28 (task 13/13, keep 15/15)\"}"}
+{"event": "run_end", "model": "B", "task": "T4", "rep": 2, "t": 1792488630.4539044}
+{"event": "run_start", "model": "B", "task": "T5", "rep": 2, "power_session": "p3-B-20261020-015341", "t": 1792488631.7033243}
+{"run": "B-T5-r2", "wall_s": 85.0, "steps": 14, "killed": null, "ran_tests": true, "peeked": 0, "score": "{\"task\": \"T5\", \"label\": \"B-T5-r2\", \"score\": 1.0, \"package_changed\": true, \"tests_changed\": false, \"visible\": \"30/30\", \"hidden\": \"21/21 (task 5/5, keep 16/16)\"}"}
+{"event": "run_end", "model": "B", "task": "T5", "rep": 2, "t": 1792488718.6652427}
+{"event": "run_start", "model": "B", "task": "T6", "rep": 2, "power_session": "p3-B-20261020-015341", "t": 1792488719.5901177}
+{"run": "B-T6-r2", "wall_s": 395.1, "steps": 21, "killed": null, "ran_tests": true, "peeked": 0, "score": "{\"task\": \"T6\", \"label\": \"B-T6-r2\", \"score\": 1.0, \"package_changed\": true, \"tests_changed\": true, \"visible\": \"54/54\", \"mutation\": \"10/10 killed\"}"}
+{"event": "run_end", "model": "B", "task": "T6", "rep": 2, "t": 1792489124.2501612}
+{"event": "server_stopped", "pid": 23920, "t": 1792489124.3384242}
+stopped 22952 (python)
+stopped 27624 (typeperf)
+stopped 34128 (powershell)
+{"event": "power_stop", "session": "p3-B-20261020-015341", "model": "B", "t": 1792489124.598809}

@@ -1,0 +1,27 @@
+{
+ "task": "T6",
+ "source_dir": "E:\\strata-dsv41\\pagoda\\coding-bench\\runs\\C-gpu-out8k\\T6\\r1\\work",
+ "label": "C-gpu-out8k-T6-r1",
+ "scored_at": "2026-11-09T17:06:24.695642",
+ "package_changed": false,
+ "tests_changed": false,
+ "visible": {
+  "total": 30,
+  "passed": 30,
+  "failed": 0,
+  "returncode": 0,
+  "timed_out": false,
+  "seconds": 2.3
+ },
+ "mutation": {
+  "has_tests": false,
+  "mutants": {},
+  "killed": 0,
+  "mutant_total": 10,
+  "original": null,
+  "score": 0.0,
+  "note": "no tests/test_reports.py"
+ },
+ "score": 0.0,
+ "hidden": null
+}

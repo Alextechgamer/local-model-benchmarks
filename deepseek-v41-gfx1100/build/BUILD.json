@@ -1,0 +1,17 @@
+{
+    "source":  "self-built from Niko1221/Strata v0.2.12 (tools/dsv41/win/build_hip_win.bat, STRATA_HIP_ARCHS=gfx1100), unsigned",
+    "program":  "strata-dsv41.exe",
+    "backend":  "hip",
+    "platform":  "windows-x64",
+    "version":  "0.1.58",
+    "archs":  [
+                  "gfx1100"
+              ],
+    "rocm":  "10.2.0a20260930",
+    "lib_dirs":  [
+                     "rocm/bin"
+                 ],
+    "commit":  "146df3c468739147f520ac3816de806f71232571",
+    "toolchain":  "ROCm 10.2.0a20260930 TheRock wheels, MSVC 14.44.35207, Windows SDK 10.0.26100, CMake 4.4.3, Ninja 1.13.2",
+    "runtime_from":  "rocm/ and HIP DLLs copied from the signed engine 0.1.58-windows-x86_64-hip-rdna3"
+}

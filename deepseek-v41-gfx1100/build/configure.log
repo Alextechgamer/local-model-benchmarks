@@ -1,0 +1,79 @@
+﻿cmd : 'vswhere.exe' is not recognized as an internal or external command,
+At line:1 char:302
++ ... tch {} } }; cmd /c "C:\Users\user\AppData\Local\Temp\claude\c8d1ce79a ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ('vswhere.exe' i...ternal command,:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+operable program or batch file.
+ROCM=E:\strata-dsv41\rocm-venv\Lib\site-packages\_rocm_sdk_devel
+AMD clang version 24.0.0git (https://github.com/ROCm/llvm-project.git 4f43f4746ede4cc49ab4129f473dbd54e0d9db4f)
+Target: x86_64-pc-windows-msvc
+Thread model: posix
+InstalledDir: E:\strata-dsv41\rocm-venv\Lib\site-packages\_rocm_sdk_devel\lib\llvm\bin
+cmake version 4.4.3
+
+CMake suite maintained and supported by Kitware (kitware.com/cmake).
+1.13.2
+-- The CXX compiler identification is Clang 24.0.0 with GNU-like command-line
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: E:/strata-dsv41/rocm-venv/Lib/site-packages/_rocm_sdk_devel/lib/llvm/bin/clang++.exe - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Strata: verify / batch windows hold up to 16 rows
+-- The HIP compiler identification is Clang 24.0.0 with GNU-like command-line
+-- Detecting HIP compiler ABI info
+-- Detecting HIP compiler ABI info - done
+-- Check for working HIP compiler: E:/strata-dsv41/rocm-venv/Lib/site-packages/_rocm_sdk_devel/lib/llvm/bin/clang++.exe - skipped
+-- Detecting HIP compile features
+-- Detecting HIP compile features - done
+-- HIP: Using hipcc from relative path: E:/strata-dsv41/rocm-venv/Lib/site-packages/_rocm_sdk_devel/bin/hipcc.exe
+-- Performing Test HIP_CLANG_SUPPORTS_PARALLEL_JOBS
+-- Performing Test HIP_CLANG_SUPPORTS_PARALLEL_JOBS - Success
+-- HIP: Using hipcc from relative path: E:/strata-dsv41/rocm-venv/Lib/site-packages/_rocm_sdk_devel/bin/hipcc.exe
+-- HIP: Using hipcc from relative path: E:/strata-dsv41/rocm-venv/Lib/site-packages/_rocm_sdk_devel/bin/hipcc.exe
+-- Strata: HIP enabled, arch gfx1100
+-- strata: pack/full/experts.bin absent - the expert arena load test is NOT registered
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Failed
+-- Looking for pthread_create in pthreads
+-- Looking for pthread_create in pthreads - not found
+-- Looking for pthread_create in pthread
+-- Looking for pthread_create in pthread - not found
+-- Check if compiler accepts -pthread
+-- Check if compiler accepts -pthread - no
+-- Found Threads: TRUE
+-- Performing Test STRATA_HAVE_AVXVNNI_INTRINSICS
+-- Performing Test STRATA_HAVE_AVXVNNI_INTRINSICS - Success
+-- The C compiler identification is Clang 24.0.0 with GNU-like command-line
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: E:/strata-dsv41/rocm-venv/Lib/site-packages/_rocm_sdk_devel/lib/llvm/bin/clang.exe - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+CMake Warning (author) at C:/Program Files/CMake/share/cmake-4.4/Modules/FetchContent.cmake:1968 (message):
+  Calling FetchContent_Populate(strata_llamacpp) is deprecated, call
+  FetchContent_MakeAvailable(strata_llamacpp) instead.  Policy CMP0169 can be
+  set to OLD to allow FetchContent_Populate(strata_llamacpp) to be called
+  directly for now, but the ability to call it with declared details will be
+  removed completely in a future version.
+Call Stack (most recent call first):
+  CMakeLists.txt:2178 (FetchContent_Populate)
+This warning is for project developers.  Use -Wno-author to suppress it.
+
+-- The ASM compiler identification is Clang with GNU-like command-line
+-- Found assembler: E:/strata-dsv41/rocm-venv/Lib/site-packages/_rocm_sdk_devel/lib/llvm/bin/clang.exe
+-- ccache found, compilation results will be cached. Disable with GGML_CCACHE=OFF.
+-- CMAKE_SYSTEM_PROCESSOR: AMD64
+-- GGML_SYSTEM_ARCH: x86
+-- Including CPU backend
+-- x86 detected
+-- Adding CPU backend variant ggml-cpu: -msse4.2;-mf16c;-mfma;-mavx;-mavx2 GGML_SSE42;GGML_F16C;GGML_FMA;GGML_AVX;GGML_AVX2
+-- ggml version: 0.24.0
+-- ggml commit:  3cf03257f
+-- trellis MMQ (Gyro prompts): overlay on the pinned ggml-cuda in E:/strata-dsv41/build-dsv41-hip/ggml-tq-overlay
+-- Configuring done (92.5s)
+-- Generating done (0.4s)
+-- Build files have been written to: E:/strata-dsv41/build-dsv41-hip
+CONFIGURE-EXIT 0

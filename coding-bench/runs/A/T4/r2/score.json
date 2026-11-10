@@ -1,0 +1,31 @@
+{
+ "task": "T4",
+ "source_dir": "E:\\strata-tests\\coding-bench\\runs\\A\\T4\\r2\\work",
+ "label": "A-T4-r2",
+ "scored_at": "2026-10-20T01:45:26.194497",
+ "package_changed": true,
+ "tests_changed": true,
+ "visible": {
+  "total": 39,
+  "passed": 39,
+  "failed": 0,
+  "returncode": 0,
+  "timed_out": false,
+  "seconds": 0.8
+ },
+ "hidden": {
+  "total": 28,
+  "passed": 28,
+  "failed": 0,
+  "task_total": 13,
+  "task_passed": 13,
+  "keep_total": 15,
+  "keep_passed": 15,
+  "failures": [],
+  "returncode": 0,
+  "timed_out": false,
+  "seconds": 0.7,
+  "output_tail": "............................                                             [100%]\n28 passed in 0.17s\n"
+ },
+ "score": 1.0
+}

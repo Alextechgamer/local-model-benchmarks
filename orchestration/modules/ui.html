@@ -1,0 +1,592 @@
+<style>
+  :root {
+    --ui-font: "Hiragino Sans", "Yu Gothic", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+    --ui-accent: #ffc0d3;
+    --ui-accent-2: #f59ab8;
+    --ui-glass: rgba(18, 20, 28, 0.42);
+    --ui-glass-strong: rgba(14, 16, 23, 0.62);
+    --ui-border: rgba(255, 255, 255, 0.16);
+    --ui-text: #f4f5f8;
+    --ui-text-dim: rgba(244, 245, 248, 0.66);
+    --ui-shadow: 0 10px 34px rgba(0, 0, 0, 0.38);
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+    background: #0a0b10;
+  }
+
+  body {
+    font-family: var(--ui-font);
+    color: var(--ui-text);
+    -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  #app {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+  }
+  #app canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* ---------- loading overlay ---------- */
+  #loading {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 18px;
+    background: radial-gradient(120% 90% at 50% 30%, #1b1d29 0%, #0a0b10 70%);
+    color: var(--ui-text);
+    font-family: var(--ui-font);
+    letter-spacing: 0.02em;
+    opacity: 1;
+    transition: opacity 700ms ease, visibility 0s linear 700ms;
+    pointer-events: all;
+  }
+  #loading.hide {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+  #loading .lt-title {
+    font-size: clamp(18px, 4.4vw, 26px);
+    font-weight: 600;
+    text-shadow: 0 2px 18px rgba(255, 192, 211, 0.35);
+  }
+  #loading .lt-sub {
+    font-size: clamp(11px, 2.8vw, 13px);
+    color: var(--ui-text-dim);
+  }
+  #loading .lt-bar {
+    width: min(240px, 56vw);
+    height: 3px;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.12);
+    overflow: hidden;
+  }
+  #loading .lt-bar i {
+    display: block;
+    width: 40%;
+    height: 100%;
+    border-radius: 3px;
+    background: linear-gradient(90deg, var(--ui-accent), var(--ui-accent-2));
+    animation: lt-slide 1.25s ease-in-out infinite;
+  }
+  @keyframes lt-slide {
+    0%   { transform: translateX(-100%); }
+    100% { transform: translateX(250%); }
+  }
+
+  /* ---------- title ---------- */
+  #title {
+    position: fixed;
+    top: 14px;
+    right: 16px;
+    z-index: 20;
+    padding: 10px 16px;
+    border-radius: 14px;
+    border: 1px solid var(--ui-border);
+    background: var(--ui-glass);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    backdrop-filter: blur(14px) saturate(140%);
+    box-shadow: var(--ui-shadow);
+    font-family: var(--ui-font);
+    font-size: clamp(13px, 3.4vw, 18px);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--ui-text);
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
+    white-space: nowrap;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* ---------- control panel ---------- */
+  #panel {
+    position: fixed;
+    top: 14px;
+    left: 14px;
+    z-index: 30;
+    width: 264px;
+    max-width: calc(100vw - 28px);
+    max-height: calc(100vh - 28px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 14px 14px 12px;
+    border-radius: 16px;
+    border: 1px solid var(--ui-border);
+    background: var(--ui-glass);
+    -webkit-backdrop-filter: blur(16px) saturate(150%);
+    backdrop-filter: blur(16px) saturate(150%);
+    box-shadow: var(--ui-shadow);
+    font-family: var(--ui-font);
+    color: var(--ui-text);
+    transition: transform 320ms cubic-bezier(0.4, 0, 0.2, 1), opacity 260ms ease;
+  }
+  #panel.collapsed {
+    transform: translateX(calc(-100% - 20px));
+    opacity: 0;
+    pointer-events: none;
+  }
+  #panel::-webkit-scrollbar { width: 8px; }
+  #panel::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.18);
+    border-radius: 8px;
+  }
+  #panel::-webkit-scrollbar-track { background: transparent; }
+
+  #panel-toggle {
+    position: fixed;
+    top: 14px;
+    left: 14px;
+    z-index: 31;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    border: 1px solid var(--ui-border);
+    background: var(--ui-glass-strong);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    box-shadow: var(--ui-shadow);
+    color: var(--ui-text);
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+    opacity: 0;
+    transform: scale(0.8);
+    pointer-events: none;
+    transition: opacity 260ms ease, transform 260ms ease, background 160ms ease;
+  }
+  #panel-toggle.show {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: auto;
+  }
+  #panel-toggle:active { transform: scale(0.92); }
+
+  .grp {
+    margin: 0 0 12px;
+  }
+  .grp:last-child { margin-bottom: 0; }
+
+  .grp-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 8px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ui-text-dim);
+  }
+  .grp-title::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.18), transparent);
+  }
+
+  .row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 7px 0;
+  }
+  .row label {
+    flex: 0 0 62px;
+    font-size: 11px;
+    color: var(--ui-text-dim);
+    letter-spacing: 0.02em;
+  }
+  .row .val {
+    flex: 0 0 44px;
+    text-align: right;
+    font-size: 11px;
+    font-variant-numeric: tabular-nums;
+    color: var(--ui-accent);
+  }
+
+  input[type="range"] {
+    flex: 1 1 auto;
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 20px;
+    margin: 0;
+    background: transparent;
+    cursor: pointer;
+  }
+  input[type="range"]::-webkit-slider-runnable-track {
+    height: 4px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.2);
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    margin-top: -5px;
+    border-radius: 50%;
+    background: linear-gradient(180deg, #ffffff, var(--ui-accent));
+    border: 1px solid rgba(0, 0, 0, 0.28);
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.45);
+  }
+  input[type="range"]::-moz-range-track {
+    height: 4px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.2);
+  }
+  input[type="range"]::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: linear-gradient(180deg, #ffffff, var(--ui-accent));
+    border: 1px solid rgba(0, 0, 0, 0.28);
+  }
+  input[type="range"]:focus-visible { outline: 2px solid var(--ui-accent-2); outline-offset: 3px; }
+
+  .checks {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px 8px;
+  }
+  .chk {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: var(--ui-text-dim);
+    cursor: pointer;
+    user-select: none;
+    padding: 3px 2px;
+    border-radius: 7px;
+  }
+  .chk:hover { color: var(--ui-text); }
+  .chk input {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 15px;
+    height: 15px;
+    flex: 0 0 15px;
+    margin: 0;
+    border-radius: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.34);
+    background: rgba(255, 255, 255, 0.08);
+    cursor: pointer;
+    position: relative;
+    transition: background 140ms ease, border-color 140ms ease;
+  }
+  .chk input:checked {
+    background: linear-gradient(180deg, var(--ui-accent), var(--ui-accent-2));
+    border-color: rgba(255, 255, 255, 0.6);
+  }
+  .chk input:checked::after {
+    content: "";
+    position: absolute;
+    left: 4px;
+    top: 1px;
+    width: 4px;
+    height: 8px;
+    border: solid #2a1a20;
+    border-width: 0 2px 2px 0;
+    transform: rotate(42deg);
+  }
+
+  .btns {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+  }
+  button {
+    font-family: inherit;
+    font-size: 11px;
+    letter-spacing: 0.01em;
+    color: var(--ui-text);
+    background: rgba(255, 255, 255, 0.09);
+    border: 1px solid rgba(255, 255, 255, 0.17);
+    border-radius: 10px;
+    padding: 8px 6px;
+    cursor: pointer;
+    transition: background 150ms ease, transform 120ms ease, border-color 150ms ease;
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+  }
+  button:hover {
+    background: rgba(255, 255, 255, 0.17);
+    border-color: rgba(255, 255, 255, 0.32);
+  }
+  button:active { transform: scale(0.95); }
+  button.active {
+    background: linear-gradient(180deg, rgba(255, 192, 211, 0.92), rgba(245, 154, 184, 0.86));
+    border-color: rgba(255, 255, 255, 0.55);
+    color: #2a1520;
+    font-weight: 700;
+  }
+  button.wide { grid-column: span 3; }
+
+  #help {
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    z-index: 30;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    font-size: 15px;
+    font-weight: 700;
+    border: 1px solid var(--ui-border);
+    background: var(--ui-glass-strong);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    box-shadow: var(--ui-shadow);
+  }
+  #help-tip {
+    position: fixed;
+    right: 16px;
+    bottom: 58px;
+    z-index: 31;
+    padding: 11px 13px;
+    border-radius: 12px;
+    border: 1px solid var(--ui-border);
+    background: var(--ui-glass-strong);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    box-shadow: var(--ui-shadow);
+    font-family: var(--ui-font);
+    font-size: 11px;
+    line-height: 1.75;
+    color: var(--ui-text);
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(6px);
+    pointer-events: none;
+    transition: opacity 200ms ease, transform 200ms ease, visibility 0s linear 200ms;
+  }
+  #help-tip.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
+    transition-delay: 0s;
+  }
+  #help-tip kbd {
+    display: inline-block;
+    min-width: 18px;
+    text-align: center;
+    padding: 1px 5px;
+    margin-right: 4px;
+    border-radius: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    background: rgba(255, 255, 255, 0.12);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 10px;
+    color: var(--ui-accent);
+  }
+  #help-tip .ht-row { display: flex; justify-content: space-between; gap: 18px; }
+  #help-tip .ht-hd {
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ui-text-dim);
+  }
+
+  #stats {
+    position: fixed;
+    left: 14px;
+    bottom: 14px;
+    z-index: 20;
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    font-family: var(--ui-font);
+    font-size: 10.5px;
+    color: var(--ui-text-dim);
+    pointer-events: none;
+    user-select: none;
+  }
+  #stats .stat {
+    padding: 5px 9px;
+    border-radius: 9px;
+    border: 1px solid var(--ui-border);
+    background: var(--ui-glass);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  #stats .stat b {
+    color: var(--ui-accent);
+    font-weight: 600;
+    margin-left: 5px;
+  }
+
+  #toast {
+    position: fixed;
+    left: 50%;
+    bottom: 26px;
+    transform: translateX(-50%) translateY(10px);
+    z-index: 40;
+    padding: 9px 16px;
+    border-radius: 11px;
+    border: 1px solid var(--ui-border);
+    background: var(--ui-glass-strong);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    box-shadow: var(--ui-shadow);
+    font-family: var(--ui-font);
+    font-size: 12px;
+    color: var(--ui-text);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 240ms ease, transform 240ms ease, visibility 0s linear 240ms;
+  }
+  #toast.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+    transition-delay: 0s;
+  }
+
+  @media (max-width: 560px) {
+    #panel {
+      top: auto;
+      bottom: 14px;
+      left: 10px;
+      right: 10px;
+      width: auto;
+      max-height: 58vh;
+      padding: 12px;
+    }
+    #panel.collapsed { transform: translateY(calc(100% + 20px)); }
+    #panel-toggle { top: auto; bottom: 14px; left: 14px; }
+    #title {
+      top: 10px;
+      right: 10px;
+      left: 10px;
+      text-align: center;
+      padding: 8px 12px;
+    }
+    #stats { left: auto; right: 12px; bottom: 58px; justify-content: flex-end; }
+    #help { right: 10px; bottom: 10px; }
+    #help-tip { right: 10px; bottom: 52px; font-size: 10.5px; }
+    #toast { bottom: auto; top: 58px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #panel, #loading, #help-tip, #toast, #panel-toggle { transition-duration: 1ms !important; }
+    #loading .lt-bar i { animation: none; }
+  }
+</style>
+
+<div id="loading">
+  <div class="lt-title">桜の庭</div>
+  <div class="lt-bar"><i></i></div>
+  <div class="lt-sub">Building the garden&hellip;</div>
+</div>
+
+<div id="title">桜の庭 &ndash; Voxel Pagoda Garden</div>
+
+<button id="panel-toggle" type="button" title="Show controls" aria-label="Show controls">&#9776;</button>
+
+<div id="panel">
+  <div class="grp">
+    <div class="grp-title">Time of day</div>
+    <div class="row">
+      <label for="time">Hour</label>
+      <input id="time" type="range" min="0" max="24" step="0.1" value="8" aria-label="Time of day">
+      <span class="val" id="time-val">08:00</span>
+    </div>
+    <div class="row">
+      <label for="speed">Speed</label>
+      <input id="speed" type="range" min="0" max="4" step="0.1" value="1" aria-label="Hours per second">
+      <span class="val" id="speed-val">1.0&times;/s</span>
+    </div>
+    <div class="btns">
+      <button id="play" type="button" title="Play / pause the day cycle (Space also toggles auto-rotate)">Pause</button>
+      <button type="button" data-preset="Overview" class="preset">Overview</button>
+      <button type="button" class="preset night-jump" title="Jump between noon and midnight (N)">Night</button>
+    </div>
+  </div>
+
+  <div class="grp">
+    <div class="grp-title">Atmosphere</div>
+    <div class="row">
+      <label for="petals">Petals</label>
+      <input id="petals" type="range" min="0" max="1500" step="10" value="900" aria-label="Petal density">
+      <span class="val" id="petals-val">900</span>
+    </div>
+    <div class="row">
+      <label for="wind">Wind</label>
+      <input id="wind" type="range" min="0" max="3" step="0.1" value="1" aria-label="Wind strength">
+      <span class="val" id="wind-val">1.0</span>
+    </div>
+  </div>
+
+  <div class="grp">
+    <div class="grp-title">Display</div>
+    <div class="checks">
+      <label class="chk"><input type="checkbox" id="autorotate"> Auto&nbsp;orbit</label>
+      <label class="chk"><input type="checkbox" id="shadows" checked> Shadows</label>
+      <label class="chk"><input type="checkbox" id="fireflies" checked> Fireflies</label>
+      <label class="chk"><input type="checkbox" id="water" checked> Water&nbsp;anim</label>
+      <label class="chk"><input type="checkbox" id="wireframe"> Wireframe</label>
+    </div>
+  </div>
+
+  <div class="grp">
+    <div class="grp-title">Views</div>
+    <div class="btns">
+      <button type="button" data-preset="Pagoda" class="preset">Pagoda</button>
+      <button type="button" data-preset="Pond" class="preset">Pond</button>
+      <button type="button" data-preset="Torii" class="preset">Torii</button>
+      <button type="button" data-preset="Blossoms" class="preset">Blossoms</button>
+      <button type="button" data-preset="Overview" class="preset">Wide</button>
+      <button type="button" id="reset" title="Reset the camera">Reset view</button>
+      <button type="button" id="regen" class="wide" title="Rebuild the whole garden with a new random seed">Regenerate seed</button>
+    </div>
+  </div>
+</div>
+
+<div id="stats">
+  <span class="stat">voxels<b id="r-voxels">0</b></span>
+  <span class="stat">fps<b id="r-fps">0</b></span>
+  <span class="stat">time<b id="r-time">08:00</b></span>
+</div>
+
+<button id="help" type="button" aria-label="Keyboard shortcuts">?</button>
+<div id="help-tip">
+  <div class="ht-hd">Keyboard shortcuts</div>
+  <div class="ht-row"><span><kbd>1</kbd>&ndash;<kbd>5</kbd></span><span>Camera presets</span></div>
+  <div class="ht-row"><span><kbd>Space</kbd></span><span>Toggle auto-orbit</span></div>
+  <div class="ht-row"><span><kbd>N</kbd></span><span>Toggle night</span></div>
+  <div class="ht-row"><span><kbd>Drag</kbd></span><span>Orbit</span></div>
+  <div class="ht-row"><span><kbd>Scroll</kbd></span><span>Zoom</span></div>
+</div>
+
+<div id="toast"></div>

@@ -1,0 +1,39 @@
+{
+ "label": "ling31-r4",
+ "file_kb": 49.6,
+ "console_errors": [],
+ "console_warnings": [],
+ "exceptions": [],
+ "logs": [
+  "Garden built: 16667 voxels (16582 opaque + 85 emissive), seed 20240817"
+ ],
+ "page": {
+  "title": "桜の庭 – Voxel Pagoda Garden",
+  "canvases": [
+   [
+    1600,
+    900
+   ]
+  ],
+  "sliders": 4,
+  "checkboxes": 6,
+  "buttons": [
+   "–",
+   "▶",
+   "Overview",
+   "Pagoda",
+   "Pond",
+   "Torii",
+   "Blossoms",
+   "Regenerate seed",
+   "Reset view",
+   "?"
+  ],
+  "voxelText": "Voxels 16,667",
+  "fpsText": "FPS 144",
+  "hasJapaneseTitle": true,
+  "loadingVisible": false,
+  "text": "GROWING THE GARDEN …\n桜の庭\nVOXEL PAGODA GARDEN\nGARDEN CONTROLS\n–\nTime\n▶\n15:58\nSpeed\nPetals\nWind\n0.7\nAuto-rotate\nShadows\nFireflies\nWater anim\nWireframe\nMist\nOverview\nPagoda\nPond\nTorii\nBlossoms\nRegenerate seed\nReset view\n?\nVoxels 16,667\nFPS 144"
+ },
+ "measured_fps_headless": 144
+}

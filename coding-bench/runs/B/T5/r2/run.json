@@ -1,0 +1,35 @@
+{
+ "model": "B",
+ "task": "T5",
+ "rep": 2,
+ "t0": 1792488631.9763513,
+ "t1": 1792488716.9969115,
+ "wall_s": 85.0,
+ "exit_code": 0,
+ "killed": null,
+ "prompt_chars": 1063,
+ "cmd": [
+  "C:\\Users\\user\\AppData\\Roaming\\npm\\node_modules\\opencode-ai\\bin\\opencode.exe",
+  "run",
+  "--pure",
+  "-m",
+  "llamacpp/qwen38-27b",
+  "--format",
+  "json",
+  "<README on stdin>"
+ ],
+ "steps": 14,
+ "tool_calls": 18,
+ "tokens": {
+  "input": 8853,
+  "output": 4299,
+  "reasoning": 0,
+  "cache_read": 198529,
+  "cache_write": 0
+ },
+ "ran_visible_tests": true,
+ "pytest_calls": 1,
+ "peeked_outside": [],
+ "errors": [],
+ "final_text": "Fixed. The ticket scenario now checks out exactly:\n\n- **Cause**: in `refund_amount` (inventory_service/orders.py:105), the tax on a refund was computed on `net` \u2014 the line's amount after line-level discounts but **before** the tier/coupon discount \u2014 instead of `taxable` (after all discounts). With no order-level discount, `net == taxable`, so only coupon/tier-discounted orders were affected.\n- **Fix**: `percent_of(net, rate)` \u2192 `percent_of(taxable, rate)`.\n- **Verification**: all 30 tests pass, and the repro from ticket #4471 now gives total $147.68, refunds of $73.84 + $73.84, summing exactly to the order total."
+}

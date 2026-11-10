@@ -1,0 +1,27 @@
+{
+ "task": "T6",
+ "source_dir": "E:\\strata-dsv41\\pagoda\\coding-bench\\runs\\C\\T6\\r1\\work",
+ "label": "C-T6-r1",
+ "scored_at": "2026-11-09T06:08:22.723665",
+ "package_changed": false,
+ "tests_changed": false,
+ "visible": {
+  "total": 30,
+  "passed": 30,
+  "failed": 0,
+  "returncode": 0,
+  "timed_out": false,
+  "seconds": 1.0
+ },
+ "mutation": {
+  "has_tests": false,
+  "mutants": {},
+  "killed": 0,
+  "mutant_total": 10,
+  "original": null,
+  "score": 0.0,
+  "note": "no tests/test_reports.py"
+ },
+ "score": 0.0,
+ "hidden": null
+}

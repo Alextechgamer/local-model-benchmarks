@@ -1,0 +1,54 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "strata": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Strata (local)",
+      "options": { "baseURL": "http://127.0.0.1:8080/v1", "apiKey": "none" },
+      "models": {
+        "strata": {
+          "name": "Qwen3.8-Flash-Next Coder (Strata)",
+          "limit": { "context": 262144, "output": 32768 }
+        }
+      }
+    },
+    "ollama": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Ollama (local)",
+      "options": { "baseURL": "http://127.0.0.1:11434/v1", "apiKey": "none" },
+      "models": {
+        "qwen3.8:27b": {
+          "name": "Qwen 3.8 27B (Ollama)",
+          "limit": { "context": 32768, "output": 8192 }
+        }
+      }
+    }
+  },
+  "mcp": {
+    "unityMCP": { "enabled": false },
+    "ghidra": { "enabled": false }
+  },
+  "permission": {
+    "edit": "allow",
+    "bash": "allow",
+    "webfetch": "deny",
+    "websearch": "deny",
+    "skill": {
+      "*": "deny",
+      "brainstorming": "allow",
+      "dispatching-parallel-agents": "allow",
+      "executing-plans": "allow",
+      "finishing-a-development-branch": "allow",
+      "receiving-code-review": "allow",
+      "requesting-code-review": "allow",
+      "subagent-driven-development": "allow",
+      "systematic-debugging": "allow",
+      "test-driven-development": "allow",
+      "using-git-worktrees": "allow",
+      "using-superpowers": "allow",
+      "verification-before-completion": "allow",
+      "writing-plans": "allow",
+      "writing-skills": "allow"
+    }
+  }
+}

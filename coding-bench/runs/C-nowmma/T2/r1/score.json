@@ -1,0 +1,44 @@
+{
+ "task": "T2",
+ "source_dir": "E:\\strata-dsv41\\pagoda\\coding-bench\\runs\\C\\T2\\r1\\work",
+ "label": "C-T2-r1",
+ "scored_at": "2026-11-09T02:45:18.220866",
+ "package_changed": false,
+ "tests_changed": false,
+ "visible": {
+  "total": 32,
+  "passed": 30,
+  "failed": 2,
+  "returncode": 1,
+  "timed_out": false,
+  "seconds": 0.9
+ },
+ "hidden": {
+  "total": 28,
+  "passed": 16,
+  "failed": 12,
+  "task_total": 12,
+  "task_passed": 0,
+  "keep_total": 16,
+  "keep_passed": 16,
+  "failures": [
+   "test_task_convert_rates_and_rounding",
+   "test_task_unknown_currency",
+   "test_task_tables_and_format",
+   "test_task_breakdown_in_eur",
+   "test_task_breakdown_in_jpy_with_fixed_coupon",
+   "test_task_rules_stay_in_usd",
+   "test_task_usd_default_and_currency_field",
+   "test_task_order_in_eur_saved_and_loaded",
+   "test_task_refund_of_non_usd_order_rejected",
+   "test_task_cli_quote_and_order_in_eur",
+   "test_task_cli_usd_output_unchanged",
+   "test_task_export_has_currency_column"
+  ],
+  "returncode": 1,
+  "timed_out": false,
+  "seconds": 1.0,
+  "output_tail": "ys.exit(status)\nE       SystemExit: 2\n\nC:\\Python314\\Lib\\argparse.py:2769: SystemExit\n---------------------------- Captured stderr call -----------------------------\nusage: inventory_service [-h] [--state STATE]\n                         {import-products,import-stock,add-customer,quote,order,ship,cancel,refund,report,export-orders} ...\ninventory_service: error: unrecognized arguments: --currency EUR\n_____________________ test_task_cli_usd_output_unchanged ______________________\n\ntmp_path = WindowsPath('C:/Users/user/AppData/Local/Temp/pytest-of-user/pytest-258/test_task_cli_usd_output_uncha0')\ncapsys = <_pytest.capture.CaptureFixture object at 0x00000214A335F890>\n\n    def test_task_cli_usd_output_unchanged(tmp_path, capsys):\n        from inventory_service.cli import main\n        st = _cli_state(tmp_path)\n>       assert main([\"--state\", st, \"order\", \"C4\", \"TOO-0002:2\", \"--currency\", \"USD\"]) == 0\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\ntest_t2_currency.py:129: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n..\\model\\inventory_service\\cli.py:127: in main\n    return run(sys.argv[1:] if argv is None else argv)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n..\\model\\inventory_service\\cli.py:59: in run\n    a = build_parser().parse_args(argv)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nC:\\Python314\\Lib\\argparse.py:2009: in parse_args\n    self.error(msg)\nC:\\Python314\\Lib\\argparse.py:2782: in error\n    self.exit(2, _('%(prog)s: error: %(message)s\\n') % args)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself = ArgumentParser(prog='inventory_service', usage=None, description=None, formatter_class=<class 'argparse.HelpFormatter'>, conflict_handler='error', add_help=True)\nstatus = 2\nmessage = 'inventory_service: error: unrecognized arguments: --currency USD\\n'\n\n    def exit(self, status=0, message=None):\n        if message:\n            self._print_message(message, _sys.stderr)\n>       _sys.exit(status)\nE       SystemExit: 2\n\nC:\\Python314\\Lib\\argparse.py:2769: SystemExit\n---------------------------- Captured stderr call -----------------------------\nusage: inventory_service [-h] [--state STATE]\n                         {import-products,import-stock,add-customer,quote,order,ship,cancel,refund,report,export-orders} ...\ninventory_service: error: unrecognized arguments: --currency USD\n____________________ test_task_export_has_currency_column _____________________\n\n    def test_task_export_has_currency_column():\n        from inventory_service.csv_io import export_orders\n        cat, inv, svc, _ = world()\n        svc.create_order(\"C4\", [(\"TOO-0002\", 2)])\n>       svc.create_order(\"C6\", [(\"KIT-0002\", 2), (\"TOO-0001\", 1)], \"FLAT5\", currency=\"JPY\")\nE       TypeError: OrderService.create_order() got an unexpected keyword argument 'currency'\n\ntest_t2_currency.py:137: TypeError\n=========================== short test summary info ===========================\nFAILED test_t2_currency.py::test_task_convert_rates_and_rounding - ModuleNotF...\nFAILED test_t2_currency.py::test_task_unknown_currency - ModuleNotFoundError:...\nFAILED test_t2_currency.py::test_task_tables_and_format - ModuleNotFoundError...\nFAILED test_t2_currency.py::test_task_breakdown_in_eur - TypeError: compute_o...\nFAILED test_t2_currency.py::test_task_breakdown_in_jpy_with_fixed_coupon - Ty...\nFAILED test_t2_currency.py::test_task_rules_stay_in_usd - TypeError: compute_...\nFAILED test_t2_currency.py::test_task_usd_default_and_currency_field - Attrib...\nFAILED test_t2_currency.py::test_task_order_in_eur_saved_and_loaded - TypeErr...\nFAILED test_t2_currency.py::test_task_refund_of_non_usd_order_rejected - Type...\nFAILED test_t2_currency.py::test_task_cli_quote_and_order_in_eur - SystemExit: 2\nFAILED test_t2_currency.py::test_task_cli_usd_output_unchanged - SystemExit: 2\nFAILED test_t2_currency.py::test_task_export_has_currency_column - TypeError:...\n12 failed, 16 passed in 0.41s\n"
+ },
+ "score": 0.5714285714285714
+}

@@ -1,0 +1,1 @@
+[93m[1m! [0mpermission requested: external_directory (E:\strata-tests\coding-bench\runs\B\T2\r2\r2\work\inventory_service\*); auto-rejecting

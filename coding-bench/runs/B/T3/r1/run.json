@@ -1,0 +1,35 @@
+{
+ "model": "B",
+ "task": "T3",
+ "rep": 1,
+ "t0": 1792487486.1256871,
+ "t1": 1792487576.1462686,
+ "wall_s": 90.0,
+ "exit_code": 0,
+ "killed": null,
+ "prompt_chars": 1549,
+ "cmd": [
+  "C:\\Users\\user\\AppData\\Roaming\\npm\\node_modules\\opencode-ai\\bin\\opencode.exe",
+  "run",
+  "--pure",
+  "-m",
+  "llamacpp/qwen38-27b",
+  "--format",
+  "json",
+  "<README on stdin>"
+ ],
+ "steps": 6,
+ "tool_calls": 7,
+ "tokens": {
+  "input": 10282,
+  "output": 4760,
+  "reasoning": 0,
+  "cache_read": 56917,
+  "cache_write": 0
+ },
+ "ran_visible_tests": true,
+ "pytest_calls": 1,
+ "peeked_outside": [],
+ "errors": [],
+ "final_text": "All 31 tests pass, including `test_pricing_structure.py`. Refactored `compute_order_total` (64 lines) into:\n\n- `_line_details(line, product)` \u2014 per-line pricing, returns the detail dict and weight\n- `_sum_lines(lines, catalog)` \u2014 step 1 accumulation\n- `_apply_coupon(coupon, after_tier)` \u2014 step 3 with min/cap/kind errors\n- `compute_order_total` \u2014 30 lines, now just validates inputs and orchestrates the steps\n\nPublic names, signatures, `PriceBreakdown` fields, error messages, and `breakdown.lines` are unchanged."
+}

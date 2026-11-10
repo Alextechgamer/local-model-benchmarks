@@ -1,0 +1,76 @@
+{
+ "model": "C",
+ "prompt_variant": "default",
+ "reasoning_effort": "low",
+ "task": "T1",
+ "rep": 1,
+ "t0": 1794263812.2012126,
+ "t1": 1794263937.222845,
+ "wall_s": 125.0,
+ "exit_code": 0,
+ "killed": null,
+ "prompt_chars": 691,
+ "cmd": [
+  "C:\\Users\\user\\AppData\\Roaming\\npm\\node_modules\\opencode-ai\\bin\\opencode.exe",
+  "run",
+  "--pure",
+  "-m",
+  "strata/deepseek",
+  "--format",
+  "json",
+  "<README on stdin>"
+ ],
+ "steps": 1,
+ "tool_calls": 0,
+ "tokens": {
+  "input": 196,
+  "output": 67,
+  "reasoning": 0,
+  "cache_read": 5836,
+  "cache_write": 0
+ },
+ "ran_visible_tests": false,
+ "pytest_calls": 0,
+ "tokens_per_step": [
+  {
+   "output": 67,
+   "reasoning": 0
+  }
+ ],
+ "peeked_outside": [],
+ "errors": [],
+ "final_text": "<tool_call>\n<function=let me look at the directory structure.>\n</\uff5cDSML\uff5c parameter>\n<parameter=tool>\nls -la && find . -type f | head -100\n</parameter>\n</function>\n</tool_call>\n",
+ "nan_drops": 0,
+ "thinking_per_request": [
+  76,
+  23
+ ],
+ "thinking_total": 99,
+ "thinking_max": 76,
+ "engine": {
+  "turns": 2,
+  "prompt_tokens": 6773,
+  "cached_tokens": 6374,
+  "fresh_tokens": 399,
+  "first_turn": {
+   "prompt": 741,
+   "cached": 538,
+   "fresh": 203,
+   "prompt_ms": 36001,
+   "prompt_tok_s": 5.6,
+   "generated": 85,
+   "gen_ms": 29937,
+   "decode_tok_s": 2.84,
+   "drafts_kept": 40,
+   "drafts": 62
+  },
+  "ttft_first_s": 36.0,
+  "ttft_median_s": 36.0,
+  "ttft_total_s": 65.5,
+  "output_tokens": 152,
+  "decode_tok_s": 2.91,
+  "drafts_kept": 83,
+  "drafts": 135
+ },
+ "disk_E_read_GB": 118.2
+}

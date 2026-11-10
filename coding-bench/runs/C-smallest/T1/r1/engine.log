@@ -1,0 +1,18 @@
+ds4 slots: saved a 28494-token conversation (0.05 GB in RAM in 3.9 s); 4 in RAM, 33 in C:\Users\user\AppData\Local\Strata\launch\ds4-slots
+ds4 slots: took back a 538-token conversation at token 538 of 1647 from the folder (0.0 s); 203 new tokens to read
+ds4: RAM store: 2.0 GB free: gave back 5 chunks (3840 slots left)
+maya ds4 serve: prompt 741 tokens = 538 reused + 203 read in 37072 ms (5.5 tok/s), 76 generated in 36321 ms (2.09 tok/s); CPU lane 39.7% of the experts
+maya ds4 serve: drafts 37 of 54 kept; per position (kept / reached): 1: 18/23 78% 2: 12/13 92% 3: 4/7 57% 4: 3/4 75% 5: 0/1 0%
+ds4: kept a 5921-token shared start (0.01 GB in RAM in 0.01 s); 1 kept, 0.01 GB
+maya ds4 serve: prompt 6117 tokens = 0 reused + 6117 read in 66827 ms (91.5 tok/s), 78 generated in 18822 ms (4.14 tok/s); CPU lane 37.3% of the experts
+maya ds4 serve: drafts 64 of 69 kept; per position (kept / reached): 1: 13/14 93% 2: 13/13 100% 3: 13/13 100% 4: 13/13 100% 5: 12/12 100%
+maya ds4 serve: prompt 6793 tokens = 6195 reused + 598 read in 29259 ms (20.4 tok/s), 51 generated in 12200 ms (4.18 tok/s); CPU lane 37.0% of the experts
+maya ds4 serve: drafts 40 of 50 kept; per position (kept / reached): 1: 9/10 90% 2: 9/9 100% 3: 8/9 89% 4: 7/8 88% 5: 7/7 100%
+maya ds4 serve: prompt 7889 tokens = 6843 reused + 1046 read in 51093 ms (20.5 tok/s), 313 generated in 48527 ms (6.45 tok/s); CPU lane 36.8% of the experts
+maya ds4 serve: drafts 256 of 273 kept; per position (kept / reached): 1: 55/57 96% 2: 53/54 98% 3: 51/51 100% 4: 49/51 96% 5: 48/48 100%
+maya ds4 serve: prompt 16978 tokens = 8202 reused + 8776 read in 73414 ms (119.5 tok/s), 601 generated in 148101 ms (4.06 tok/s); CPU lane 34.6% of the experts
+maya ds4 serve: drafts 452 of 500 kept; per position (kept / reached): 1: 115/132 87% 2: 97/106 92% 3: 86/88 98% 4: 79/83 95% 5: 75/76 99%
+maya ds4 serve: prompt 17615 tokens = 17578 reused + 37 read in 6478 ms (5.7 tok/s), 77 generated in 24469 ms (3.15 tok/s); CPU lane 34.7% of the experts
+maya ds4 serve: drafts 49 of 59 kept; per position (kept / reached): 1: 14/20 70% 2: 10/11 91% 3: 9/9 100% 4: 9/9 100% 5: 7/8 88%
+maya ds4 serve: prompt 17889 tokens = 17692 reused + 197 read in 22119 ms (8.9 tok/s), 96 generated in 36014 ms (2.67 tok/s); CPU lane 34.7% of the experts
+maya ds4 serve: drafts 62 of 85 kept; per position (kept / reached): 1: 22/28 79% 2: 15/17 88% 3: 10/13 77% 4: 9/10 90% 5: 6/6 100%

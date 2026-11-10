@@ -1,0 +1,35 @@
+{
+ "model": "B",
+ "task": "T1",
+ "rep": 1,
+ "t0": 1792486439.2848558,
+ "t1": 1792486619.3366058,
+ "wall_s": 180.1,
+ "exit_code": 0,
+ "killed": null,
+ "prompt_chars": 691,
+ "cmd": [
+  "C:\\Users\\user\\AppData\\Roaming\\npm\\node_modules\\opencode-ai\\bin\\opencode.exe",
+  "run",
+  "--pure",
+  "-m",
+  "llamacpp/qwen38-27b",
+  "--format",
+  "json",
+  "<README on stdin>"
+ ],
+ "steps": 12,
+ "tool_calls": 25,
+ "tokens": {
+  "input": 30725,
+  "output": 6588,
+  "reasoning": 0,
+  "cache_read": 244268,
+  "cache_write": 0
+ },
+ "ran_visible_tests": true,
+ "pytest_calls": 3,
+ "peeked_outside": [],
+ "errors": [],
+ "final_text": "All 30 tests pass. Three bugs fixed:\n\n1. **inventory.py:89** \u2014 `release()` had an early `return` inside the loop, so it only freed the order's first reservation; removed it so every line is released.\n2. **csv_io.py:60** \u2014 an empty optional `weight_kg` cell was passed through to `to_decimal('')` instead of falling back to the default `\"0\"`; empty cells now use the default.\n3. **pricing.py:90** \u2014 the bulk discount applied only for quantity `> 10`; the docstring says \"quantity >= 10\", so changed to `>=`."
+}

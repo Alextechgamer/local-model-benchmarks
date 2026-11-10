@@ -1,0 +1,13 @@
+03:14:06 START C default T1
+03:22:58 END T1 rc 0 {"run": "C-T1-r1", "wall_s": 530.1, "steps": 5, "killed": null, "ran_tests": true, "peeked": 0, "score": "{\"task\": \"T1\", \"label\": \"C-T1-r1\", \"score\": 1.0, \"package_changed\": true, \"tests_changed\": false, \"visible\": \"30/30\", \"hidden\": \"25/25 (task 7/7, keep 18/18)\"}"} 
+03:22:58 START C default T2
+04:08:39 END T2 rc 0 {"run": "C-T2-r1", "wall_s": 2701.1, "steps": 13, "killed": "time limit", "ran_tests": true, "peeked": 0, "score": "{\"task\": \"T2\", \"label\": \"C-T2-r1\", \"score\": 0.8571428571428571, \"package_changed\": true, \"tests_changed\": false, \"visible\": \"30/32\", \"hidden\": \"24/28 (task 10/12, keep 14/16)\"}"} 
+04:08:39 START C default T3
+04:37:07 END T3 rc 0 {"run": "C-T3-r1", "wall_s": 1705.3, "steps": 8, "killed": null, "ran_tests": true, "peeked": 0, "score": "{\"task\": \"T3\", \"label\": \"C-T3-r1\", \"score\": 1.0, \"package_changed\": true, \"tests_changed\": false, \"visible\": \"31/31\", \"hidden\": \"25/25 (task 1/1, keep 24/24)\"}"} 
+04:37:07 START C default T4
+04:57:44 END T4 rc 0 {"run": "C-T4-r1", "wall_s": 1235.2, "steps": 11, "killed": null, "ran_tests": true, "peeked": 0, "score": "{\"task\": \"T4\", \"label\": \"C-T4-r1\", \"score\": 1.0, \"package_changed\": true, \"tests_changed\": true, \"visible\": \"37/37\", \"hidden\": \"28/28 (task 13/13, keep 15/15)\"}"} 
+04:57:44 START C default T5
+05:22:46 END T5 rc 0 {"run": "C-T5-r1", "wall_s": 1500.3, "steps": 13, "killed": null, "ran_tests": true, "peeked": 0, "score": "{\"task\": \"T5\", \"label\": \"C-T5-r1\", \"score\": 1.0, \"package_changed\": true, \"tests_changed\": true, \"visible\": \"31/31\", \"hidden\": \"21/21 (task 5/5, keep 16/16)\"}"} 
+05:22:46 START C default T6
+06:08:23 END T6 rc 0 {"run": "C-T6-r1", "wall_s": 2700.7, "steps": 5, "killed": "time limit", "ran_tests": false, "peeked": 0, "score": "{\"task\": \"T6\", \"label\": \"C-T6-r1\", \"score\": 0.0, \"package_changed\": false, \"tests_changed\": false, \"visible\": \"30/30\", \"mutation\": \"0/10 killed (no tests/test_reports.py)\"}"} 
+06:08:23 ALL-DONE

@@ -1,0 +1,45 @@
+[strata] thinking capped at 12288 of max_tokens 16384 to leave room for the answer (budget 32768)
+[strata] thinking capped at 12288 of max_tokens 16384 to leave room for the answer (budget 32768)
+[strata] reading the prompt: 741 tokens, 14 s so far
+[strata] reading the prompt: 741 tokens, 24 s so far
+[strata] reading the prompt: 741 tokens, 34 s so far
+[strata] reading the prompt: 741 of 741 tokens, 36 s so far
+[strata] thinking: 2 of budget 12288 (max 16384) tokens, 0.9 tok/s, 38 s
+[strata] thinking: 4 of budget 12288 (max 16384) tokens, 1.2 tok/s, 39 s
+[strata] thinking: 10 of budget 12288 (max 16384) tokens, 2.2 tok/s, 41 s
+[strata] thinking: 12 of budget 12288 (max 16384) tokens, 2.1 tok/s, 42 s
+[strata] thinking: 14 of budget 12288 (max 16384) tokens, 1.9 tok/s, 43 s
+[strata] thinking: 15 of budget 12288 (max 16384) tokens, 1.8 tok/s, 44 s
+[strata] thinking: 20 of budget 12288 (max 16384) tokens, 2.1 tok/s, 46 s
+[strata] thinking: 23 of budget 12288 (max 16384) tokens, 2.1 tok/s, 47 s
+[strata] thinking: 26 of budget 12288 (max 16384) tokens, 2.1 tok/s, 49 s
+[strata] thinking: 29 of budget 12288 (max 16384) tokens, 2.1 tok/s, 50 s
+[strata] thinking: 34 of budget 12288 (max 16384) tokens, 2.3 tok/s, 51 s
+[strata] thinking: 37 of budget 12288 (max 16384) tokens, 2.3 tok/s, 52 s
+[strata] thinking: 39 of budget 12288 (max 16384) tokens, 2.2 tok/s, 53 s
+[strata] thinking: 45 of budget 12288 (max 16384) tokens, 2.4 tok/s, 55 s
+[strata] thinking: 51 of budget 12288 (max 16384) tokens, 2.5 tok/s, 56 s
+[strata] thinking: 59 of budget 12288 (max 16384) tokens, 2.7 tok/s, 58 s
+[strata] thinking: 67 of budget 12288 (max 16384) tokens, 2.8 tok/s, 60 s
+[strata] thinking: 73 of budget 12288 (max 16384) tokens, 2.9 tok/s, 61 s
+[strata] thinking: 76 of budget 12288 (max 16384) tokens, 2.9 tok/s, 62 s
+[strata] answering: 79 of max 16384 tokens, 2.9 tok/s, 63 s
+[strata] done: 85 tokens in 66 s (2.8 tok/s) (stop, cancel=False)
+[strata] reading the prompt: 6,032 tokens, 10 s so far
+[strata] reading the prompt: 6,032 tokens, 20 s so far
+[strata] reading the prompt: 6,032 of 6,032 tokens, 30 s so far
+[strata] thinking: 2 of budget 12288 (max 16384) tokens, 0.8 tok/s, 32 s
+[strata] thinking: 4 of budget 12288 (max 16384) tokens, 1.2 tok/s, 33 s
+[strata] thinking: 12 of budget 12288 (max 16384) tokens, 1.9 tok/s, 36 s
+[strata] thinking: 18 of budget 12288 (max 16384) tokens, 2.3 tok/s, 38 s
+[strata] thinking: 20 of budget 12288 (max 16384) tokens, 2.2 tok/s, 39 s
+[strata] thinking: 23 of budget 12288 (max 16384) tokens, 2.2 tok/s, 40 s
+[strata] answering: 28 of max 16384 tokens, 2.5 tok/s, 41 s
+[strata] answering: 30 of max 16384 tokens, 2.4 tok/s, 42 s
+[strata] answering: 37 of max 16384 tokens, 2.7 tok/s, 43 s
+[strata] answering: 39 of max 16384 tokens, 2.6 tok/s, 44 s
+[strata] answering: 44 of max 16384 tokens, 2.6 tok/s, 46 s
+[strata] answering: 46 of max 16384 tokens, 2.5 tok/s, 48 s
+[strata] answering: 51 of max 16384 tokens, 2.5 tok/s, 50 s
+[strata] answering: 63 of max 16384 tokens, 2.8 tok/s, 52 s
+[strata] done: 67 tokens in 52 s (3.0 tok/s) (stop, cancel=False)

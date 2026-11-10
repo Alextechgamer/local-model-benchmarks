@@ -1,0 +1,35 @@
+{
+ "model": "A",
+ "task": "T3",
+ "rep": 1,
+ "t0": 1792484677.046569,
+ "t1": 1792484762.0703127,
+ "wall_s": 85.0,
+ "exit_code": 0,
+ "killed": null,
+ "prompt_chars": 1549,
+ "cmd": [
+  "C:\\Users\\user\\AppData\\Roaming\\npm\\node_modules\\opencode-ai\\bin\\opencode.exe",
+  "run",
+  "--pure",
+  "-m",
+  "strata/coder",
+  "--format",
+  "json",
+  "<README on stdin>"
+ ],
+ "steps": 12,
+ "tool_calls": 11,
+ "tokens": {
+  "input": 13017,
+  "output": 4008,
+  "reasoning": 0,
+  "cache_read": 128372,
+  "cache_write": 0
+ },
+ "ran_visible_tests": true,
+ "pytest_calls": 1,
+ "peeked_outside": [],
+ "errors": [],
+ "final_text": "Refactored `pricing.py` \u2014 split `compute_order_total` into small helpers (`check_region_and_tier`, `price_line`, `price_lines`, `resolve_coupon_discount`), keeping all public names/signatures and identical behavior. Longest function is now 23 lines; all 31 tests pass."
+}

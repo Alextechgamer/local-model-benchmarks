@@ -1,0 +1,41 @@
+{
+ "label": "mimo-r4",
+ "file_kb": 54.9,
+ "console_errors": [],
+ "console_warnings": [],
+ "exceptions": [],
+ "logs": [
+  "[pagoda] voxel count: 16790 (opaque 16725 / emissive 65 / water 272 )"
+ ],
+ "page": {
+  "title": "桜の庭 – Voxel Pagoda Garden",
+  "canvases": [
+   [
+    1600,
+    900
+   ]
+  ],
+  "sliders": 4,
+  "checkboxes": 0,
+  "buttons": [
+   "–",
+   "Play cycle",
+   "Night",
+   "1 Overview",
+   "2 Pagoda",
+   "3 Pond",
+   "4 Torii",
+   "5 Blossoms",
+   "Reset view",
+   "Regenerate seed",
+   "Controls",
+   "?"
+  ],
+  "voxelText": "VOXEL GARDEN...",
+  "fpsText": "FPS\n144",
+  "hasJapaneseTitle": true,
+  "loadingVisible": false,
+  "text": "桜の庭\n\nBUILDING VOXEL GARDEN...\n\n桜の庭 – Voxel Pagoda Garden\n\nTHREE.JS · INSTANCED VOXELS\n\nGARDEN CONTROLS\n–\nTIME OF DAY\nHour\n09:30\nCycle speed\n1.0x\nPlay cycle\nNight\nATMOSPHERE\nPetal density\n1000\nWind strength\n1.00\nTOGGLES\nAuto-rotate\nShadows\nFireflies\nWater animation\nWireframe mode\nCAMERA PRESETS\n1 Overview\n2 Pagoda\n3 Pond\n4 Torii\n5 Blossoms\nReset view\nRegenerate seed\nLIVE READOUT\nVOXELS\n16,790\nFPS\n144\nTIME\n09:30\ndrag orbit · wheel zoom · right-drag pan\n?\nKeyboard shortcuts\nSpace toggle auto-rotate\n1–5 jump to camera preset\nN toggle day / night\nP play / pause time cycle\nW toggle wireframe\nR reset view"
+ },
+ "measured_fps_headless": 145
+}

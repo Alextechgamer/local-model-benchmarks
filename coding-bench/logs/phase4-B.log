@@ -1,0 +1,23 @@
+power logging started: gpu pid 36992, cpu pid 36740, mem pid 17760
+{"event": "p4_power_start", "session": "p4-B-20261020-031222", "model": "B", "t": 1792491142.5953238}
+{"event": "server_ready", "model": "B", "pid": 6908, "load_s": 11.0, "free_gb": 51.0, "t": 1792491154.3174038}
+{"model": "B", "size": "8k", "rep": 1, "status": "ok", "error": null, "prompt_tokens": 8188, "ttft_s": 12.939030170440674, "prompt_tps": 632.8140434130494, "output_tps": 82.36584633327325, "answers_correct": 3}
+{"model": "B", "size": "8k", "rep": 2, "status": "ok", "error": null, "prompt_tokens": 8188, "ttft_s": 12.932056903839111, "prompt_tps": 633.1552714997138, "output_tps": 81.12044013709563, "answers_correct": 3}
+{"model": "B", "size": "8k", "rep": 3, "status": "ok", "error": null, "prompt_tokens": 8189, "ttft_s": 12.882101774215698, "prompt_tps": 635.6881930859121, "output_tps": 79.13165031934903, "answers_correct": 3}
+{"model": "B", "size": "32k", "rep": 1, "status": "ok", "error": null, "prompt_tokens": 31854, "ttft_s": 60.39207863807678, "prompt_tps": 527.4532806015436, "output_tps": 67.82996074265725, "answers_correct": 3}
+{"model": "B", "size": "32k", "rep": 2, "status": "ok", "error": null, "prompt_tokens": 31853, "ttft_s": 60.171366453170776, "prompt_tps": 529.371391703229, "output_tps": 66.27985587429308, "answers_correct": 3}
+{"model": "B", "size": "32k", "rep": 3, "status": "ok", "error": null, "prompt_tokens": 31850, "ttft_s": 60.20574641227722, "prompt_tps": 529.0192697204916, "output_tps": 68.03742739520946, "answers_correct": 3}
+{"model": "B", "size": "64k", "rep": 1, "status": "ok", "error": null, "prompt_tokens": 63968, "ttft_s": 151.9714138507843, "prompt_tps": 420.92126656667193, "output_tps": 54.02045422407737, "answers_correct": 3}
+{"model": "B", "size": "64k", "rep": 2, "status": "ok", "error": null, "prompt_tokens": 63965, "ttft_s": 151.24788212776184, "prompt_tps": 422.9150127600967, "output_tps": 55.27488160445437, "answers_correct": 3}
+{"model": "B", "size": "64k", "rep": 3, "status": "ok", "error": null, "prompt_tokens": 63969, "ttft_s": 151.46793508529663, "prompt_tps": 422.32700910576835, "output_tps": 57.620221037450186, "answers_correct": 3}
+{"model": "B", "size": "96k", "rep": 1, "status": "ok", "error": null, "prompt_tokens": 94777, "ttft_s": 269.73726296424866, "prompt_tps": 351.3678420195206, "output_tps": 48.48811029012333, "answers_correct": 3}
+{"model": "B", "size": "96k", "rep": 2, "status": "ok", "error": null, "prompt_tokens": 94781, "ttft_s": 268.19111371040344, "prompt_tps": 353.40842837300664, "output_tps": 46.5782341172041, "answers_correct": 3}
+{"model": "B", "size": "96k", "rep": 3, "status": "ok", "error": null, "prompt_tokens": 94780, "ttft_s": 268.4985933303833, "prompt_tps": 352.99998716706386, "output_tps": 47.53906370946212, "answers_correct": 3}
+{"model": "B", "size": "128k", "rep": 0, "status": "does_not_fit", "prompt_tokens_est": 125166, "ctx_limit": 98304, "t_start": 1792492805.8939095, "t_end": 1792492805.8939095}
+{"model": "B", "size": "200k", "rep": 0, "status": "does_not_fit", "prompt_tokens_est": 198658, "ctx_limit": 98304, "t_start": 1792492805.8941834, "t_end": 1792492805.8941836}
+{"model": "B", "size": "250k", "rep": 0, "status": "does_not_fit", "prompt_tokens_est": 248912, "ctx_limit": 98304, "t_start": 1792492805.8944397, "t_end": 1792492805.89444}
+{"event": "server_stopped", "pid": 6908, "t": 1792492806.0125117}
+stopped 36992 (python)
+stopped 36740 (typeperf)
+stopped 17760 (powershell)
+{"event": "p4_power_stop", "session": "p4-B-20261020-031222", "model": "B", "t": 1792492806.2800586}

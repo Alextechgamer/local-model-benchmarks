@@ -1,0 +1,1479 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Voxel Pagoda Garden</title>
+<style>
+  html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #8ec6ec; }
+  canvas { display: block; }
+  /* ---- loading overlay: fades out once the garden is built ---- */
+  #loading {
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 40;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(9, 13, 20, 0.92); color: #e9e3d3;
+    font-family: 'Courier New', monospace; font-size: 13px; letter-spacing: 0.1em;
+    pointer-events: none; transition: opacity 0.8s ease;
+  }
+  #loading.done { opacity: 0; }
+
+  /* ---- title, top-right ---- */
+  #title {
+    position: fixed; top: 16px; right: 20px; z-index: 30; pointer-events: none;
+    font-family: 'Segoe UI', 'Yu Gothic', 'Hiragino Sans', sans-serif;
+    font-size: 21px; font-weight: 600; color: #f6f0e4;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+  }
+
+  /* ---- glass control panel, top-left ---- */
+  #panel {
+    position: fixed; top: 16px; left: 16px; z-index: 30; width: 320px;
+    box-sizing: border-box; padding: 8px 12px 12px;
+    background: rgba(16, 22, 30, 0.5); backdrop-filter: blur(12px) saturate(1.3);
+    -webkit-backdrop-filter: blur(12px) saturate(1.3);
+    border: 1px solid rgba(226, 236, 246, 0.2); border-radius: 12px;
+    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.35);
+    color: #e8eef6; font-family: 'Segoe UI', sans-serif; font-size: 12px;
+  }
+  #panelHead {
+    display: flex; align-items: center; justify-content: space-between;
+    cursor: pointer; user-select: none; font-size: 13px; font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+  #chev { color: #9fb4c8; font-size: 11px; }
+  #panelBody {
+    overflow: hidden; max-height: 520px; opacity: 1;
+    transition: opacity 0.22s ease, max-height 0.28s ease;
+  }
+  #panel.collapsed #panelBody { opacity: 0; max-height: 0; }
+  #panel.collapsed { padding: 8px 12px 8px; }
+  .grp { padding: 0 0 8px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+  .row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0 0 6px; }
+  .row label { font-size: 11px; color: #b9c6d6; }
+  .row input[type="range"] { width: 104px; accent-color: #e8a8c6; }
+  .chk { display: flex; align-items: center; gap: 8px; margin: 0 0 5px; cursor: pointer; user-select: none; }
+  .chk span { font-size: 11px; color: #b9c6d6; }
+  button {
+    background: rgba(255, 255, 255, 0.09); color: #eaf0f8;
+    border: 1px solid rgba(255, 255, 255, 0.18); border-radius: 6px;
+    padding: 3px 7px; font-size: 11px; cursor: pointer;
+  }
+  #stats {
+    margin: 6px 0 0; font-family: 'Courier New', monospace; font-size: 11px;
+    color: #cfe3c8;
+  }
+  #help { position: relative; margin: 4px 0 0; font-size: 11px; color: #9fb4c8; }
+  #help .tip {
+    position: absolute; left: 0; top: 16px; width: 236px;
+    background: rgba(8, 12, 18, 0.94); border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 8px; padding: 7px 9px; opacity: 0; pointer-events: none;
+    transition: opacity 0.18s ease; font-size: 11px; line-height: 1.55;
+    white-space: pre-wrap;
+  }
+  #help:hover .tip { opacity: 1; }
+</style>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<div id="loading">桜の庭 — raking the sand, planting the blossoms…</div>
+<div id="title">桜の庭 – Voxel Pagoda Garden</div>
+<div id="panel">
+  <div id="panelHead">桜の庭<span id="chev">▾</span></div>
+  <div id="panelBody">
+    <div class="grp">
+      <div class="row"><label>Time of day</label><input type="range" id="sTime" min="0" max="24" step="0.1" value="10"></div>
+      <div class="row"><label>Play cycle</label><button id="bPlay" type="button">▶</button></div>
+      <div class="row"><label>Speed</label><input type="range" id="sSpeed" min="0.05" max="4" step="0.05" value="1"></div>
+      <div class="row"><label>Petal density</label><input type="range" id="sPetals" min="0" max="1500" step="10" value="1200"></div>
+      <div class="row"><label>Wind strength</label><input type="range" id="sWind" min="0" max="4" step="0.05" value="1"></div>
+    </div>
+    <div class="grp">
+      <div class="chk"><input type="checkbox" id="cRotate" checked><span>Auto-rotate</span></div>
+      <div class="chk"><input type="checkbox" id="cShadows" checked><span>Shadows</span></div>
+      <div class="chk"><input type="checkbox" id="cFireflies" checked><span>Fireflies</span></div>
+      <div class="chk"><input type="checkbox" id="cWater" checked><span>Water animation</span></div>
+      <div class="chk"><input type="checkbox" id="cWire"><span>Wireframe mode</span></div>
+    </div>
+    <div class="grp">
+      <div class="row"><label>Camera</label><button id="p0" type="button">Overview</button><button id="p1" type="button">Pagoda</button><button id="p2" type="button">Pond</button><button id="p3" type="button">Torii</button><button id="p4" type="button">Blossoms</button></div>
+      <div class="row"><button id="bSeed" type="button">Regenerate seed</button><button id="bReset" type="button">Reset view</button></div>
+    </div>
+    <div id="stats">voxels <span id="rVox">0</span> · <span id="rFps">0</span> fps · <span id="rTime">10:00</span></div>
+  </div>
+  <div id="help" title="Space auto-rotate · 1-5 camera preset · N day/night">Keyboard<span class="tip">Space   toggle auto-rotate
+1 - 5   jump to a camera preset
+N       noon ⇄ 22:00
+drag    orbit · wheel / pinch zoom
+click   the panel header collapses it</span></div>
+</div>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+/* ================= config / constants ================= */
+const VOXEL  = 1;
+const GARDEN = 80;
+const HALF   = GARDEN / 2;
+const SIDE_STEPS = [[1, 0], [-1, 0], [0, 1], [0, -1]]; // 4-neighbour offsets
+let   seed   = 20261005;
+const SKY    = 0x8ec6ec;
+
+/* ---- palette + layout for the architecture stage ---- */
+const PAL = {
+  stone:      0x9c988e, stoneDark: 0x7c786f,
+  pillar:     0x8b2b22, wall:      0xf2ead8,
+  roof:       0x39383f, roofTrim:  0x4f4d57,
+  gold:       0xe8c25a, glow:      0xffc863,
+  vermilion:  0xc2452e, kasagi:    0x24221f,
+  rock:       0x8b8b8b, moss:      0x5c7f3b,
+  hedge:      0x2f4a24, hedgeTop:  0x3b5c2c,
+  bench:      0x8a623c, benchDark: 0x6b4a2c,
+  subsoil:    0x6a5842,
+  trunk:      0x6b4a2f, trunkDark: 0x4e3622,
+  bamboo:     0x6f9a45, bambooNode: 0x4d6b32, bambooLeaf: 0x5f8b3a, bambooLeafLit: 0x74a152,
+};
+const POND = { x0: 12, x1: 25, z0: -5, z1: 4 };  // 14x10 bed, east of the pagoda (water comes later)
+const ZEN  = { x0: 14, x1: 28, z0: 14, z1: 28 }; // raked-sand bed
+const TORII = { x: pathX(38), z: 38 };           // gate position (props check against it)
+const GROVE = { x: -30, z: -30 };                // bamboo corner (north-west)
+const TREE_COUNT = 7;                             // cherry trees per garden
+const BLOOM = [0xf6c3d5, 0xf1a9c1, 0xe88fab, 0xfff2f6]; // pink/white blossom shades
+
+/* ---- time of day + weather (all read by applyTime) ---- */
+let timeOfDay = 10; // hours, 0-24
+let windStrength = 1; // petal drift force
+const LANTERNS = [ // stone-lantern spots: three on the path, two at the pond corners
+  [pathX(35) - 3, 35], [pathX(27) + 3, 27], [pathX(17) - 3, 17],
+  [POND.x0 - 1, POND.z0 - 1], [POND.x1 + 1, POND.z1 + 1],
+];
+
+// x-centre of the meandering stone path at a given z (shared by terrain + props)
+function pathX(z) { return Math.round(Math.sin(z * 0.12) * 3); }
+
+/* ================= seeded RNG ================= */
+function mulberry32(s) {
+  let a = s >>> 0;
+  return function () {
+    a = (a + 0x6d2b79f5) >>> 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 7 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+let rng = mulberry32(seed);
+
+/* ================= voxel builder helpers ================= */
+const staticVoxels = new Map(); // "x,y,z" -> voxel: terrain + architecture, stays put
+const propVoxels   = new Map(); // trees + rocks, thrown away by "Regenerate seed"
+let activeVoxels   = staticVoxels; // which map addVoxel writes into
+
+function addVoxel(x, y, z, color, emissive = false) {
+  const key = x + ',' + y + ',' + z;
+  if (activeVoxels.has(key)) return; // dedupe overlapping voxels
+  activeVoxels.set(key, { x, y, z, color, emissive });
+}
+
+function box(x0, y0, z0, w, h, d, color, emissive = false) {
+  for (let x = x0; x < x0 + w; x++)
+    for (let y = y0; y < y0 + h; y++)
+      for (let z = z0; z < z0 + d; z++)
+        addVoxel(x, y, z, color, emissive);
+}
+
+function fillRect(x0, z0, y, w, d, color) {
+  for (let x = x0; x < x0 + w; x++)
+    for (let z = z0; z < z0 + d; z++)
+      addVoxel(x, y, z, color);
+}
+
+function cylinder(cx, cy, cz, radius, height, color, emissive = false) {
+  const r = Math.ceil(radius);
+  for (let y = cy; y < cy + height; y++)
+    for (let dx = -r; dx <= r; dx++)
+      for (let dz = -r; dz <= r; dz++)
+        if (dx * dx + dz * dz <= radius * radius)
+          addVoxel(cx + dx, y, cz + dz, color, emissive);
+}
+
+function sphere(cx, cy, cz, radius, color, emissive = false) {
+  const r = Math.ceil(radius);
+  for (let dx = -r; dx <= r; dx++)
+    for (let dy = -r; dy <= r; dy++)
+      for (let dz = -r; dz <= r; dz++)
+        if (dx * dx + dy * dy + dz * dz <= radius * radius)
+          addVoxel(cx + dx, cy + dy, cz + dz, color, emissive);
+}
+
+// blob of voxels whose colour is picked per-voxel out of a palette (blossoms, foliage)
+function sphereMix(cx, cy, cz, radius, palette) {
+  const r = Math.ceil(radius);
+  for (let dx = -r; dx <= r; dx++)
+    for (let dy = -r; dy <= r; dy++)
+      for (let dz = -r; dz <= r; dz++) {
+        if (dx * dx + dy * dy + dz * dz > radius * radius) continue;
+        addVoxel(cx + dx, cy + dy, cz + dz, palette[Math.floor(rng() * palette.length)]);
+      }
+}
+
+// layered pagoda roof: each course steps inward going up, the four corners flare upward
+function roofTier(cx, cz, y, hw, layers, color) {
+  for (let i = 0; i < layers; i++) {
+    const h = hw + 1 - i; // widest course overhangs the walls by one voxel
+    fillRect(cx - h, cz - h, y + i, 2 * h + 1, 2 * h + 1, i % 2 === 0 ? color : PAL.roofTrim);
+  }
+  const e = hw + 1;
+  for (const sx of [-1, 1])
+    for (const sz of [-1, 1]) {
+      addVoxel(cx + sx * (e + 1), y,     cz + sz * (e + 1), color); // eave tip reaches out
+      addVoxel(cx + sx * (e + 1), y + 1, cz + sz * (e + 1), color); // ...and lifts
+      addVoxel(cx + sx * e,       y + 1, cz + sz * e,       color); // knee under the lift
+    }
+}
+
+// smooth value-noise sampler over the garden footprint (seeded)
+function makeValueNoise(step) {
+  const n = Math.ceil(GARDEN / step) + 2;
+  const lat = new Float32Array(n * n);
+  for (let i = 0; i < n * n; i++) lat[i] = rng();
+  return (x, z) => {
+    const fx = (x + HALF) / step, fz = (z + HALF) / step;
+    const xi = Math.floor(fx), zi = Math.floor(fz);
+    const tx = fx - xi, tz = fz - zi;
+    const a = lat[zi * n + xi],       b = lat[zi * n + xi + 1];
+    const c = lat[(zi + 1) * n + xi], d = lat[(zi + 1) * n + xi + 1];
+    return (a * (1 - tx) + b * tx) * (1 - tz) + (c * (1 - tx) + d * tx) * tz;
+  };
+}
+
+/* ================= scene assembly ================= */
+const pondCells = new Set();   // "x,z" cells that hold water
+const pondRad = new Float32Array(32); // radial profile of the irregular outline
+let pondCx = 0, pondCz = 0, pondRx = 0, pondRz = 0, pondFloor = 0;
+
+const heightMap = new Int16Array(GARDEN * GARDEN); // ground surface height per column
+
+function groundAt(x, z) {
+  if (x < -HALF || x >= HALF || z < -HALF || z >= HALF) return 0;
+  return heightMap[(x + HALF) * GARDEN + (z + HALF)];
+}
+
+// irregular pond bed: an ellipse whose radius wobbles with a seeded profile
+function markPondBed() {
+  const bedRng = mulberry32(seed ^ 0x9e3779b9); // own stream: the terrain noise stays put
+  pondCx = (POND.x0 + POND.x1) / 2;
+  pondCz = (POND.z0 + POND.z1) / 2;
+  pondRx = (POND.x1 - POND.x0) / 2 + 0.5;
+  pondRz = (POND.z1 - POND.z0) / 2 + 0.5;
+  for (let k = 0; k < 32; k++) pondRad[k] = 0.78 + bedRng() * 0.38;
+  for (let x = POND.x0 - 1; x <= POND.x1 + 1; x++)
+    for (let z = POND.z0 - 1; z <= POND.z1 + 1; z++) {
+      const dx = x + 0.5 - pondCx, dz = z + 0.5 - pondCz;
+      const f = (Math.atan2(dz, dx) + Math.PI) * 32 / (Math.PI * 2);
+      const k0 = Math.floor(f) % 32, k1 = (k0 + 1) % 32, ft = f - Math.floor(f);
+      const rr = pondRad[k0] * (1 - ft) + pondRad[k1] * ft;
+      if ((dx / (pondRx * rr)) ** 2 + (dz / (pondRz * rr)) ** 2 <= 1) pondCells.add(x + ',' + z);
+    }
+}
+
+// pond basin: sink every water column one level below the lowest rim cell
+function carvePondBed() {
+  let rim = Infinity;
+  pondCells.forEach(key => {
+    const [x, z] = key.split(',').map(Number);
+    for (const [dx, dz] of SIDE_STEPS) {
+      const nx = x + dx, nz = z + dz;
+      if (!pondCells.has(nx + ',' + nz)) rim = Math.min(rim, groundAt(nx, nz));
+    }
+  });
+  pondFloor = rim - 1; // one below the lowest bank cell (may dip to -1, which is fine)
+  pondCells.forEach(key => {
+    const [x, z] = key.split(',').map(Number);
+    heightMap[(x + HALF) * GARDEN + (z + HALF)] = pondFloor;
+  });
+}
+
+// lowest / highest ground under a footprint, so props can be seated flush
+function groundTop(x0, z0, w, d) {
+  let m = 0;
+  for (let x = x0; x < x0 + w; x++)
+    for (let z = z0; z < z0 + d; z++) m = Math.max(m, groundAt(x, z));
+  return m;
+}
+
+function groundBottom(x0, z0, w, d) {
+  let m = Infinity;
+  for (let x = x0; x < x0 + w; x++)
+    for (let z = z0; z < z0 + d; z++) m = Math.min(m, groundAt(x, z));
+  return m;
+}
+
+function buildTerrain() {
+  const groundNoise = makeValueNoise(9);
+  const patchNoise  = makeValueNoise(6);
+
+  // stone path: meanders from the south edge (+z) up to the central hill
+  const pathCells = new Set();
+  for (let z = HALF - 1; z >= 8; z--) {
+    const cx = pathX(z);
+    for (let x = cx - 1; x <= cx + 1; x++) pathCells.add(x + ',' + z);
+  }
+
+  // raked-sand zen garden area (flat, east-southeast of the hill)
+  const inZen = (x, z) => x >= ZEN.x0 && x <= ZEN.x1 && z >= ZEN.z0 && z <= ZEN.z1;
+  const inPond = (x, z) => pondCells.has(x + ',' + z);
+
+  // pass 1: heights only, so the fill pass can see every neighbour
+  for (let x = -HALF; x < HALF; x++)
+    for (let z = -HALF; z < HALF; z++) {
+      let h = Math.floor(groundNoise(x, z) * 3.2); // gently rolling, 0..3
+      const d = Math.hypot(x, z);
+      if (d < 15) {                                // small hill at the centre
+        const t = d <= 7 ? 1 : 1 - (d - 7) / 8;
+        h = Math.max(h, Math.round(3 + t));        // flat plateau at height 4
+      }
+      if (inZen(x, z)) h = 2;                      // flat sand bed
+      heightMap[(x + HALF) * GARDEN + (z + HALF)] = h;
+    }
+
+  // carve the pond basin down one level before the surface pass paints it
+  carvePondBed();
+
+  // pass 2: surface voxels
+  for (let x = -HALF; x < HALF; x++)
+    for (let z = -HALF; z < HALF; z++) {
+      const h = groundAt(x, z);
+      const onPath = pathCells.has(x + ',' + z);
+
+      let color;
+      if (inPond(x, z)) {
+        const p = patchNoise(x, z); // muddy bottom, a little gravel mixed in
+        color = p < 0.4 ? 0x3d4636 : p < 0.72 ? 0x4b4a3c : 0x5a5244;
+      } else if (inZen(x, z)) {
+        color = ((x % 4) + 4) % 4 === 0 ? 0xa89877 : 0xd6c7a2; // raked stripes
+      } else if (onPath) {
+        color = 0x9aa0a0;                                      // stone path
+      } else {
+        const p = patchNoise(x, z);
+        if (p < 0.32) color = 0x77593c;                        // dirt patch
+        else if (p > 0.76) color = 0x8d8b84;                   // gravel patch
+        else {
+          const g = rng();
+          color = g < 0.5 ? 0x5d8a3c : g < 0.85 ? 0x517a34 : 0x6e9a4a; // grass
+        }
+      }
+      addVoxel(x, h, z, color);
+    }
+
+  // pass 3: close the ground -- fill the exposed side voxels below every step,
+  // so no column ever floats with open sides (out-of-bounds reads 0, which skirts the rim)
+  for (let x = -HALF; x < HALF; x++)
+    for (let z = -HALF; z < HALF; z++) {
+      const h = groundAt(x, z);
+      let lo = h;
+      for (const [dx, dz] of SIDE_STEPS) lo = Math.min(lo, groundAt(x + dx, z + dz));
+      for (let y = lo; y < h; y++) addVoxel(x, y, z, PAL.subsoil);
+    }
+}
+
+/* ---- the pagoda: five tiers on the central hill ---- */
+function buildTier(cx, cz, y, hw, wallH, roofLayers) {
+  const windowCols = hw >= 4 ? [-2, 0, 2] : [0]; // openings at the middle of each wall run
+  for (let dy = 0; dy < wallH; dy++) {
+    const yy = y + dy;
+    for (let dx = -hw; dx <= hw; dx++)
+      for (let dz = -hw; dz <= hw; dz++) {
+        const onX = Math.abs(dx) === hw, onZ = Math.abs(dz) === hw;
+        if (!onX && !onZ) continue; // hollow core, floored by the roof below
+        const corner = (onX && onZ) ||
+                       (onX && Math.abs(dz) === hw - 1) ||
+                       (onZ && Math.abs(dx) === hw - 1);
+        if (corner) { addVoxel(cx + dx, yy, cz + dz, PAL.pillar); continue; } // dark-red corner pillars
+        const along = onZ ? dx : dz;
+        if (dy > 0 && windowCols.includes(along)) {
+          const ix = onZ ? cx + dx : cx + dx - Math.sign(dx);
+          const iz = onZ ? cz + dz - Math.sign(dz) : cz + dz;
+          addVoxel(ix, yy, iz, PAL.glow, true); // warm light inside the opening
+          continue;                              // the wall voxel itself stays a hole
+        }
+        addVoxel(cx + dx, yy, cz + dz, PAL.wall); // white walls
+      }
+  }
+  roofTier(cx, cz, y + wallH, hw, roofLayers, PAL.roof);
+}
+
+function buildPagoda() {
+  const cx = 0, cz = 0;
+  let y = groundTop(cx - 7, cz - 7, 15, 15) + 1;
+
+  // stone base (ki): two stepped courses
+  fillRect(cx - 7, cz - 7, y, 15, 15, PAL.stone);
+  fillRect(cx - 6, cz - 6, y + 1, 13, 13, PAL.stoneDark);
+  y += 2;
+
+  const tiers = [ // half-width, wall height, roof courses -- tapers as it goes up
+    { hw: 6, wall: 3, roof: 3 },
+    { hw: 5, wall: 3, roof: 2 },
+    { hw: 4, wall: 3, roof: 2 },
+    { hw: 3, wall: 3, roof: 2 },
+    { hw: 2, wall: 3, roof: 2 },
+  ];
+  for (const t of tiers) {
+    buildTier(cx, cz, y, t.hw, t.wall, t.roof);
+    y += t.wall + t.roof;
+  }
+
+  // sorin: golden finial spire on the topmost roof
+  fillRect(cx - 1, cz - 1, y, 3, 3, PAL.gold);
+  box(cx, y + 1, cz, 1, 3, 1, PAL.gold);
+  addVoxel(cx, y + 4, cz, PAL.gold);
+}
+
+/* ---- torii gate at the south entrance of the path ---- */
+function buildTorii(cx, cz) {
+  const hi = groundTop(cx - 5, cz - 1, 11, 3);
+  const lo = groundBottom(cx - 5, cz - 1, 11, 3);
+  const y = hi + 1;
+  for (const px of [cx - 4, cx + 3]) {
+    box(px - 1, lo, cz - 1, 4, y - lo + 1, 3, PAL.stoneDark); // stone base, seated in the ground
+    box(px, y + 1, cz, 2, 6, 2, PAL.vermilion);             // vermilion pillar
+  }
+  box(cx - 4, y + 7, cz - 1, 9, 1, 3, PAL.vermilion);        // lower beam (nagi)
+  box(cx - 5, y + 8, cz - 1, 11, 1, 3, PAL.kasagi);          // kasagi overhangs both sides
+}
+
+/* ---- stone lantern (toro) ---- */
+function buildLantern(cx, cz) {
+  const hi = groundTop(cx - 1, cz - 1, 3, 3);
+  const lo = groundBottom(cx - 1, cz - 1, 3, 3);
+  const y = hi + 1;
+  box(cx - 1, lo, cz - 1, 3, y - lo + 1, 3, PAL.stoneDark);  // plinth, seated in the ground
+  box(cx, y + 1, cz, 1, 1, 1, PAL.stone);                    // post
+  for (let dy = 0; dy < 2; dy++)
+    for (let dx = -1; dx <= 1; dx++)
+      for (let dz = -1; dz <= 1; dz++) {
+        const face = Math.abs(dx) + Math.abs(dz) === 1;      // four glass faces
+        const core = dx === 0 && dz === 0;                   // flame inside the housing
+        const lit = face || core;
+        addVoxel(cx + dx, y + 2 + dy, cz + dz, lit ? PAL.glow : PAL.stone, lit);
+      }
+  fillRect(cx - 1, cz - 1, y + 4, 3, 3, PAL.stoneDark);      // cap
+  addVoxel(cx, y + 5, cz, PAL.stone);                        // knob
+}
+
+/* ---- large mossy rock: grey body, green top ---- */
+function buildRock(cx, cz, r) {
+  const cy = groundAt(cx, cz) + Math.round(r);
+  const ri = Math.ceil(r);
+  for (let dx = -ri; dx <= ri; dx++)
+    for (let dy = -ri; dy <= ri; dy++)
+      for (let dz = -ri; dz <= ri; dz++) {
+        const d2 = dx * dx + dy * dy + dz * dz;
+        if (d2 > r * r) continue;
+        const mossy = dy >= r * 0.4 && d2 <= r * r * 0.8;
+        addVoxel(cx + dx, cy + dy, cz + dz, mossy ? PAL.moss : PAL.rock);
+      }
+}
+
+/* ---- wooden bench ---- */
+function buildBench(cx, cz) {
+  const hi = groundTop(cx, cz, 5, 2);
+  const lo = groundBottom(cx, cz, 5, 2);
+  const y = hi + 1;
+  box(cx, lo, cz, 1, y - lo + 1, 2, PAL.benchDark);
+  box(cx + 4, lo, cz, 1, y - lo + 1, 2, PAL.benchDark);
+  box(cx, y + 1, cz, 5, 1, 2, PAL.bench);                    // seat
+  box(cx, y + 2, cz, 5, 2, 1, PAL.bench);                    // backrest
+}
+
+/* ---- low dark-green hedges flanking part of the path ---- */
+function buildHedge(z0, z1) {
+  for (let z = z0; z <= z1; z++) {
+    const px = pathX(z);
+    for (const side of [-1, 1]) {
+      const hx = px + side * 2;
+      const y = groundAt(hx, z) + 1;
+      addVoxel(hx, y, z, PAL.hedge);
+      addVoxel(hx, y + 1, z, (z + side) % 3 === 0 ? PAL.hedge : PAL.hedgeTop);
+    }
+  }
+}
+
+/* ---- cherry blossom tree: 2-thick trunk, big rounded blossom canopy ---- */
+const CANOPY_LOBES = [[3, 0, 0], [-3, 0, 0], [0, 0, 3], [0, 0, -3], [0, 3, 0], [0, -3, 0], [3, 0, -3]];
+
+function buildTree(cx, cz) {
+  const base = groundTop(cx - 1, cz - 1, 2, 2) + 1;
+  const th = 5 + Math.floor(rng() * 3); // trunk 5-7 tall
+  box(cx - 1, base, cz - 1, 2, th, 2, PAL.trunk);
+  for (const [dx, dz] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) { // a few branches into the canopy
+    if (rng() < 0.45) continue;
+    addVoxel(cx + dx, base + th - 2, cz + dz, PAL.trunkDark);
+    addVoxel(cx + dx * 2, base + th - 1, cz + dz * 2, PAL.trunkDark);
+  }
+  const cy = base + th + 2;
+  sphereMix(cx, cy, cz, 4, BLOOM);
+  for (const [ox, oy, oz] of CANOPY_LOBES) sphereMix(cx + ox, cy + oy, cz + oz, 3, BLOOM);
+  sphereMix(cx + 2, cy + 3, cz - 2, 2, BLOOM);
+}
+
+// signed distance from the pond's irregular outline (negative = inside the water)
+function pondEdgeDist(x, z) {
+  const dx = x + 0.5 - pondCx, dz = z + 0.5 - pondCz;
+  const f = (Math.atan2(dz, dx) + Math.PI) * 32 / (Math.PI * 2);
+  const k0 = Math.floor(f) % 32, k1 = (k0 + 1) % 32, ft = f - Math.floor(f);
+  const rr = pondRad[k0] * (1 - ft) + pondRad[k1] * ft;
+  const ex = pondRx * rr, ez = pondRz * rr;
+  const t = Math.hypot(dx / ex, dz / ez); // 1 right on the rim
+  if (t < 1e-4) return -Math.min(ex, ez);
+  const d = Math.hypot(dx - dx / t, dz - dz / t); // nearest point on the rim, along the same ray
+  return t < 1 ? -d : d;
+}
+
+// how far a point sits along the default overview's line of sight to the pond
+function pondSide(x, z) {
+  const ax = OVERVIEW_POS.x - pondCx, az = OVERVIEW_POS.z - pondCz;
+  return ((x - pondCx) * ax + (z - pondCz) * az) / Math.hypot(ax, az);
+}
+
+// canopy placement: seeded, but never in the pagoda, the torii, the pond or the grove
+function treeOk(x, z, placed) {
+  if (x < -33 || x > 32 || z < -33 || z > 32) return false; // canopy stays inside the garden
+  if (Math.hypot(x, z) < 15) return false;                  // clear of the pagoda
+  if (Math.hypot(x - TORII.x, z - TORII.z) < 7) return false;
+  if (pondCells.has(x + ',' + z)) return false;             // not in the pond
+  // the overview looks in from the south-east: nothing may stand within 6 units of
+  // the pond rim on that side, or the canopies swallow the water and the bridge
+  if (pondEdgeDist(x, z) < 6 && pondSide(x, z) > -4) return false;
+  if (x >= GROVE.x - 7 && x <= GROVE.x + 7 && z >= GROVE.z - 7 && z <= GROVE.z + 7) return false;
+  if (x >= ZEN.x0 - 3 && x <= ZEN.x1 + 3 && z >= ZEN.z0 - 3 && z <= ZEN.z1 + 3) return false;
+  if (Math.abs(x - pathX(z)) <= 2) return false;            // keep the path clear
+  for (const [px, pz] of placed) if (Math.hypot(x - px, z - pz) < 6) return false;
+  return true;
+}
+
+let treeSpots = []; // where the canopies ended up, read by the Blossoms preset
+
+function buildTrees(n) {
+  const spotRng = mulberry32(seed ^ 0x7feb352d);
+  const candidates = [];
+  for (let k = 0; k < 8; k++) { // ring hugging the pond
+    const a = k / 8 * Math.PI * 2;
+    candidates.push([Math.round(pondCx + Math.cos(a) * (pondRx + 5.5) + (spotRng() - 0.5) * 4),
+                     Math.round(pondCz + Math.sin(a) * (pondRz + 5.5) + (spotRng() - 0.5) * 4)]);
+  }
+  for (let k = 0; k < 6; k++) { // a wider ring, so the pond side of the overview stays stocked
+    const a = k / 6 * Math.PI * 2;
+    candidates.push([Math.round(pondCx + Math.cos(a) * (pondRx + 12) + (spotRng() - 0.5) * 3),
+                     Math.round(pondCz + Math.sin(a) * (pondRz + 12) + (spotRng() - 0.5) * 3)]);
+  }
+  for (const pz of [33, 28, 23, 18]) // along the stone path
+    candidates.push([pathX(pz) + (spotRng() < 0.5 ? -5 : 5), pz]);
+  for (const c of [[-13, -20], [-24, 8], [31, -19], [6, -16], [-9, 21], [22, 33],
+                   [-30, 12], [31, 32], [-20, -30], [10, -30]]) candidates.push(c);
+  for (let i = candidates.length - 1; i > 0; i--) { // seeded shuffle
+    const j = Math.floor(spotRng() * (i + 1));
+    const tmp = candidates[i]; candidates[i] = candidates[j]; candidates[j] = tmp;
+  }
+  const placed = [];
+  for (const [x, z] of candidates) {
+    if (placed.length >= n) break;
+    if (treeOk(x, z, placed)) placed.push([x, z]);
+  }
+  treeSpots = placed;
+  for (const [x, z] of placed) buildTree(x, z);
+}
+
+/* ---- pond: coping, lily pads, arched footbridge, water surface ---- */
+let waterMesh = null;
+let waterBase = null;
+let waterY = 0; // world height of the water surface, set once the basin is carved
+const waterMat = new THREE.MeshLambertMaterial({ color: 0x3f7f8f, transparent: true, opacity: 0.66 });
+
+function buildPond() {
+  waterY = pondFloor + 1.6; // surface sits at the top of the carved basin, proud of the bank
+  // stone coping on every bank cell that touches the water
+  pondCells.forEach(key => {
+    const [x, z] = key.split(',').map(Number);
+    for (const [dx, dz] of SIDE_STEPS) {
+      const nx = x + dx, nz = z + dz;
+      if (pondCells.has(nx + ',' + nz)) continue;
+      addVoxel(nx, groundAt(nx, nz) + 1, nz, (nx + nz + 400) % 2 === 0 ? PAL.stone : PAL.stoneDark);
+    }
+  });
+
+  // lily pads, a few of them topped with a pink bloom
+  const cells = [...pondCells].map(k => k.split(',').map(Number));
+  const padRng = mulberry32(seed ^ 0x2f6c2c74);
+  const padY = pondFloor + 2; // pads ride the raised water line
+  for (let i = 0; i < 6; i++) {
+    const [px, pz] = cells[Math.floor(padRng() * cells.length)];
+    for (const [dx, dz] of [[0, 0], [1, 0], [0, 1], [1, 1]]) {
+      if (!pondCells.has((px + dx) + ',' + (pz + dz))) continue;
+      addVoxel(px + dx, padY, pz + dz, (dx + dz) % 2 === 0 ? 0x3f6b32 : 0x4f7f3a);
+    }
+    if (i % 2 === 0) addVoxel(px, padY + 1, pz, i === 2 ? 0xfbd4e2 : 0xf2a0bb);
+  }
+
+  buildBridge();
+  makeWaterMesh();
+}
+
+// small arched footbridge across the narrow (north-south) part of the pond
+function buildBridge() {
+  const bx = Math.round(pondCx) + 1;
+  let zmin = Infinity, zmax = -Infinity;
+  pondCells.forEach(key => {
+    const [x, z] = key.split(',').map(Number);
+    if (x >= bx && x <= bx + 2) { zmin = Math.min(zmin, z); zmax = Math.max(zmax, z); }
+  });
+  const z0 = zmin - 1, z1 = zmax + 1, n = z1 - z0 + 1;
+  const bank = Math.max(groundAt(bx, z0), groundAt(bx + 2, z1)) + 1;
+  for (let i = 0; i < n; i++) {
+    const z = z0 + i;
+    const y = bank + 1 + Math.round(2.2 * Math.sin(Math.PI * i / (n - 1))); // the arch
+    for (let dx = 0; dx < 3; dx++) addVoxel(bx + dx, y, z, PAL.bench);
+    addVoxel(bx, y + 1, z, PAL.benchDark);         // railings both sides
+    addVoxel(bx + 2, y + 1, z, PAL.benchDark);
+  }
+  addVoxel(bx + 1, bank, z0, PAL.benchDark);       // end posts, seated in the banks
+  addVoxel(bx + 1, bank, z1, PAL.benchDark);
+}
+
+// one transparent sheet over the basin: a subdivided plane pulled to the pond outline
+function makeWaterMesh() {
+  const geo = new THREE.PlaneGeometry(pondRx * 2 + 3, pondRz * 2 + 3, 22, 16);
+  geo.rotateX(-Math.PI / 2);
+  const pos = geo.attributes.position;
+  const base = new Float32Array(pos.array.length);
+  for (let i = 0; i < pos.count; i++) {
+    let ox = pos.array[i * 3], oz = pos.array[i * 3 + 2];
+    const len = Math.hypot(ox, oz);
+    if (len > 1e-4) {
+      const f = (Math.atan2(oz, ox) + Math.PI) * 32 / (Math.PI * 2);
+      const k0 = Math.floor(f) % 32, k1 = (k0 + 1) % 32, ft = f - Math.floor(f);
+      const rr = (pondRad[k0] * (1 - ft) + pondRad[k1] * ft) * 1.12; // tuck under the coping
+      const reach = 1 / Math.hypot(ox / (pondRx * rr), oz / (pondRz * rr));
+      if (len > reach) { const s = (reach - 0.05) / len; ox *= s; oz *= s; }
+    }
+    pos.array[i * 3] = ox; pos.array[i * 3 + 2] = oz;
+    base[i * 3] = ox; base[i * 3 + 2] = oz;
+  }
+  const mesh = new THREE.Mesh(geo, waterMat);
+  mesh.position.set(pondCx, waterY, pondCz);
+  scene.add(mesh);
+  gardenMeshes.push(mesh);
+  waterMesh = mesh;
+  waterBase = base;
+}
+
+/* ---- koi: small voxel fish swimming under the surface ---- */
+const koi = [];
+const KOI_ORANGE = new THREE.MeshLambertMaterial({ color: 0xe8641f });
+const KOI_WHITE  = new THREE.MeshLambertMaterial({ color: 0xf7f2e8 });
+const KOI_DEEP   = new THREE.MeshLambertMaterial({ color: 0xc44a17 });
+
+function buildKoi() {
+  const koiRng = mulberry32(seed ^ 0x6a2b9e91);
+  for (let i = 0; i < 3; i++) {
+    const g = new THREE.Group();
+    const parts = [
+      [1.15, 0.4, 0.55, KOI_ORANGE, 0, 0, 0],
+      [0.42, 0.36, 0.5, KOI_WHITE, -0.72, 0, 0],
+      [0.45, 0.28, 0.66, KOI_WHITE, 0.78, 0, 0],
+      [0.5, 0.14, 0.42, KOI_DEEP, 0.15, -0.22, 0],
+      [0.3, 0.1, 0.34, KOI_DEEP, -0.25, -0.16, 0.32],
+    ];
+    for (const [w, h, d, mat, ox, oy, oz] of parts) {
+      const mesh = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat);
+      mesh.position.set(ox, oy, oz);
+      g.add(mesh);
+      gardenMeshes.push(mesh);
+    }
+    scene.add(g);
+    gardenMeshes.push(g); // the group itself, so a rebuild can take it out of the scene
+    koi.push({
+      group: g,
+      phase: koiRng() * Math.PI * 2,
+      speed: 0.22 + koiRng() * 0.16,
+      rx: 1.6 + koiRng() * (pondRx - 5),
+      rz: 1.4 + koiRng() * (pondRz - 4.5),
+    });
+  }
+}
+
+/* ---- bamboo grove in the north-west corner ---- */
+function buildBamboo(cx, cz) {
+  const groveRng = mulberry32(seed ^ 0x1652a6c9);
+  for (let i = 0; i < 12; i++) {
+    const sx = cx + Math.round((groveRng() - 0.5) * 11);
+    const sz = cz + Math.round((groveRng() - 0.5) * 11);
+    const h = 9 + Math.floor(groveRng() * 5);
+    const base = groundAt(sx, sz) + 1;
+    for (let y = 0; y < h; y++) // darker node ring every fourth voxel
+      addVoxel(sx, base + y, sz, y % 4 === 0 ? PAL.bambooNode : PAL.bamboo);
+    for (const dy of [-1, -4, -7]) { // small leaf clusters
+      const ly = base + h + dy;
+      if (ly <= base + 1) continue;
+      const dir = groveRng() < 0.5 ? -1 : 1;
+      addVoxel(sx + dir, ly, sz, PAL.bambooLeaf);
+      addVoxel(sx + dir * 2, ly, sz, PAL.bambooLeafLit);
+      addVoxel(sx, ly, sz + dir, PAL.bambooLeaf);
+      addVoxel(sx, ly - 1, sz + dir * 2, PAL.bambooLeafLit);
+    }
+  }
+}
+
+/* ---- engine / renderer ---- */
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+document.body.appendChild(renderer.domElement);
+
+const scene = new THREE.Scene();
+const skyColor = new THREE.Color(SKY);
+scene.background = skyColor;
+scene.fog = new THREE.FogExp2(SKY, 0.0032);
+
+const OVERVIEW_POS = new THREE.Vector3(66, 52, 66); // south-east overview
+const OVERVIEW_TGT = new THREE.Vector3(0, 13, 0);   // middle of the garden, mid-height of the pagoda
+
+const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 600);
+camera.position.copy(OVERVIEW_POS);
+
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.target.copy(OVERVIEW_TGT);
+controls.enableDamping = true;
+controls.dampingFactor = 0.08;
+controls.minDistance = 12;
+controls.maxDistance = 240;
+controls.maxPolarAngle = Math.PI / 2 - 0.05; // camera never goes below ground
+
+window.addEventListener('resize', () => {
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+});
+
+/* ---- lighting: sun on an arc, sky, fog, warm lamps ---- */
+const sunFocus = new THREE.Object3D(); // directional-light target, kept in the scene graph
+sunFocus.position.set(0, 10, 0);
+scene.add(sunFocus);
+
+const sun = new THREE.DirectionalLight(0xfff1d6, 2.4);
+sun.target = sunFocus;
+sun.castShadow = true;
+sun.shadow.mapSize.set(2048, 2048);
+sun.shadow.camera.left = -70;
+sun.shadow.camera.right = 70;
+sun.shadow.camera.top = 70;
+sun.shadow.camera.bottom = -70;
+sun.shadow.camera.near = 20;
+sun.shadow.camera.far = 340;
+sun.shadow.bias = -0.0004;
+sun.shadow.normalBias = 0.08;
+scene.add(sun);
+
+const hemi = new THREE.HemisphereLight(0xcfe0f4, 0x78684e, 0.8);
+scene.add(hemi);
+
+const ambient = new THREE.AmbientLight(0x2b3350, 0.2);
+scene.add(ambient);
+
+const warmLights = []; // lamps inside the pagoda + one per stone lantern
+
+function placeWarmLights() { // called after the terrain exists, so lamps seat themselves
+  const spots = [[0, 12, 0, 22, 95], [0, 20, 0, 22, 95], [0, 28, 0, 20, 75]]; // inside the tiers
+  for (const [lx, lz] of LANTERNS) spots.push([lx, groundAt(lx, lz) + 4.5, lz, 15, 55]);
+  for (let i = 0; i < spots.length; i++) {
+    const [x, y, z, reach, strength] = spots[i];
+    if (i >= warmLights.length) {
+      const light = new THREE.PointLight(0xffb26a, 0, reach, 2);
+      light.position.set(x, y, z);
+      scene.add(light);
+      warmLights.push({ light, strength });
+    } else { // rebuild: reuse the same lights, just re-seat them
+      warmLights[i].light.position.set(x, y, z);
+      warmLights[i].strength = strength;
+    }
+  }
+}
+
+/* colour stops for the sky / sun ramp */
+const SKY_NOON  = new THREE.Color(0x8ec6ec);
+const SKY_DAWN  = new THREE.Color(0xf6a869);
+const SKY_DUSK  = new THREE.Color(0xdf7d55);
+const SKY_NIGHT = new THREE.Color(0x05081c);
+const SUN_HIGH  = new THREE.Color(0xfff3dc);
+const SUN_LOW   = new THREE.Color(0xff8a45);
+const SUN_MOON  = new THREE.Color(0x8fa8dc);
+const GND_DAY   = new THREE.Color(0x78684e);
+const GND_NIGHT = new THREE.Color(0x141826);
+const AMB_DAY   = new THREE.Color(0x9ab4c8);
+const AMB_NIGHT = new THREE.Color(0x2b3350);
+
+const scratch = new THREE.Color(); // reused by applyTime: no per-frame colour allocations
+const sunDir = new THREE.Vector3();
+
+function applyTime(t) {
+  timeOfDay = t;
+  const arc = (t - 6) / 12 * Math.PI; // -PI/2 at midnight, +PI/2 at noon
+  const e = Math.sin(arc);            // sun height: -1 midnight, +1 noon, 0 at 6h/18h
+  const east = Math.cos(arc);         // +1 at sunrise, -1 at sunset
+  const night = e < 0;
+  const up = night ? -e : e;          // moon mirrors the sun below the horizon
+  const dayness = THREE.MathUtils.clamp(e * 2.4, 0, 1); // 0 night, 1 full sun
+  const nightF = 1 - THREE.MathUtils.clamp((e + 0.1) * 3.2, 0, 1); // 1 deep night, 0 daylight
+  const low = 1 - THREE.MathUtils.clamp(Math.abs(e) * 2.6, 0, 1); // peaks at sunrise / sunset
+  const mistF = THREE.MathUtils.clamp(1 - Math.abs(t - 6.5) / 2, 0, 1); // dawn mist over the pond
+
+  // --- sun / moon position on an arc, shadow frustum refitted to the garden ---
+  sunDir.set(east * (night ? -1 : 1), up + 0.06, 0.38).normalize();
+  sun.position.copy(sunFocus.position).addScaledVector(sunDir, 170);
+  scratch.copy(SUN_LOW).lerp(SUN_HIGH, dayness);
+  sun.color.copy(scratch).lerp(SUN_MOON, nightF);
+  sun.intensity = 0.14 + 2.6 * dayness;
+  const span = 62 + 26 * (1 - up); // a low sun throws longer shadows across the garden
+  sun.shadow.camera.left = -span;
+  sun.shadow.camera.right = span;
+  sun.shadow.camera.top = span;
+  sun.shadow.camera.bottom = -span;
+  sun.shadow.camera.updateProjectionMatrix();
+
+  // --- sky + fog share one colour, density thickens at night and at dawn ---
+  skyColor.copy(SKY_NOON)
+    .lerp(east > 0 ? SKY_DAWN : SKY_DUSK, low * (1 - nightF))
+    .lerp(SKY_NIGHT, nightF);
+  scene.fog.color.copy(skyColor);
+  scene.fog.density = 0.0026 + 0.0022 * nightF + 0.0028 * mistF;
+
+  // --- hemisphere sky/ground tint + a low ambient floor so night stays readable ---
+  hemi.color.copy(skyColor);
+  hemi.groundColor.copy(GND_NIGHT).lerp(GND_DAY, dayness);
+  hemi.intensity = 0.18 + 0.7 * dayness;
+  ambient.color.copy(AMB_NIGHT).lerp(AMB_DAY, dayness);
+  ambient.intensity = 0.08 + 0.2 * dayness;
+
+  // --- warm lamps: bright at night, near zero at noon ---
+  for (let i = 0; i < warmLights.length; i++) {
+    const wl = warmLights[i];
+    wl.light.intensity = wl.strength * (0.04 + 0.96 * nightF);
+  }
+
+  // emissive window / lantern voxels read as dark glass by day, hot glow by night
+  emissiveMaterial.color.setScalar(0.5 + 0.95 * nightF);
+
+  // particle opacities
+  starMat.opacity = nightF;
+  petalMat.uniforms.uOpacity.value = 0.35 + 0.65 * dayness;
+  fireflyMat.uniforms.uOpacity.value = opt.fireflies ? nightF : 0;
+  mistMat.opacity = 0.32 * mistF;
+}
+
+/* ================= particles: stars, petals, fireflies, mist ================= */
+function paintCanvas(size, painter) {
+  const c = document.createElement('canvas');
+  c.width = size; c.height = size;
+  painter(c.getContext('2d'), size);
+  const tex = new THREE.CanvasTexture(c);
+  tex.colorSpace = THREE.SRGBColorSpace;
+  return tex;
+}
+
+// --- stars: a shell of points around the garden, faded out by day ---
+const STAR_COUNT = 1500;
+const starPos = new Float32Array(STAR_COUNT * 3);
+const starCol = new Float32Array(STAR_COUNT * 3);
+{
+  const r = mulberry32(seed ^ 0x51f07dbe);
+  for (let i = 0; i < STAR_COUNT; i++) {
+    const u = r() * 2 - 1, a = r() * Math.PI * 2, s = Math.sqrt(1 - u * u), R = 300;
+    starPos[i * 3] = Math.cos(a) * s * R;
+    starPos[i * 3 + 1] = Math.abs(u) * R + 24;
+    starPos[i * 3 + 2] = Math.sin(a) * s * R;
+    const b = 0.3 + r() * 0.7;
+    starCol[i * 3] = b; starCol[i * 3 + 1] = b; starCol[i * 3 + 2] = b * (0.9 + r() * 0.2);
+  }
+}
+const starGeo = new THREE.BufferGeometry();
+starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
+starGeo.setAttribute('color', new THREE.BufferAttribute(starCol, 3));
+const starMat = new THREE.PointsMaterial({
+  size: 2.4, sizeAttenuation: false, transparent: true, opacity: 0,
+  vertexColors: true, fog: false, depthWrite: false,
+});
+const stars = new THREE.Points(starGeo, starMat);
+stars.frustumCulled = false;
+scene.add(stars);
+
+// --- cherry petals: points with a round pink sprite, spun in the fragment shader ---
+const petalTex = paintCanvas(64, (ctx, s) => {
+  ctx.clearRect(0, 0, s, s);
+  const g = ctx.createRadialGradient(s * 0.5, s * 0.5, s * 0.04, s * 0.5, s * 0.5, s * 0.5);
+  g.addColorStop(0, 'rgba(255,246,248,1)');
+  g.addColorStop(0.5, 'rgba(248,186,212,0.95)');
+  g.addColorStop(1, 'rgba(232,143,171,0)');
+  ctx.fillStyle = g;
+  ctx.beginPath(); ctx.arc(s * 0.5, s * 0.5, s * 0.5, 0, Math.PI * 2); ctx.fill();
+});
+
+const PETAL_MAX = 1500; // the density slider tops out here
+let petalCount = PETAL_MAX;
+const petalPos = new Float32Array(PETAL_MAX * 3);
+const petalFall = new Float32Array(PETAL_MAX);
+const petalPhase = new Float32Array(PETAL_MAX);
+const petalSway = new Float32Array(PETAL_MAX);
+const petalSpin = new Float32Array(PETAL_MAX);
+const petalRate = new Float32Array(PETAL_MAX);
+const petalSize = new Float32Array(PETAL_MAX);
+const petalTint = new Float32Array(PETAL_MAX);
+
+function seedPetal(i, r) { // r() supplies the randomness, so rebuilds and respawns share it
+  petalPos[i * 3] = (r() - 0.5) * GARDEN;
+  petalPos[i * 3 + 1] = 2 + r() * 33; // anywhere up to height 35
+  petalPos[i * 3 + 2] = (r() - 0.5) * GARDEN;
+  petalFall[i] = 1.2 + r() * 1.7;
+  petalPhase[i] = r() * Math.PI * 2;
+  petalSway[i] = 0.7 + r() * 1.9;
+  petalSpin[i] = r() * Math.PI * 2;
+  petalRate[i] = 1.1 + r() * 3.6;
+  petalSize[i] = 0.45 + r() * 0.3; // about 0.6 world units
+  petalTint[i] = 0.85 + r() * 0.3;
+}
+{
+  const pr = mulberry32(seed ^ 0x2545f491);
+  for (let i = 0; i < PETAL_MAX; i++) seedPetal(i, pr);
+}
+
+const petalGeo = new THREE.BufferGeometry();
+petalGeo.setAttribute('position', new THREE.BufferAttribute(petalPos, 3));
+petalGeo.setAttribute('aSpin', new THREE.BufferAttribute(petalSpin, 1));
+petalGeo.setAttribute('aRate', new THREE.BufferAttribute(petalRate, 1));
+petalGeo.setAttribute('aSize', new THREE.BufferAttribute(petalSize, 1));
+petalGeo.setAttribute('aTint', new THREE.BufferAttribute(petalTint, 1));
+petalGeo.setDrawRange(0, petalCount);
+
+const petalMat = new THREE.ShaderMaterial({
+  uniforms: {
+    uTex: { value: petalTex },
+    uOpacity: { value: 1 },
+    uScale: { value: 400 },
+    uTime: { value: 0 },
+  },
+  transparent: true,
+  depthWrite: false,
+  vertexShader: `
+attribute float aSpin;
+attribute float aRate;
+attribute float aSize;
+attribute float aTint;
+uniform float uScale;
+uniform float uTime;
+varying float vAngle;
+varying float vTint;
+void main() {
+  vec4 mv = modelViewMatrix * vec4(position, 1.0);
+  float dist = max(-mv.z, 0.001);
+  gl_PointSize = clamp(aSize * uScale / dist, 1.0, 96.0);
+  vAngle = aSpin + uTime * aRate;
+  vTint = aTint;
+  gl_Position = projectionMatrix * mv;
+}`,
+  fragmentShader: `
+uniform sampler2D uTex;
+uniform float uOpacity;
+varying float vAngle;
+varying float vTint;
+void main() {
+  vec2 uv = gl_PointCoord - vec2(0.5);
+  float c = cos(vAngle);
+  float s = sin(vAngle);
+  uv = vec2(uv.x * c - uv.y * s, uv.x * s + uv.y * c) + vec2(0.5);
+  vec4 t = texture2D(uTex, uv);
+  if (t.a < 0.02) discard;
+  gl_FragColor = vec4(t.rgb * vTint, t.a * uOpacity);
+}`,
+});
+const petals = new THREE.Points(petalGeo, petalMat);
+petals.frustumCulled = false;
+scene.add(petals);
+
+// --- fireflies: pulsing yellow-green motes near the pond and the grass, night only ---
+const FIREFLY_COUNT = 150;
+const ffPos = new Float32Array(FIREFLY_COUNT * 3);
+const ffHome = new Float32Array(FIREFLY_COUNT * 3);
+const ffPhase = new Float32Array(FIREFLY_COUNT);
+const ffRad = new Float32Array(FIREFLY_COUNT);
+const ffRate = new Float32Array(FIREFLY_COUNT);
+const ffSize = new Float32Array(FIREFLY_COUNT);
+
+function seedFireflies() { // needs the terrain, so buildGarden calls it once the ground exists
+  const r = mulberry32(seed ^ 0x3ab71c5e);
+  for (let i = 0; i < FIREFLY_COUNT; i++) {
+    let x, z;
+    if (i % 2 === 0) { // half of them hug the pond edge
+      const a = r() * Math.PI * 2;
+      x = Math.round(pondCx + Math.cos(a) * (pondRx + 1 + r() * 6));
+      z = Math.round(pondCz + Math.sin(a) * (pondRz + 1 + r() * 6));
+    } else {
+      x = Math.round((r() - 0.5) * GARDEN);
+      z = Math.round((r() - 0.5) * GARDEN);
+    }
+    const y = groundAt(x, z) + 0.8 + r() * 2.4;
+    ffHome[i * 3] = x; ffHome[i * 3 + 1] = y; ffHome[i * 3 + 2] = z;
+    ffPos[i * 3] = x; ffPos[i * 3 + 1] = y; ffPos[i * 3 + 2] = z;
+    ffPhase[i] = r() * Math.PI * 2;
+    ffRad[i] = 1 + r() * 3;
+    ffRate[i] = 0.25 + r() * 0.6;
+    ffSize[i] = 0.35 + r() * 0.35;
+  }
+}
+const ffGeo = new THREE.BufferGeometry();
+ffGeo.setAttribute('position', new THREE.BufferAttribute(ffPos, 3));
+ffGeo.setAttribute('aPhase', new THREE.BufferAttribute(ffPhase, 1));
+ffGeo.setAttribute('aRate', new THREE.BufferAttribute(ffRate, 1));
+ffGeo.setAttribute('aSize', new THREE.BufferAttribute(ffSize, 1));
+
+const fireflyMat = new THREE.ShaderMaterial({
+  uniforms: { uTime: { value: 0 }, uOpacity: { value: 0 }, uScale: { value: 400 } },
+  transparent: true,
+  depthWrite: false,
+  blending: THREE.AdditiveBlending,
+  vertexShader: `
+attribute float aPhase;
+attribute float aRate;
+attribute float aSize;
+uniform float uScale;
+uniform float uTime;
+varying float vPulse;
+void main() {
+  vec4 mv = modelViewMatrix * vec4(position, 1.0);
+  float dist = max(-mv.z, 0.001);
+  gl_PointSize = clamp(aSize * uScale / dist, 1.0, 48.0);
+  vPulse = 0.15 + 0.85 * (0.5 + 0.5 * sin(uTime * (1.3 + aRate * 3.0) + aPhase));
+  gl_Position = projectionMatrix * mv;
+}`,
+  fragmentShader: `
+uniform float uOpacity;
+varying float vPulse;
+void main() {
+  float d = length(gl_PointCoord - vec2(0.5));
+  float a = smoothstep(0.5, 0.02, d);
+  gl_FragColor = vec4(vec3(0.74, 0.92, 0.32) * (0.5 + 1.4 * vPulse), a * vPulse * uOpacity);
+}`,
+});
+const fireflies = new THREE.Points(ffGeo, fireflyMat);
+fireflies.frustumCulled = false;
+scene.add(fireflies);
+
+// --- dawn mist: a few wide sheets drifting over the pond ---
+const mistTex = paintCanvas(256, (ctx, s) => {
+  ctx.clearRect(0, 0, s, s);
+  const r = mulberry32(seed ^ 0x77e12b7f);
+  for (let i = 0; i < 30; i++) {
+    const cx = r() * s, cy = r() * s, rad = s * (0.07 + r() * 0.15);
+    const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, rad);
+    g.addColorStop(0, 'rgba(255,255,255,0.42)');
+    g.addColorStop(1, 'rgba(255,255,255,0)');
+    ctx.fillStyle = g;
+    ctx.beginPath(); ctx.arc(cx, cy, rad, 0, Math.PI * 2); ctx.fill();
+  }
+});
+const mistGeo = new THREE.PlaneGeometry(1, 1);
+mistGeo.rotateX(-Math.PI / 2);
+const mistMat = new THREE.MeshBasicMaterial({
+  map: mistTex, color: 0xd6dfec, transparent: true, opacity: 0,
+  depthWrite: false, fog: false, side: THREE.DoubleSide,
+});
+const mistPlanes = [];
+for (let i = 0; i < 5; i++) {
+  const sheet = new THREE.Mesh(mistGeo, mistMat);
+  sheet.scale.set(30 + i * 8, 1, 26 + i * 7);
+  sheet.renderOrder = 2;
+  scene.add(sheet);
+  mistPlanes.push(sheet);
+}
+
+function updatePetals(dt) {
+  for (let i = 0; i < petalCount; i++) {
+    const i3 = i * 3;
+    let x = petalPos[i3], y = petalPos[i3 + 1], z = petalPos[i3 + 2];
+    petalPhase[i] += dt * 1.6;
+    const sway = petalSway[i];
+    x += (Math.sin(petalPhase[i]) * sway + windStrength * 1.1) * dt;
+    z += (Math.cos(petalPhase[i] * 0.8) * sway * 0.6 + windStrength * 0.45) * dt;
+    y -= petalFall[i] * dt;
+    if (y < groundAt(Math.round(x), Math.round(z)) + 0.3 ||
+        x < -HALF || x >= HALF || z < -HALF || z >= HALF) {
+      seedPetal(i, frand); // back to the top of the garden
+      continue;
+    }
+    petalPos[i3] = x; petalPos[i3 + 1] = y; petalPos[i3 + 2] = z;
+  }
+  petalGeo.attributes.position.needsUpdate = true;
+  petalGeo.setDrawRange(0, petalCount);
+  petalMat.uniforms.uTime.value = elapsed;
+  petalMat.uniforms.uScale.value = renderer.domElement.height * 0.5;
+}
+
+function updateFireflies(t) {
+  for (let i = 0; i < FIREFLY_COUNT; i++) {
+    const i3 = i * 3;
+    const a = t * ffRate[i] + ffPhase[i];
+    const rad = ffRad[i];
+    ffPos[i3] = ffHome[i3] + Math.sin(a) * rad;
+    ffPos[i3 + 1] = ffHome[i3 + 1] + Math.sin(a * 1.7) * 0.6;
+    ffPos[i3 + 2] = ffHome[i3 + 2] + Math.cos(a * 0.8) * rad;
+  }
+  ffGeo.attributes.position.needsUpdate = true;
+  fireflyMat.uniforms.uTime.value = t;
+  fireflyMat.uniforms.uScale.value = renderer.domElement.height * 0.5;
+}
+
+function updateMist(t) {
+  for (let i = 0; i < mistPlanes.length; i++) {
+    const sheet = mistPlanes[i];
+    sheet.position.x = pondCx + Math.sin(t * 0.05 + i * 1.7) * 5;
+    sheet.position.z = pondCz + Math.cos(t * 0.04 + i * 2.3) * 4;
+    sheet.position.y = waterY + 1.1 + i * 0.9;
+  }
+}
+
+// small xorshift for the animation loop: no allocation, no closure churn
+let frngState = 0x9e3779b9;
+function frand() {
+  frngState ^= frngState << 13;
+  frngState ^= frngState >>> 17;
+  frngState ^= frngState << 5;
+  return (frngState >>> 0) / 4294967296;
+}
+
+/* ---- instanced-mesh build step ---- */
+const opaqueMaterial   = new THREE.MeshLambertMaterial({ color: 0xffffff });
+const emissiveMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+
+let staticMeshes = []; // instanced meshes built from staticVoxels
+let propMeshes = [];   // instanced meshes built from propVoxels
+let gardenMeshes = []; // water sheet + koi: everything that is not a voxel
+
+function disposeList(list) { // drop a batch of meshes from the scene and free their buffers
+  for (const m of list) {
+    scene.remove(m);
+    if (m.geometry) m.geometry.dispose();
+    if (m.instanceMatrix) m.dispose(); // InstancedMesh: also release the instance attributes
+  }
+}
+
+function clearGarden() {
+  disposeList(staticMeshes);
+  disposeList(propMeshes);
+  disposeList(gardenMeshes);
+  staticMeshes = []; propMeshes = []; gardenMeshes = [];
+  staticVoxels.clear(); propVoxels.clear();
+  activeVoxels = staticVoxels;
+}
+
+// one instanced mesh per (voxel list, material) pair, with a slight lightness jitter
+function emitInstances(map, outList) {
+  const opaque = [], emissive = [];
+  map.forEach(v => (v.emissive ? emissive : opaque).push(v));
+  const dummy = new THREE.Object3D();
+  const col = new THREE.Color();
+  const hsl = { h: 0, s: 0, l: 0 };
+  for (const pair of [[opaque, opaqueMaterial], [emissive, emissiveMaterial]]) {
+    const list = pair[0];
+    if (!list.length) continue;
+    const geo = new THREE.BoxGeometry(VOXEL, VOXEL, VOXEL); // one per mesh, so a rebuild can dispose it
+    const mesh = new THREE.InstancedMesh(geo, pair[1], list.length);
+    for (let i = 0; i < list.length; i++) {
+      const v = list[i];
+      dummy.position.set(v.x, v.y, v.z);
+      dummy.updateMatrix();
+      mesh.setMatrixAt(i, dummy.matrix);
+      col.setHex(v.color);
+      col.getHSL(hsl); // slight +-4% lightness jitter per voxel
+      col.setHSL(hsl.h, hsl.s, THREE.MathUtils.clamp(hsl.l + (rng() - 0.5) * 0.08, 0, 1));
+      mesh.setColorAt(i, col);
+    }
+    mesh.instanceMatrix.needsUpdate = true;
+    if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
+    mesh.castShadow = true;
+    mesh.receiveShadow = true;
+    scene.add(mesh);
+    outList.push(mesh);
+  }
+}
+
+// rocks + trees only: the pagoda, pond and torii keep their spots across a reseed
+function pickRockSpots(r) {
+  const spots = [];
+  let guard = 0;
+  while (spots.length < 6 && guard++ < 500) {
+    const x = Math.round((r() - 0.5) * 64), z = Math.round((r() - 0.5) * 64);
+    const rad = 1.8 + r() * 1.6;
+    if (Math.hypot(x, z) < 13) continue;                    // clear of the pagoda
+    if (pondEdgeDist(x, z) < rad + 2) continue;             // off the pond
+    if (pondEdgeDist(x, z) < 9 && pondSide(x, z) > -4) continue; // keep the overview's pond view open
+    if (Math.abs(x - pathX(z)) < 3) continue;               // off the path
+    if (Math.hypot(x - TORII.x, z - TORII.z) < 8) continue;
+    if (x >= ZEN.x0 - 2 && x <= ZEN.x1 + 2 && z >= ZEN.z0 - 2 && z <= ZEN.z1 + 2) continue;
+    if (x >= GROVE.x - 6 && x <= GROVE.x + 6 && z >= GROVE.z - 6 && z <= GROVE.z + 6) continue;
+    let ok = true;
+    for (const s of spots) if (Math.hypot(x - s[0], z - s[1]) < 9) ok = false;
+    if (ok) spots.push([x, z, rad]);
+  }
+  return spots;
+}
+
+function buildProps() {
+  propVoxels.clear();
+  activeVoxels = propVoxels;
+  const spotRng = mulberry32(seed ^ 0x51ed270b);
+  for (const [rx, rz, rr] of pickRockSpots(spotRng)) buildRock(rx, rz, rr);
+  buildTrees(TREE_COUNT);
+  activeVoxels = staticVoxels;
+}
+
+function buildGarden() {
+  clearGarden();
+  rng = mulberry32(seed); // same seed -> identical garden
+  markPondBed();
+  buildTerrain();
+
+  buildPagoda();
+  buildTorii(TORII.x, TORII.z);
+
+  for (const [lx, lz] of LANTERNS) buildLantern(lx, lz);
+
+  buildBench(pathX(22) + 4, 22);
+  buildHedge(20, 34);
+
+  buildPond();
+  buildBamboo(GROVE.x, GROVE.z);
+  buildKoi();
+
+  placeWarmLights(); // lamps need the finished ground height to sit at the right height
+  seedFireflies();
+
+  buildProps();
+  emitInstances(staticVoxels, staticMeshes);
+  emitInstances(propVoxels, propMeshes);
+
+  console.log('garden voxels:', staticVoxels.size + propVoxels.size);
+}
+
+/* ================= UI wiring ================= */
+function byId(id) { return document.getElementById(id); }
+
+const loadingEl = byId('loading');
+const panelEl = byId('panel');
+const headEl = byId('panelHead');
+const chevEl = byId('chev');
+const sTime = byId('sTime'), sSpeed = byId('sSpeed'), sPetals = byId('sPetals'), sWind = byId('sWind');
+const playBtn = byId('bPlay');
+const rVox = byId('rVox'), rFps = byId('rFps'), rTime = byId('rTime');
+
+// live options, mirrored by the panel's checkboxes
+const opt = { autoRotate: false, shadows: true, fireflies: true, water: true, wire: false, playing: false };
+const checks = {
+  autoRotate: byId('cRotate'), shadows: byId('cShadows'), fireflies: byId('cFireflies'),
+  water: byId('cWater'), wire: byId('cWire'),
+};
+const wireMaterials = [opaqueMaterial, emissiveMaterial, waterMat, KOI_ORANGE, KOI_WHITE, KOI_DEEP];
+
+function applyOptions() { // push the checkbox state into the renderer / lights / controls
+  renderer.shadowMap.enabled = opt.shadows;
+  sun.castShadow = opt.shadows;
+  for (const m of wireMaterials) { m.wireframe = opt.wire; m.needsUpdate = true; }
+  if (tweenLeft === 0) controls.autoRotate = opt.autoRotate; // the tween re-arms it when it lands
+}
+
+headEl.addEventListener('click', () => { // the panel collapses / expands
+  panelEl.classList.toggle('collapsed');
+  chevEl.textContent = panelEl.classList.contains('collapsed') ? '▸' : '▾';
+});
+
+for (const key in checks) {
+  const input = checks[key];
+  input.checked = opt[key];
+  input.parentElement.addEventListener('click', () => {
+    opt[key] = !opt[key];
+    input.checked = opt[key];
+    applyOptions();
+  });
+}
+
+playBtn.addEventListener('click', () => {
+  opt.playing = !opt.playing;
+  playBtn.textContent = opt.playing ? '❚❚' : '▶';
+});
+
+/* ---- camera presets + a small lerp tween (no tween library) ---- */
+let tweenPos = null, tweenTgt = null, tweenLeft = 0;
+
+function presetPose(i) {
+  if (i === 0) return [OVERVIEW_POS.clone(), OVERVIEW_TGT.clone()];
+  if (i === 1) return [new THREE.Vector3(24, 27, 30), new THREE.Vector3(0, 17, 0)]; // pagoda, south-east
+  if (i === 2) { // pond: low over the near bank, square on the bridge and the water
+    return [new THREE.Vector3(pondCx + 11, waterY + 5, pondCz + 18),
+            new THREE.Vector3(pondCx + 2, waterY + 0.6, pondCz + 0.5)];
+  }
+  if (i === 3) { // torii, looking up the path
+    return [new THREE.Vector3(TORII.x + 13, 15, TORII.z + 24), new THREE.Vector3(TORII.x, 9, TORII.z)];
+  }
+  const spot = treeSpots.length ? treeSpots[Math.floor(treeSpots.length / 3)] : [6, -16];
+  const gy = groundAt(Math.round(spot[0]), Math.round(spot[1]));
+  return [new THREE.Vector3(spot[0] + 13, gy + 15, spot[1] + 15), // up in the canopy
+          new THREE.Vector3(spot[0], gy + 8, spot[1])];
+}
+
+function gotoPreset(i) {
+  const pose = presetPose(i);
+  tweenPos = pose[0];
+  tweenTgt = pose[1];
+  tweenLeft = 90;
+  controls.autoRotate = false; // restored once the tween lands
+}
+
+for (let i = 0; i < 5; i++) {
+  const btn = byId('p' + i);
+  btn.addEventListener('click', () => gotoPreset(i));
+}
+
+function regenerate() { // new seed: trees, rocks and petals move, the rest stays put
+  seed = (Math.floor(Math.random() * 0x7ffffffe) + 1) | 1;
+  disposeList(propMeshes);
+  propMeshes = [];
+  rng = mulberry32(seed);
+  buildProps();
+  emitInstances(propVoxels, propMeshes);
+  reseedPetals();
+  console.log('regenerated seed:', seed);
+}
+
+function reseedPetals() {
+  const pr = mulberry32(seed ^ 0x2545f491);
+  for (let i = 0; i < PETAL_MAX; i++) seedPetal(i, pr);
+  petalGeo.attributes.position.needsUpdate = true;
+}
+
+byId('bSeed').addEventListener('click', regenerate);
+byId('bReset').addEventListener('click', () => gotoPreset(0));
+
+function fmtTime(h) {
+  const hh = Math.floor(h) % 24;
+  const mm = Math.floor((h - Math.floor(h)) * 60);
+  return (hh < 10 ? '0' : '') + hh + ':' + (mm < 10 ? '0' : '') + mm;
+}
+
+/* ---- keyboard: Space auto-rotate, 1-5 presets, N noon <-> 22:00 ---- */
+let nightMode = false;
+window.addEventListener('keydown', (e) => {
+  if (e.code === 'Space') {
+    opt.autoRotate = !opt.autoRotate;
+    applyOptions();
+  } else if (e.key >= '1' && e.key <= '5') {
+    gotoPreset(e.key.charCodeAt(0) - 49);
+  } else if (e.key === 'n' || e.key === 'N') {
+    nightMode = !nightMode;
+    timeOfDay = nightMode ? 22 : 12;
+    sTime.value = timeOfDay;
+  }
+});
+
+/* ================= animation loop ================= */
+const clock = new THREE.Clock();
+
+function rippleWater(t) {
+  if (!waterMesh) return;
+  const pos = waterMesh.geometry.attributes.position;
+  const arr = pos.array;
+  for (let i = 0; i < pos.count; i++) {
+    if (opt.water) {
+      const x = waterBase[i * 3], z = waterBase[i * 3 + 2];
+      arr[i * 3 + 1] = Math.sin(x * 0.62 + t * 1.7) * 0.07 + Math.cos(z * 0.78 + t * 1.25) * 0.06;
+    } else {
+      arr[i * 3 + 1] = 0; // switched off: the sheet lies dead flat
+    }
+  }
+  pos.needsUpdate = true;
+  waterMesh.geometry.computeVertexNormals();
+  if (opt.water) waterMat.color.setHSL(0.52 + 0.035 * Math.sin(t * 0.21), 0.5, 0.4 + 0.05 * Math.sin(t * 0.55));
+}
+
+function swimKoi(dt) {
+  for (const f of koi) {
+    f.phase += f.speed * dt;
+    const vx = -Math.sin(f.phase) * f.rx; // tangent to the loop
+    const vz = Math.cos(f.phase) * f.rz;
+    f.group.position.set(pondCx + Math.cos(f.phase) * f.rx,
+                         waterY - 0.42 + Math.sin(f.phase * 2.1) * 0.06,
+                         pondCz + Math.sin(f.phase) * f.rz);
+    f.group.rotation.y = -Math.atan2(vz, vx);
+  }
+}
+
+let elapsed = 0; // own clock: THREE.Clock.getElapsedTime() would eat the getDelta() below
+let fpsFrames = 0, fpsAccum = 0;
+
+function frame() {
+  requestAnimationFrame(frame);
+  const dt = clock.getDelta();
+  elapsed += dt;
+
+  // sliders feed the simulation every frame
+  windStrength = +sWind.value;
+  petalCount = Math.min(PETAL_MAX, Math.max(0, Math.round(+sPetals.value)));
+  if (opt.playing) {
+    timeOfDay = (timeOfDay + +sSpeed.value * dt * 2.4) % 24;
+    sTime.value = timeOfDay; // the thumb walks with the cycle
+  } else {
+    timeOfDay = +sTime.value;
+  }
+
+  if (tweenLeft > 0) { // lerp camera position and orbit target toward the preset
+    camera.position.lerp(tweenPos, 0.08);
+    controls.target.lerp(tweenTgt, 0.08);
+    if (--tweenLeft === 0) {
+      camera.position.copy(tweenPos);
+      controls.target.copy(tweenTgt);
+      controls.autoRotate = opt.autoRotate;
+    }
+  }
+
+  applyTime(timeOfDay);
+  rippleWater(elapsed);
+  swimKoi(dt);
+  updatePetals(dt);
+  updateFireflies(elapsed);
+  updateMist(elapsed);
+  controls.update();
+  renderer.render(scene, camera);
+
+  fpsFrames++; fpsAccum += dt;
+  if (fpsAccum >= 0.5) { // live readouts, twice a second
+    rFps.textContent = String(Math.round(fpsFrames / fpsAccum));
+    rVox.textContent = String(staticVoxels.size + propVoxels.size);
+    rTime.textContent = fmtTime(timeOfDay);
+    fpsFrames = 0; fpsAccum = 0;
+  }
+}
+
+requestAnimationFrame(() => { // one painted frame, so the loading overlay gets seen
+  buildGarden();
+  applyTime(timeOfDay); // sky, lamps and the shadow frustum before the first frame
+  loadingEl.classList.add('done');
+  frame();
+});
+</script>
+</body>
+</html>

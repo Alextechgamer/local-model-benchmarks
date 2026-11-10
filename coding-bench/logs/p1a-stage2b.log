@@ -1,0 +1,104 @@
+﻿>>> arm v045-r1792 ['--set-arg', '--vram-reserve-mib', '1792', '--smoke']
+>>> A-v045-r1792
+{"event": "start", "pid": 39816, "free_gb": 50.4, "cmd": ["C:\\Users\\user\\Strata\\.venv\\Scripts\\python.exe", "E:\\strata-tests\\coding-bench\\tools\\strata-v0.1.45\\serve\\server.py", "--engine", "strata", "--config", "E:\\strata-tests\\coding-bench\\configs\\tune\\A-v045-r1792.json", "--port", "8080"], "env": [], "tag": "A-v045-r1792", "t": 1792480083.2132514}
+{"event": "loaded", "load_s": 20.6, "tag": "A-v045-r1792", "t": 1792480103.776316}
+warmup {'error': None, 'prompt_tokens': 16140, 'completion_tokens': 512, 'ttft_s': 11.273521900177002}
+{"run": 1, "error": null, "prompt_tokens": 16140, "completion_tokens": 512, "ttft_s": 10.746928930282593, "prompt_tps": 1501.824391386907, "output_tps": 68.35776654837554, "peak_vram_dedicated_mb": 18730.0, "peak_vram_shared_mb": 28522.0}
+{"run": 2, "error": null, "prompt_tokens": 16136, "completion_tokens": 512, "ttft_s": 10.760279655456543, "prompt_tps": 1499.5892780367865, "output_tps": 71.4795399180014, "peak_vram_dedicated_mb": 18730.0, "peak_vram_shared_mb": 28522.0}
+{"run": 3, "error": null, "prompt_tokens": 16141, "completion_tokens": 512, "ttft_s": 10.781062126159668, "prompt_tps": 1497.1623214038189, "output_tps": 69.13476646732006, "peak_vram_dedicated_mb": 18730.0, "peak_vram_shared_mb": 28522.0}
+SUMMARY {"tag": "A-v045-r1792", "n": 3, "median_ttft_s": 10.760279655456543, "median_prompt_tps": 1499.5892780367865, "median_output_tps": 69.13476646732006, "max_vram_shared_mb": 28522.0, "max_vram_dedicated_mb": 18730.0, "completion_tokens": [512, 512, 512], "errors": []}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "A-v045-r1792", "rep": 1, "wall_s": 15.1, "smoke_version": 2}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "A-v045-r1792", "rep": 2, "wall_s": 10.0, "smoke_version": 2}
+{"tool_call": true, "tool_result": true, "tool_typed": false, "code": true, "tag": "A-v045-r1792", "rep": 3, "wall_s": 14.5, "smoke_version": 2}
+SMOKE A-v045-r1792 {"tool_call": 3, "tool_typed": 2, "tool_result": 3, "code": 3} of 3
+{"event": "stopped", "pid": 39816, "alive_s": 134.2, "tag": "A-v045-r1792", "t": 1792480217.455573}
+>>> arm v045-r1792-notable ['--set-arg', '--vram-reserve-mib', '1792']
+>>> A-v045-r1792-notable
+{"event": "start", "pid": 27700, "free_gb": 50.4, "cmd": ["C:\\Users\\user\\Strata\\.venv\\Scripts\\python.exe", "E:\\strata-tests\\coding-bench\\tools\\strata-v0.1.45\\serve\\server.py", "--engine", "strata", "--config", "E:\\strata-tests\\coding-bench\\configs\\tune\\A-v045-r1792-notable.json", "--port", "8080"], "env": [], "tag": "A-v045-r1792-notable", "t": 1792480228.461939}
+{"event": "loaded", "load_s": 20.7, "tag": "A-v045-r1792-notable", "t": 1792480249.1324008}
+warmup {'error': None, 'prompt_tokens': 16141, 'completion_tokens': 512, 'ttft_s': 22.350798845291138}
+{"run": 1, "error": null, "prompt_tokens": 16142, "completion_tokens": 512, "ttft_s": 21.843316555023193, "prompt_tps": 738.9903433088282, "output_tps": 70.69132201905947, "peak_vram_dedicated_mb": 18724.0, "peak_vram_shared_mb": 28522.0}
+{"run": 2, "error": null, "prompt_tokens": 16141, "completion_tokens": 512, "ttft_s": 21.831567764282227, "prompt_tps": 739.3422302180084, "output_tps": 61.03292391360898, "peak_vram_dedicated_mb": 18730.0, "peak_vram_shared_mb": 28522.0}
+{"run": 3, "error": null, "prompt_tokens": 16139, "completion_tokens": 512, "ttft_s": 21.811492919921875, "prompt_tps": 739.9310106489404, "output_tps": 71.30471828457954, "peak_vram_dedicated_mb": 18730.0, "peak_vram_shared_mb": 28522.0}
+SUMMARY {"tag": "A-v045-r1792-notable", "n": 3, "median_ttft_s": 21.831567764282227, "median_prompt_tps": 739.3422302180084, "median_output_tps": 70.69132201905947, "max_vram_shared_mb": 28522.0, "max_vram_dedicated_mb": 18730.0, "completion_tokens": [512, 512, 512], "errors": []}
+{"event": "stopped", "pid": 27700, "alive_s": 139.6, "tag": "A-v045-r1792-notable", "t": 1792480368.077225}
+>>> arm v045-r1792-kvq4 ['--set-arg', '--vram-reserve-mib', '1792', '--set-arg', '--kv', 'q4_0', '--smoke']
+>>> A-v045-r1792-kvq4
+{"event": "start", "pid": 5760, "free_gb": 50.3, "cmd": ["C:\\Users\\user\\Strata\\.venv\\Scripts\\python.exe", "E:\\strata-tests\\coding-bench\\tools\\strata-v0.1.45\\serve\\server.py", "--engine", "strata", "--config", "E:\\strata-tests\\coding-bench\\configs\\tune\\A-v045-r1792-kvq4.json", "--port", "8080"], "env": [], "tag": "A-v045-r1792-kvq4", "t": 1792480379.064815}
+{"event": "loaded", "load_s": 20.6, "tag": "A-v045-r1792-kvq4", "t": 1792480399.6149204}
+warmup {'error': None, 'prompt_tokens': 16140, 'completion_tokens': 512, 'ttft_s': 11.339679956436157}
+{"run": 1, "error": null, "prompt_tokens": 16140, "completion_tokens": 512, "ttft_s": 10.836113691329956, "prompt_tps": 1489.4638852777741, "output_tps": 63.18615101739112, "peak_vram_dedicated_mb": 18735.0, "peak_vram_shared_mb": 26818.0}
+{"run": 2, "error": null, "prompt_tokens": 16137, "completion_tokens": 512, "ttft_s": 10.844571828842163, "prompt_tps": 1488.0255536767365, "output_tps": 68.88513307579193, "peak_vram_dedicated_mb": 18735.0, "peak_vram_shared_mb": 26818.0}
+{"run": 3, "error": null, "prompt_tokens": 16136, "completion_tokens": 512, "ttft_s": 10.842897891998291, "prompt_tps": 1488.1630502033822, "output_tps": 60.20490060158851, "peak_vram_dedicated_mb": 18735.0, "peak_vram_shared_mb": 26818.0}
+SUMMARY {"tag": "A-v045-r1792-kvq4", "n": 3, "median_ttft_s": 10.842897891998291, "median_prompt_tps": 1488.1630502033822, "median_output_tps": 63.18615101739112, "max_vram_shared_mb": 26818.0, "max_vram_dedicated_mb": 18735.0, "completion_tokens": [512, 512, 512], "errors": []}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "A-v045-r1792-kvq4", "rep": 1, "wall_s": 13.9, "smoke_version": 2}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "A-v045-r1792-kvq4", "rep": 2, "wall_s": 16.0, "smoke_version": 2}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "A-v045-r1792-kvq4", "rep": 3, "wall_s": 13.9, "smoke_version": 2}
+SMOKE A-v045-r1792-kvq4 {"tool_call": 3, "tool_typed": 3, "tool_result": 3, "code": 3} of 3
+{"event": "stopped", "pid": 5760, "alive_s": 140.6, "tag": "A-v045-r1792-kvq4", "t": 1792480519.614885}
+>>> arm v045-r1792-pf16k ['--set-arg', '--vram-reserve-mib', '1792', '--set-arg', '--prefill', 'auto:16384']
+>>> A-v045-r1792-pf16k
+{"event": "start", "pid": 21488, "free_gb": 50.5, "cmd": ["C:\\Users\\user\\Strata\\.venv\\Scripts\\python.exe", "E:\\strata-tests\\coding-bench\\tools\\strata-v0.1.45\\serve\\server.py", "--engine", "strata", "--config", "E:\\strata-tests\\coding-bench\\configs\\tune\\A-v045-r1792-pf16k.json", "--port", "8080"], "env": [], "tag": "A-v045-r1792-pf16k", "t": 1792480530.5893443}
+{"event": "loaded", "load_s": 20.6, "tag": "A-v045-r1792-pf16k", "t": 1792480551.2291062}
+warmup {'error': None, 'prompt_tokens': 16140, 'completion_tokens': 512, 'ttft_s': 10.550821781158447}
+{"run": 1, "error": null, "prompt_tokens": 16140, "completion_tokens": 512, "ttft_s": 9.996235847473145, "prompt_tps": 1614.6077629890935, "output_tps": 62.58991066532941, "peak_vram_dedicated_mb": 18738.0, "peak_vram_shared_mb": 28562.0}
+{"run": 2, "error": null, "prompt_tokens": 16140, "completion_tokens": 512, "ttft_s": 9.9678955078125, "prompt_tps": 1619.1983540908923, "output_tps": 69.45920247294528, "peak_vram_dedicated_mb": 18738.0, "peak_vram_shared_mb": 28562.0}
+{"run": 3, "error": null, "prompt_tokens": 16141, "completion_tokens": 512, "ttft_s": 9.984941482543945, "prompt_tps": 1616.5342609386655, "output_tps": 67.18459668619333, "peak_vram_dedicated_mb": 18738.0, "peak_vram_shared_mb": 28562.0}
+SUMMARY {"tag": "A-v045-r1792-pf16k", "n": 3, "median_ttft_s": 9.984941482543945, "median_prompt_tps": 1616.5342609386655, "median_output_tps": 67.18459668619333, "max_vram_shared_mb": 28562.0, "max_vram_dedicated_mb": 18738.0, "completion_tokens": [512, 512, 512], "errors": []}
+{"event": "stopped", "pid": 21488, "alive_s": 92.6, "tag": "A-v045-r1792-pf16k", "t": 1792480623.1981854}
+>>> arm v045-r1792-minp07 ['--set-arg', '--vram-reserve-mib', '1792', '--set-arg', '--spec-min-p', '0.7', '--smoke']
+>>> A-v045-r1792-minp07
+{"event": "start", "pid": 29984, "free_gb": 50.5, "cmd": ["C:\\Users\\user\\Strata\\.venv\\Scripts\\python.exe", "E:\\strata-tests\\coding-bench\\tools\\strata-v0.1.45\\serve\\server.py", "--engine", "strata", "--config", "E:\\strata-tests\\coding-bench\\configs\\tune\\A-v045-r1792-minp07.json", "--port", "8080"], "env": [], "tag": "A-v045-r1792-minp07", "t": 1792480634.1772382}
+{"event": "loaded", "load_s": 20.5, "tag": "A-v045-r1792-minp07", "t": 1792480654.7089112}
+warmup {'error': None, 'prompt_tokens': 16138, 'completion_tokens': 512, 'ttft_s': 11.297281742095947}
+{"run": 1, "error": null, "prompt_tokens": 16141, "completion_tokens": 512, "ttft_s": 10.765675783157349, "prompt_tps": 1499.302071241289, "output_tps": 68.29277362443689, "peak_vram_dedicated_mb": 18732.0, "peak_vram_shared_mb": 28522.0}
+{"run": 2, "error": null, "prompt_tokens": 16139, "completion_tokens": 512, "ttft_s": 10.790489196777344, "prompt_tps": 1495.6689827204523, "output_tps": 61.585712664284216, "peak_vram_dedicated_mb": 18738.0, "peak_vram_shared_mb": 28522.0}
+{"run": 3, "error": null, "prompt_tokens": 16138, "completion_tokens": 512, "ttft_s": 10.772955179214478, "prompt_tps": 1498.010502367719, "output_tps": 70.00371345204486, "peak_vram_dedicated_mb": 18738.0, "peak_vram_shared_mb": 28522.0}
+SUMMARY {"tag": "A-v045-r1792-minp07", "n": 3, "median_ttft_s": 10.772955179214478, "median_prompt_tps": 1498.010502367719, "median_output_tps": 68.29277362443689, "max_vram_shared_mb": 28522.0, "max_vram_dedicated_mb": 18738.0, "completion_tokens": [512, 512, 512], "errors": []}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "A-v045-r1792-minp07", "rep": 1, "wall_s": 10.4, "smoke_version": 2}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "A-v045-r1792-minp07", "rep": 2, "wall_s": 11.8, "smoke_version": 2}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "A-v045-r1792-minp07", "rep": 3, "wall_s": 9.1, "smoke_version": 2}
+SMOKE A-v045-r1792-minp07 {"tool_call": 3, "tool_typed": 3, "tool_result": 3, "code": 3} of 3
+{"event": "stopped", "pid": 29984, "alive_s": 126.9, "tag": "A-v045-r1792-minp07", "t": 1792480761.1086905}
+>>> arm v045-r1792-adaptasync ['--set-arg', '--vram-reserve-mib', '1792', '--set-arg', '--adapt-async', '1', '--smoke']
+>>> A-v045-r1792-adaptasync
+{"event": "start", "pid": 33448, "free_gb": 50.5, "cmd": ["C:\\Users\\user\\Strata\\.venv\\Scripts\\python.exe", "E:\\strata-tests\\coding-bench\\tools\\strata-v0.1.45\\serve\\server.py", "--engine", "strata", "--config", "E:\\strata-tests\\coding-bench\\configs\\tune\\A-v045-r1792-adaptasync.json", "--port", "8080"], "env": [], "tag": "A-v045-r1792-adaptasync", "t": 1792480772.1022701}
+{"event": "loaded", "load_s": 20.6, "tag": "A-v045-r1792-adaptasync", "t": 1792480792.7078009}
+warmup {'error': None, 'prompt_tokens': 16140, 'completion_tokens': 512, 'ttft_s': 11.336251974105835}
+{"run": 1, "error": null, "prompt_tokens": 16137, "completion_tokens": 512, "ttft_s": 10.77967619895935, "prompt_tps": 1496.9837407136436, "output_tps": 64.11952012165688, "peak_vram_dedicated_mb": 18738.0, "peak_vram_shared_mb": 28522.0}
+{"run": 2, "error": null, "prompt_tokens": 16139, "completion_tokens": 512, "ttft_s": 10.781077861785889, "prompt_tps": 1496.9746259977915, "output_tps": 70.242123473243, "peak_vram_dedicated_mb": 18738.0, "peak_vram_shared_mb": 28522.0}
+{"run": 3, "error": null, "prompt_tokens": 16141, "completion_tokens": 512, "ttft_s": 10.791504144668579, "prompt_tps": 1495.7136450690498, "output_tps": 60.982423215056684, "peak_vram_dedicated_mb": 18738.0, "peak_vram_shared_mb": 28522.0}
+SUMMARY {"tag": "A-v045-r1792-adaptasync", "n": 3, "median_ttft_s": 10.781077861785889, "median_prompt_tps": 1496.9746259977915, "median_output_tps": 64.11952012165688, "max_vram_shared_mb": 28522.0, "max_vram_dedicated_mb": 18738.0, "completion_tokens": [512, 512, 512], "errors": []}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "A-v045-r1792-adaptasync", "rep": 1, "wall_s": 11.0, "smoke_version": 2}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "A-v045-r1792-adaptasync", "rep": 2, "wall_s": 13.1, "smoke_version": 2}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "A-v045-r1792-adaptasync", "rep": 3, "wall_s": 16.1, "smoke_version": 2}
+SMOKE A-v045-r1792-adaptasync {"tool_call": 3, "tool_typed": 3, "tool_result": 3, "code": 3} of 3
+{"event": "stopped", "pid": 33448, "alive_s": 136.4, "tag": "A-v045-r1792-adaptasync", "t": 1792480908.4616833}
+>>> arm v045-r1792-cpushare ['--set-arg', '--vram-reserve-mib', '1792', '--env', 'STRATA_PREFILL_CPU_SHARE=auto', '--smoke']
+>>> A-v045-r1792-cpushare
+{"event": "start", "pid": 39220, "free_gb": 50.3, "cmd": ["C:\\Users\\user\\Strata\\.venv\\Scripts\\python.exe", "E:\\strata-tests\\coding-bench\\tools\\strata-v0.1.45\\serve\\server.py", "--engine", "strata", "--config", "E:\\strata-tests\\coding-bench\\configs\\tune\\A-v045-r1792-cpushare.json", "--port", "8080"], "env": [], "tag": "A-v045-r1792-cpushare", "t": 1792480919.4245064}
+{"event": "loaded", "load_s": 20.6, "tag": "A-v045-r1792-cpushare", "t": 1792480940.03659}
+warmup {'error': None, 'prompt_tokens': 16141, 'completion_tokens': 512, 'ttft_s': 11.305445194244385}
+{"run": 1, "error": null, "prompt_tokens": 16138, "completion_tokens": 512, "ttft_s": 10.786588907241821, "prompt_tps": 1496.1170893576364, "output_tps": 68.58126702960874, "peak_vram_dedicated_mb": 18730.0, "peak_vram_shared_mb": 28522.0}
+{"run": 2, "error": null, "prompt_tokens": 16136, "completion_tokens": 512, "ttft_s": 10.784991264343262, "prompt_tps": 1496.1532749078756, "output_tps": 63.7274263952445, "peak_vram_dedicated_mb": 18730.0, "peak_vram_shared_mb": 28522.0}
+{"run": 3, "error": null, "prompt_tokens": 16138, "completion_tokens": 512, "ttft_s": 10.80739712715149, "prompt_tps": 1493.2365129302416, "output_tps": 62.32260139373256, "peak_vram_dedicated_mb": 18736.0, "peak_vram_shared_mb": 28542.0}
+SUMMARY {"tag": "A-v045-r1792-cpushare", "n": 3, "median_ttft_s": 10.786588907241821, "median_prompt_tps": 1496.1170893576364, "median_output_tps": 63.7274263952445, "max_vram_shared_mb": 28542.0, "max_vram_dedicated_mb": 18736.0, "completion_tokens": [512, 512, 512], "errors": []}
+{"tool_call": false, "tool_result": true, "tool_typed": true, "code": true, "tag": "A-v045-r1792-cpushare", "rep": 1, "wall_s": 14.5, "smoke_version": 2}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "A-v045-r1792-cpushare", "rep": 2, "wall_s": 10.7, "smoke_version": 2}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "A-v045-r1792-cpushare", "rep": 3, "wall_s": 12.8, "smoke_version": 2}
+SMOKE A-v045-r1792-cpushare {"tool_call": 2, "tool_typed": 3, "tool_result": 3, "code": 3} of 3
+{"event": "stopped", "pid": 39220, "alive_s": 134.1, "tag": "A-v045-r1792-cpushare", "t": 1792481053.476427}
+>>> arm v045-r1792-coupled ['--set-arg', '--vram-reserve-mib', '1792', '--add-flag=--coupled-draft', '--smoke']
+>>> A-v045-r1792-coupled
+{"event": "start", "pid": 10536, "free_gb": 50.5, "cmd": ["C:\\Users\\user\\Strata\\.venv\\Scripts\\python.exe", "E:\\strata-tests\\coding-bench\\tools\\strata-v0.1.45\\serve\\server.py", "--engine", "strata", "--config", "E:\\strata-tests\\coding-bench\\configs\\tune\\A-v045-r1792-coupled.json", "--port", "8080"], "env": [], "tag": "A-v045-r1792-coupled", "t": 1792481064.4374993}
+{"event": "loaded", "load_s": 20.5, "tag": "A-v045-r1792-coupled", "t": 1792481084.9778926}
+warmup {'error': None, 'prompt_tokens': 16141, 'completion_tokens': 512, 'ttft_s': 11.349602699279785}
+{"run": 1, "error": null, "prompt_tokens": 16137, "completion_tokens": 512, "ttft_s": 10.817245244979858, "prompt_tps": 1491.784611936109, "output_tps": 61.08915275510798, "peak_vram_dedicated_mb": 18732.0, "peak_vram_shared_mb": 28522.0}
+{"run": 2, "error": null, "prompt_tokens": 16140, "completion_tokens": 512, "ttft_s": 10.824128150939941, "prompt_tps": 1491.1131663383385, "output_tps": 63.71097019302829, "peak_vram_dedicated_mb": 18732.0, "peak_vram_shared_mb": 28522.0}
+{"run": 3, "error": null, "prompt_tokens": 16139, "completion_tokens": 512, "ttft_s": 10.815928220748901, "prompt_tps": 1492.1511746943274, "output_tps": 68.31375065137117, "peak_vram_dedicated_mb": 18732.0, "peak_vram_shared_mb": 28522.0}
+SUMMARY {"tag": "A-v045-r1792-coupled", "n": 3, "median_ttft_s": 10.817245244979858, "median_prompt_tps": 1491.784611936109, "median_output_tps": 63.71097019302829, "max_vram_shared_mb": 28522.0, "max_vram_dedicated_mb": 18732.0, "completion_tokens": [512, 512, 512], "errors": []}
+{"tool_call": true, "tool_result": false, "tool_typed": true, "code": true, "tag": "A-v045-r1792-coupled", "rep": 1, "wall_s": 10.8, "smoke_version": 2}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "A-v045-r1792-coupled", "rep": 2, "wall_s": 16.6, "smoke_version": 2}
+{"tool_call": true, "tool_result": true, "tool_typed": true, "code": true, "tag": "A-v045-r1792-coupled", "rep": 3, "wall_s": 15.1, "smoke_version": 2}
+SMOKE A-v045-r1792-coupled {"tool_call": 3, "tool_typed": 3, "tool_result": 2, "code": 3} of 3
+{"event": "stopped", "pid": 10536, "alive_s": 139.3, "tag": "A-v045-r1792-coupled", "t": 1792481203.729898}

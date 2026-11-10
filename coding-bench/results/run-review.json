@@ -1,0 +1,10 @@
+{
+ "note": "Manual review of runs that the harness flagged (run.json peeked_outside). A run is invalid only if it read the hidden tests, the references, the mutants or the scorer.",
+ "reviews": {
+  "A-T6-r2": {
+   "valid": true,
+   "flagged_call": "Copy -Recurse . ..\\..\\..\\..\\Temp\\opencode_mut -Exclude opencode.json",
+   "finding": "The model built its own scratch mutation check: copies of its own work folder and a check_mutants.py in C:\\Users\\user\\AppData\\Local\\Temp\\opencode, with 26 mutants it wrote itself. It never read hidden/, reference/ (including reference/mutants/T6) or score.py. It wrote outside its work folder (the user's temp folder); those scratch files were left in place."
+  }
+ }
+}

@@ -1,0 +1,15 @@
+ds4 slots: saved a 16619-token conversation (0.04 GB in RAM in 0.1 s); 4 in RAM, 36 in C:\Users\user\AppData\Local\Strata\launch\ds4-slots
+ds4 slots: took back a 538-token conversation at token 538 of 1647 from the folder (0.0 s); 238 new tokens to read
+maya ds4 serve: prompt 776 tokens = 538 reused + 238 read in 31066 ms (7.7 tok/s), 70 generated in 23133 ms (3.03 tok/s); CPU lane 34.2% of the experts
+maya ds4 serve: drafts 35 of 55 kept; per position (kept / reached): 1: 19/23 83% 2: 9/15 60% 3: 3/5 60% 4: 3/3 100% 5: 1/1 100%
+ds4: took back a 5921-token shared start (0.01 s)
+maya ds4 serve: prompt 6152 tokens = 5921 reused + 231 read in 31058 ms (7.4 tok/s), 159 generated in 35163 ms (4.52 tok/s); CPU lane 34.3% of the experts
+maya ds4 serve: drafts 128 of 145 kept; per position (kept / reached): 1: 30/31 97% 2: 29/30 97% 3: 27/29 93% 4: 21/25 84% 5: 21/21 100%
+maya ds4 serve: prompt 7284 tokens = 6311 reused + 973 read in 49272 ms (19.7 tok/s), 137 generated in 38408 ms (3.57 tok/s); CPU lane 34.0% of the experts
+maya ds4 serve: drafts 110 of 129 kept; per position (kept / reached): 1: 25/27 93% 2: 23/25 92% 3: 22/22 100% 4: 20/21 95% 5: 20/20 100%
+maya ds4 serve: prompt 9449 tokens = 7421 reused + 2028 read in 83922 ms (24.2 tok/s), 1453 generated in 336836 ms (4.31 tok/s); CPU lane 34.5% of the experts
+maya ds4 serve: drafts 876 of 1167 kept; per position (kept / reached): 1: 318/415 77% 2: 203/234 87% 3: 144/159 91% 4: 113/124 91% 5: 98/103 95%
+maya ds4 serve: prompt 10916 tokens = 10902 reused + 14 read in 3463 ms (4.0 tok/s), 70 generated in 15333 ms (4.57 tok/s); CPU lane 34.6% of the experts
+maya ds4 serve: drafts 57 of 61 kept; per position (kept / reached): 1: 13/13 100% 2: 12/12 100% 3: 12/12 100% 4: 11/12 92% 5: 9/11 82%
+maya ds4 serve: prompt 11200 tokens = 10986 reused + 214 read in 23325 ms (9.2 tok/s), 41 generated in 16927 ms (2.42 tok/s); CPU lane 34.6% of the experts
+maya ds4 serve: drafts 26 of 37 kept; per position (kept / reached): 1: 9/13 69% 2: 5/7 71% 3: 5/5 100% 4: 4/5 80% 5: 3/4 75%

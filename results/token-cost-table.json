@@ -1,0 +1,544 @@
+[
+ {
+  "group": "paid",
+  "run": "gpt-6-luna #1",
+  "model": "gpt-6-luna",
+  "secs": 283,
+  "tokens": {
+   "inp": 60,
+   "out": 26464,
+   "cr": 549432,
+   "cw": 42243,
+   "cost": 0.024012695
+  },
+  "check": {
+   "errors": 0,
+   "voxels": 19978,
+   "canvas": true
+  },
+  "note": "",
+  "eq_luna": 0.024012695
+ },
+ {
+  "group": "paid",
+  "run": "gpt-6-luna #2",
+  "model": "gpt-6-luna",
+  "secs": 22,
+  "tokens": {
+   "inp": 18,
+   "out": 1155,
+   "cr": 49325,
+   "cw": 12674,
+   "cost": 0.0026568
+  },
+  "check": null,
+  "note": "stopped after a design note, waiting for approval",
+  "eq_luna": 0.0026568000000000004
+ },
+ {
+  "group": "paid",
+  "run": "gpt-6-luna #3",
+  "model": "gpt-6-luna",
+  "secs": 437,
+  "tokens": {
+   "inp": 99,
+   "out": 38674,
+   "cr": 1547839,
+   "cw": 69377,
+   "cost": 0.043497415
+  },
+  "check": {
+   "errors": 0,
+   "voxels": 16902,
+   "canvas": true
+  },
+  "note": "",
+  "eq_luna": 0.043497415
+ },
+ {
+  "group": "paid",
+  "run": "glm-5.3-flash",
+  "model": "glm-5.3-flash",
+  "secs": 901,
+  "tokens": null,
+  "check": null,
+  "note": "timed out, no step finished"
+ },
+ {
+  "group": "paid",
+  "run": "deepseek-v4.1-flash",
+  "model": "deepseek-v4.1-flash",
+  "secs": 999,
+  "tokens": {
+   "inp": 195694,
+   "out": 87564,
+   "cr": 4434048,
+   "cw": 0,
+   "cost": 0.09519464400000001
+  },
+  "check": {
+   "errors": 0,
+   "voxels": 16521,
+   "canvas": true
+  },
+  "note": "",
+  "eq_luna": 0.10769188
+ },
+ {
+  "group": "free-pass1",
+  "run": "muse-spark-1.3",
+  "model": "muse-spark-1.3",
+  "secs": 219,
+  "tokens": {
+   "inp": 11984,
+   "out": 24056,
+   "cr": 320987,
+   "cw": 0,
+   "cost": 0.0
+  },
+  "check": {
+   "errors": 0,
+   "voxels": 17231,
+   "canvas": true
+  },
+  "note": "",
+  "eq_luna": 0.01643627
+ },
+ {
+  "group": "free-pass1",
+  "run": "longcat-2.5",
+  "model": "longcat-2.5",
+  "secs": 1115,
+  "tokens": {
+   "inp": 67397,
+   "out": 50157,
+   "cr": 489088,
+   "cw": 0,
+   "cost": 0.0
+  },
+  "check": {
+   "errors": 0,
+   "voxels": 15395,
+   "canvas": true
+  },
+  "note": "",
+  "eq_luna": 0.036709080000000005
+ },
+ {
+  "group": "free-pass1",
+  "run": "nemotron-3.5-lightning",
+  "model": "nemotron-3.5-lightning",
+  "secs": 1253,
+  "tokens": {
+   "inp": 116567,
+   "out": 36004,
+   "cr": 2638864,
+   "cw": 0,
+   "cost": 0.0
+  },
+  "check": {
+   "errors": 1,
+   "voxels": null,
+   "canvas": false
+  },
+  "note": "",
+  "eq_luna": 0.056047339999999994
+ },
+ {
+  "group": "free-pass1",
+  "run": "space-bunny",
+  "model": "space-bunny",
+  "secs": 139,
+  "tokens": {
+   "inp": 6700,
+   "out": 34922,
+   "cr": 10409,
+   "cw": 0,
+   "cost": 0.0
+  },
+  "check": null,
+  "note": "",
+  "eq_luna": 0.01823509
+ },
+ {
+  "group": "free-pass1",
+  "run": "big-pickle",
+  "model": "big-pickle",
+  "secs": 191,
+  "tokens": {
+   "inp": 6881,
+   "out": 32000,
+   "cr": 1792,
+   "cw": 0,
+   "cost": 0.0
+  },
+  "check": null,
+  "note": "",
+  "eq_luna": 0.016706020000000002
+ },
+ {
+  "group": "free-pass1",
+  "run": "mimo-v2.6-flash",
+  "model": "mimo-v2.6-flash",
+  "secs": 877,
+  "tokens": {
+   "inp": 4301,
+   "out": 32006,
+   "cr": 4096,
+   "cw": 0,
+   "cost": 0.0
+  },
+  "check": null,
+  "note": "",
+  "eq_luna": 0.016474060000000002
+ },
+ {
+  "group": "free-pass1",
+  "run": "step-5-preview",
+  "model": "step-5-preview",
+  "secs": 1416,
+  "tokens": {
+   "inp": 65977,
+   "out": 52365,
+   "cr": 3584,
+   "cw": 0,
+   "cost": 0.0
+  },
+  "check": null,
+  "note": "",
+  "eq_luna": 0.03281604
+ },
+ {
+  "group": "free-pass1",
+  "run": "nemotron-3-ultra",
+  "model": "nemotron-3-ultra",
+  "secs": 956,
+  "tokens": {
+   "inp": 8911,
+   "out": 193,
+   "cr": 0,
+   "cw": 0,
+   "cost": 0.0
+  },
+  "check": null,
+  "note": "",
+  "eq_luna": 0.0009876
+ },
+ {
+  "group": "free-pass1",
+  "run": "ling-3.1-flash",
+  "model": "ling-3.1-flash",
+  "secs": 75,
+  "tokens": {
+   "inp": 0,
+   "out": 0,
+   "cr": 0,
+   "cw": 0,
+   "cost": 0.0
+  },
+  "check": null,
+  "note": "",
+  "eq_luna": 0.0
+ },
+ {
+  "group": "free-pass1",
+  "run": "ling-3.0-flash-fin",
+  "model": "ling-3.0-flash-fin",
+  "secs": 75,
+  "tokens": {
+   "inp": 0,
+   "out": 0,
+   "cr": 0,
+   "cw": 0,
+   "cost": 0.0
+  },
+  "check": null,
+  "note": "",
+  "eq_luna": 0.0
+ },
+ {
+  "group": "free-pass1",
+  "run": "exo",
+  "model": "exo",
+  "secs": 4,
+  "tokens": {
+   "inp": 0,
+   "out": 0,
+   "cr": 0,
+   "cw": 0,
+   "cost": 0.0
+  },
+  "check": null,
+  "note": "",
+  "eq_luna": 0.0
+ },
+ {
+  "group": "free-pass2",
+  "run": "ling-3.1-flash",
+  "model": "ling-3.1-flash",
+  "secs": 1666,
+  "tokens": {
+   "inp": 551220,
+   "out": 71900,
+   "cr": 2226688,
+   "cw": 0,
+   "cost": 0.0
+  },
+  "check": {
+   "errors": 0,
+   "voxels": 16667,
+   "canvas": true
+  },
+  "note": "",
+  "eq_luna": 0.11333888
+ },
+ {
+  "group": "free-pass2",
+  "run": "big-pickle",
+  "model": "big-pickle",
+  "secs": 316,
+  "tokens": {
+   "inp": 61554,
+   "out": 51633,
+   "cr": 1079680,
+   "cw": 0,
+   "cost": 0.0
+  },
+  "check": {
+   "errors": 0,
+   "voxels": 16264,
+   "canvas": true
+  },
+  "note": "",
+  "eq_luna": 0.04276870000000001
+ },
+ {
+  "group": "free-pass2",
+  "run": "mimo-v2.6-flash",
+  "model": "mimo-v2.6-flash",
+  "secs": 1203,
+  "tokens": {
+   "inp": 96666,
+   "out": 59659,
+   "cr": 1682112,
+   "cw": 0,
+   "cost": 0.0
+  },
+  "check": {
+   "errors": 0,
+   "voxels": 16790,
+   "canvas": true
+  },
+  "note": "",
+  "eq_luna": 0.05631722
+ },
+ {
+  "group": "free-pass2",
+  "run": "space-bunny",
+  "model": "space-bunny",
+  "secs": 257,
+  "tokens": {
+   "inp": 55809,
+   "out": 38134,
+   "cr": 2991778,
+   "cw": 0,
+   "cost": 0.0
+  },
+  "check": {
+   "errors": 0,
+   "voxels": 16229,
+   "canvas": true
+  },
+  "note": "",
+  "eq_luna": 0.05456568
+ },
+ {
+  "group": "free-pass2",
+  "run": "step-5-preview",
+  "model": "step-5-preview",
+  "secs": 1774,
+  "tokens": {
+   "inp": 93426,
+   "out": 68900,
+   "cr": 3277696,
+   "cw": 0,
+   "cost": 0.0
+  },
+  "check": {
+   "errors": 0,
+   "voxels": 16500,
+   "canvas": true
+  },
+  "note": "",
+  "eq_luna": 0.07656956
+ },
+ {
+  "group": "free-pass2",
+  "run": "nemotron-3-ultra",
+  "model": "nemotron-3-ultra",
+  "secs": 3228,
+  "tokens": {
+   "inp": 538567,
+   "out": 33027,
+   "cr": 1058400,
+   "cw": 0,
+   "cost": 0.0
+  },
+  "check": {
+   "errors": 0,
+   "voxels": null,
+   "canvas": false
+  },
+  "note": "",
+  "eq_luna": 0.08095420000000002
+ },
+ {
+  "group": "free-pass2",
+  "run": "nemotron-3.5-lightning",
+  "model": "nemotron-3.5-lightning",
+  "secs": 2477,
+  "tokens": {
+   "inp": 449390,
+   "out": 96544,
+   "cr": 12647264,
+   "cw": 0,
+   "cost": 0.0
+  },
+  "check": {
+   "errors": 1,
+   "voxels": null,
+   "canvas": false
+  },
+  "note": "",
+  "eq_luna": 0.21968364
+ },
+ {
+  "group": "free-pass2",
+  "run": "ling-3.0-flash-fin",
+  "model": "ling-3.0-flash-fin",
+  "secs": null,
+  "tokens": {
+   "inp": 0,
+   "out": 0,
+   "cr": 0,
+   "cw": 0,
+   "cost": 0.0
+  },
+  "check": null,
+  "note": "",
+  "eq_luna": 0.0
+ },
+ {
+  "group": "orchestrated",
+  "run": "5 modules + 4 fix rounds",
+  "model": "muse + longcat + space-bunny",
+  "secs": null,
+  "tokens": {
+   "inp": 139624,
+   "out": 106728,
+   "cr": 545175,
+   "cw": 0,
+   "cost": 0.0
+  },
+  "check": {
+   "errors": 0,
+   "voxels": 17442,
+   "canvas": true
+  },
+  "note": "lead (Claude) tokens not included",
+  "eq_luna": 0.07277815
+ },
+ {
+  "group": "local",
+  "run": "claude-code run 1",
+  "model": "flash-next IQ1_M",
+  "secs": 2647,
+  "tokens": {
+   "inp": 103034,
+   "out": 73444,
+   "cr": 4718542,
+   "cw": 0,
+   "cost": 0.0
+  },
+  "check": {
+   "errors": 0,
+   "voxels": 16500,
+   "canvas": true
+  },
+  "note": "",
+  "eq_luna": 0.09421082
+ },
+ {
+  "group": "local",
+  "run": "claude-code run 2",
+  "model": "flash-next IQ1_M",
+  "secs": 1210,
+  "tokens": {
+   "inp": 79253,
+   "out": 73610,
+   "cr": 4715892,
+   "cw": 0,
+   "cost": 0.0
+  },
+  "check": {
+   "errors": 2,
+   "voxels": 16500,
+   "canvas": true
+  },
+  "note": "",
+  "eq_luna": 0.09188922000000001
+ },
+ {
+  "group": "local",
+  "run": "claude-code guided (5 stages)",
+  "model": "flash-next IQ1_M",
+  "secs": 3799,
+  "tokens": {
+   "inp": 230959,
+   "out": 233609,
+   "cr": 9897646,
+   "cw": 0,
+   "cost": 0.0
+  },
+  "check": {
+   "errors": 0,
+   "voxels": 15465,
+   "canvas": true
+  },
+  "note": "",
+  "eq_luna": 0.23887686000000002
+ },
+ {
+  "group": "local",
+  "run": "opencode",
+  "model": "flash-next IQ1_M",
+  "secs": 2921,
+  "tokens": {
+   "inp": 70145,
+   "out": 129283,
+   "cr": 16603621,
+   "cw": 0,
+   "cost": 0.0
+  },
+  "check": {
+   "errors": 0,
+   "voxels": 16350,
+   "canvas": true
+  },
+  "note": "",
+  "eq_luna": 0.23769221
+ },
+ {
+  "group": "local",
+  "run": "opencode 27B",
+  "model": "qwen3.8-27b IQ4_XS",
+  "secs": 3753,
+  "tokens": null,
+  "check": {
+   "errors": 2,
+   "voxels": 16001,
+   "canvas": true
+  },
+  "note": "token total not recorded (saved export is a partial snapshot)"
+ }
+]

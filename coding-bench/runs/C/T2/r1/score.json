@@ -1,0 +1,36 @@
+{
+ "task": "T2",
+ "source_dir": "E:\\strata-dsv41\\pagoda\\coding-bench\\runs\\C\\T2\\r1\\work",
+ "label": "C-T2-r1",
+ "scored_at": "2026-11-09T04:08:35.023688",
+ "package_changed": true,
+ "tests_changed": false,
+ "visible": {
+  "total": 32,
+  "passed": 30,
+  "failed": 2,
+  "returncode": 1,
+  "timed_out": false,
+  "seconds": 1.4
+ },
+ "hidden": {
+  "total": 28,
+  "passed": 24,
+  "failed": 4,
+  "task_total": 12,
+  "task_passed": 10,
+  "keep_total": 16,
+  "keep_passed": 14,
+  "failures": [
+   "test_keep_pricing_totals[C2-items3-FLAT5-100.01]",
+   "test_keep_pricing_totals[C5-items4-BIG25-193.29]",
+   "test_task_breakdown_in_jpy_with_fixed_coupon",
+   "test_task_export_has_currency_column"
+  ],
+  "returncode": 1,
+  "timed_out": false,
+  "seconds": 2.7,
+  "output_tail": "      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\ntest_keep_regress.py:46: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n..\\model\\inventory_service\\pricing.py:137: in compute_order_total\n    subtotal = convert(subtotal, code)\n               ^^^^^^^^^^^^^^^^^^^^^^^\n..\\model\\inventory_service\\currency.py:30: in convert\n    code = normalize_currency(currency)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\ncurrency = 'BIG25'\n\n    def normalize_currency(currency) -> str:\n        code = str(currency).strip().upper()\n        if code not in RATES:\n>           raise UnsupportedCurrency(f\"unsupported currency {currency!r}\")\nE           inventory_service.currency.UnsupportedCurrency: unsupported currency 'BIG25'\n\n..\\model\\inventory_service\\currency.py:24: UnsupportedCurrency\n________________ test_task_breakdown_in_jpy_with_fixed_coupon _________________\n\n    def test_task_breakdown_in_jpy_with_fixed_coupon():\n        from inventory_service.pricing import compute_order_total\n        cat, *_ = world()\n>       b = compute_order_total(lines(cat, (\"KIT-0002\", 2), (\"TOO-0001\", 1)), cat, customer(\"C6\"), \"FLAT5\",\n                                currency=\"JPY\")\n\ntest_t2_currency.py:50: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n..\\model\\inventory_service\\pricing.py:137: in compute_order_total\n    subtotal = convert(subtotal, code)\n               ^^^^^^^^^^^^^^^^^^^^^^^\n..\\model\\inventory_service\\currency.py:30: in convert\n    code = normalize_currency(currency)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\ncurrency = 'FLAT5'\n\n    def normalize_currency(currency) -> str:\n        code = str(currency).strip().upper()\n        if code not in RATES:\n>           raise UnsupportedCurrency(f\"unsupported currency {currency!r}\")\nE           inventory_service.currency.UnsupportedCurrency: unsupported currency 'FLAT5'\n\n..\\model\\inventory_service\\currency.py:24: UnsupportedCurrency\n____________________ test_task_export_has_currency_column _____________________\n\n    def test_task_export_has_currency_column():\n        from inventory_service.csv_io import export_orders\n        cat, inv, svc, _ = world()\n        svc.create_order(\"C4\", [(\"TOO-0002\", 2)])\n>       svc.create_order(\"C6\", [(\"KIT-0002\", 2), (\"TOO-0001\", 1)], \"FLAT5\", currency=\"JPY\")\n\ntest_t2_currency.py:137: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n..\\model\\inventory_service\\orders.py:59: in create_order\n    breakdown = compute_order_total(lines, self.catalog, customer, coupon, currency=currency)\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n..\\model\\inventory_service\\pricing.py:137: in compute_order_total\n    subtotal = convert(subtotal, code)\n               ^^^^^^^^^^^^^^^^^^^^^^^\n..\\model\\inventory_service\\currency.py:30: in convert\n    code = normalize_currency(currency)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\ncurrency = 'FLAT5'\n\n    def normalize_currency(currency) -> str:\n        code = str(currency).strip().upper()\n        if code not in RATES:\n>           raise UnsupportedCurrency(f\"unsupported currency {currency!r}\")\nE           inventory_service.currency.UnsupportedCurrency: unsupported currency 'FLAT5'\n\n..\\model\\inventory_service\\currency.py:24: UnsupportedCurrency\n=========================== short test summary info ===========================\nFAILED test_keep_regress.py::test_keep_pricing_totals[C2-items3-FLAT5-100.01]\nFAILED test_keep_regress.py::test_keep_pricing_totals[C5-items4-BIG25-193.29]\nFAILED test_t2_currency.py::test_task_breakdown_in_jpy_with_fixed_coupon - in...\nFAILED test_t2_currency.py::test_task_export_has_currency_column - inventory_...\n4 failed, 24 passed in 1.42s\n"
+ },
+ "score": 0.8571428571428571
+}

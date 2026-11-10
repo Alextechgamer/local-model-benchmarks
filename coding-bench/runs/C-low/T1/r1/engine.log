@@ -1,0 +1,8 @@
+ds4 slots: saved a 29784-token conversation (0.05 GB in RAM in 3.6 s); 3 in RAM, 0 in C:\Users\user\AppData\Local\Strata\launch\ds4-slots
+ds4 slots: took back a 538-token conversation at token 538 of 1632 from RAM (0.0 s); 203 new tokens to read
+ds4: RAM store: 2.4 GB free: gave back 5 chunks (3840 slots left)
+maya ds4 serve: prompt 741 tokens = 538 reused + 203 read in 36001 ms (5.6 tok/s), 85 generated in 29937 ms (2.84 tok/s); CPU lane 40.9% of the experts
+maya ds4 serve: drafts 40 of 62 kept; per position (kept / reached): 1: 21/25 84% 2: 11/17 65% 3: 4/5 80% 4: 2/3 67% 5: 2/2 100%
+ds4: took back a 5836-token shared start (0.01 s)
+maya ds4 serve: prompt 6032 tokens = 5836 reused + 196 read in 29531 ms (6.6 tok/s), 67 generated in 22386 ms (2.99 tok/s); CPU lane 40.9% of the experts
+maya ds4 serve: drafts 43 of 73 kept; per position (kept / reached): 1: 14/16 88% 2: 9/14 64% 3: 8/8 100% 4: 7/7 100% 5: 5/6 83%

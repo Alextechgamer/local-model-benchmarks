@@ -1,0 +1,50 @@
+[
+ {
+  "prompt": 1558,
+  "cached": 0,
+  "fresh": 1558,
+  "prompt_ms": 62556,
+  "prompt_tok_s": 24.9,
+  "generated": 89,
+  "gen_ms": 63469,
+  "decode_tok_s": 1.4,
+  "drafts_kept": 43,
+  "drafts": 62
+ },
+ {
+  "prompt": 6849,
+  "cached": 5836,
+  "fresh": 1013,
+  "prompt_ms": 52088,
+  "prompt_tok_s": 19.4,
+  "generated": 61,
+  "gen_ms": 18910,
+  "decode_tok_s": 3.23,
+  "drafts_kept": 48,
+  "drafts": 64
+ },
+ {
+  "prompt": 7276,
+  "cached": 6910,
+  "fresh": 366,
+  "prompt_ms": 24109,
+  "prompt_tok_s": 15.2,
+  "generated": 66,
+  "gen_ms": 10057,
+  "decode_tok_s": 6.56,
+  "drafts_kept": 52,
+  "drafts": 56
+ },
+ {
+  "prompt": 20275,
+  "cached": 7342,
+  "fresh": 12933,
+  "prompt_ms": 77671,
+  "prompt_tok_s": 166.5,
+  "generated": 83,
+  "gen_ms": 25265,
+  "decode_tok_s": 3.29,
+  "drafts_kept": 19,
+  "drafts": 46
+ }
+]

@@ -1,0 +1,35 @@
+{
+ "model": "B",
+ "task": "T1",
+ "rep": 2,
+ "t0": 1792488200.363193,
+ "t1": 1792488260.3798792,
+ "wall_s": 60.0,
+ "exit_code": 0,
+ "killed": null,
+ "prompt_chars": 691,
+ "cmd": [
+  "C:\\Users\\user\\AppData\\Roaming\\npm\\node_modules\\opencode-ai\\bin\\opencode.exe",
+  "run",
+  "--pure",
+  "-m",
+  "llamacpp/qwen38-27b",
+  "--format",
+  "json",
+  "<README on stdin>"
+ ],
+ "steps": 7,
+ "tool_calls": 13,
+ "tokens": {
+  "input": 16905,
+  "output": 1453,
+  "reasoning": 0,
+  "cache_read": 76798,
+  "cache_write": 0
+ },
+ "ran_visible_tests": true,
+ "pytest_calls": 3,
+ "peeked_outside": [],
+ "errors": [],
+ "final_text": "All 30 tests pass. Three bugs fixed:\n\n1. `inventory.py:89` \u2014 `release()` returned inside the loop, freeing only the first reservation; removed the early `return`.\n2. `pricing.py:90` \u2014 bulk discount used `quantity > 10` instead of `>= 10` (docs say \"quantity >= 10\").\n3. `csv_io.py:59` \u2014 optional CSV columns only defaulted when missing, not when empty; now `if not row.get(col)` treats blank cells as defaults."
+}

@@ -1,0 +1,35 @@
+{
+ "model": "B",
+ "task": "T4",
+ "rep": 1,
+ "t0": 1792487578.7877436,
+ "t1": 1792487753.821778,
+ "wall_s": 175.0,
+ "exit_code": 0,
+ "killed": null,
+ "prompt_chars": 808,
+ "cmd": [
+  "C:\\Users\\user\\AppData\\Roaming\\npm\\node_modules\\opencode-ai\\bin\\opencode.exe",
+  "run",
+  "--pure",
+  "-m",
+  "llamacpp/qwen38-27b",
+  "--format",
+  "json",
+  "<README on stdin>"
+ ],
+ "steps": 15,
+ "tool_calls": 17,
+ "tokens": {
+  "input": 7131,
+  "output": 10271,
+  "reasoning": 0,
+  "cache_read": 226695,
+  "cache_write": 0
+ },
+ "ran_visible_tests": true,
+ "pytest_calls": 3,
+ "peeked_outside": [],
+ "errors": [],
+ "final_text": "Done. Implemented `plan_shipments` in `inventory_service/fulfillment.py:37`.\n\nHow it follows each rule:\n1. **Order of lines** \u2014 a working `remaining` dict tracks units left; each line depletes it for later lines.\n2. **Single warehouse** \u2014 first scans `priority` for the first warehouse holding the whole quantity and ships all from it (so an earlier warehouse with *some* stock is skipped when a later one can cover it).\n3. **Split** \u2014 otherwise walks `priority`, taking `min(left, still_needed)` from each warehouse until covered.\n4. **Insufficient** \u2014 if total left across `priority` < quantity, raises `InsufficientStock(sku, wanted, available=total left)`.\n5. **Zero/negative** \u2014 zero is skipped; negative raises `ValueError`.\n6. **No mutation** \u2014 builds fresh dicts, never touches `stock`.\n\nReturns `{warehouse: [(sku, units), ...]}` in planning order, only for warehouses that ship something (repeats kept separate).\n\nVerified: full suite passes (44/44) and both docstring doctests pass. Added 12 more tests in `tests/test_fulfillment.py` covering every rule and edge cases."
+}

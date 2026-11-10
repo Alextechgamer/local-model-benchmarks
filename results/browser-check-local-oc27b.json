@@ -1,0 +1,42 @@
+{
+ "label": "oc27b",
+ "file_kb": 51.6,
+ "console_errors": [
+  "THREE.WebGLProgram: Shader Error 0 - VALIDATE_STATUS false\n\nProgram Info Log: Vertex shader is not compiled.\nVERTEX\n\nERROR: 0:79: 'uInt' : undeclared identifier\n\n  74:         vec3 p = position;\n  75:         p.x += sin(uTime * 0.5 + aPhase * 2.3) * 0.7;\n  76:         p.y += sin(uTime * 0.9 + aPhase",
+  "THREE.WebGLProgram: Shader Error 1282 - VALIDATE_STATUS false\n\nProgram Info Log: Vertex shader is not compiled.\nVERTEX\n\nERROR: 0:79: 'uInt' : undeclared identifier\n\n  74:         vec3 p = position;\n  75:         p.x += sin(uTime * 0.5 + aPhase * 2.3) * 0.7;\n  76:         p.y += sin(uTime * 0.9 + aPh"
+ ],
+ "console_warnings": [],
+ "exceptions": [],
+ "logs": [
+  "[pagoda] garden built: seed=1337 voxels=16001"
+ ],
+ "page": {
+  "title": "桜の庭 – Voxel Pagoda Garden",
+  "canvases": [
+   [
+    1600,
+    900
+   ]
+  ],
+  "sliders": 4,
+  "checkboxes": 5,
+  "buttons": [
+   "?",
+   "–",
+   "⏸",
+   "Overview",
+   "Pagoda",
+   "Pond",
+   "Torii",
+   "Blossoms",
+   "Regenerate (new seed)",
+   "Reset view"
+  ],
+  "voxelText": "Voxels\n16,001",
+  "fpsText": "FPS\n144",
+  "hasJapaneseTitle": true,
+  "loadingVisible": false,
+  "text": "Garden Controls\n? –\nTime of day\n15:00\n⏸\nCycle speed\n1.00 h/s\nPetal density\n1000\nWind strength\n0.80\nAuto-rotate\nShadows\nFireflies (night)\nWater animation\nWireframe mode\nOverview\nPagoda\nPond\nTorii\nBlossoms\nRegenerate (new seed)\nReset view\nVoxels\n16,001\nFPS\n144\nTime\n15:00\n桜の庭\n\nVoxel Pagoda Garden"
+ },
+ "measured_fps_headless": 144
+}

@@ -1,0 +1,43 @@
+{
+ "label": "bunny-r4",
+ "file_kb": 54.4,
+ "console_errors": [],
+ "console_warnings": [],
+ "exceptions": [],
+ "logs": [
+  "Voxel count: 16229"
+ ],
+ "page": {
+  "title": "桜の庭 – Voxel Pagoda Garden",
+  "canvases": [
+   [
+    1600,
+    900
+   ]
+  ],
+  "sliders": 4,
+  "checkboxes": 0,
+  "buttons": [
+   "▶ Play cycle",
+   "Night",
+   "Auto-rotate",
+   "Shadows",
+   "Fireflies",
+   "Water anim",
+   "Wireframe",
+   "1 Overview",
+   "2 Pagoda",
+   "3 Pond",
+   "4 Torii",
+   "5 Blossoms",
+   "Reset view",
+   "🌸 Regenerate seed"
+  ],
+  "voxelText": "voxels 16,229",
+  "fpsText": "fps 144",
+  "hasJapaneseTitle": true,
+  "loadingVisible": false,
+  "text": "GARDEN CONTROLS\n−\nTIME OF DAY\nHour\n09:00\n▶ Play cycle\nNight\nCycle speed\n1.0\nATMOSPHERE\nPetals\n1000\nWind\n1.0\nTOGGLES\nAuto-rotate\nShadows\nFireflies\nWater anim\nWireframe\nCAMERA PRESETS\n1 Overview\n2 Pagoda\n3 Pond\n4 Torii\n5 Blossoms\nReset view\n🌸 Regenerate seed\nvoxels 16,229\nfps 144\ntime 09:00\nseed 134d8e3\n桜の庭 – Voxel Pagoda Garden\n\nSAKURA · PAGODA · STILLNESS\n\nSHORTCUTS\nSpace auto-rotate · 1–5 presets · N night\nW wireframe · R reset view · drag to orbit, scroll to zoom"
+ },
+ "measured_fps_headless": 144
+}

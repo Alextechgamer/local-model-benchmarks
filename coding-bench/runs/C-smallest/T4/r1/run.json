@@ -1,0 +1,63 @@
+{
+ "model": "C",
+ "prompt_variant": "smallest",
+ "task": "T4",
+ "rep": 1,
+ "t0": 1794235036.4660697,
+ "t1": 1794235731.5750237,
+ "wall_s": 695.1,
+ "exit_code": 0,
+ "killed": null,
+ "prompt_chars": 808,
+ "cmd": [
+  "C:\\Users\\user\\AppData\\Roaming\\npm\\node_modules\\opencode-ai\\bin\\opencode.exe",
+  "run",
+  "--pure",
+  "-m",
+  "strata/deepseek",
+  "--format",
+  "json",
+  "<README on stdin>"
+ ],
+ "steps": 5,
+ "tool_calls": 7,
+ "tokens": {
+  "input": 3460,
+  "output": 1860,
+  "reasoning": 0,
+  "cache_read": 41541,
+  "cache_write": 0
+ },
+ "ran_visible_tests": true,
+ "pytest_calls": 1,
+ "peeked_outside": [],
+ "errors": [],
+ "final_text": "Implemented `plan_shipments` in `inventory_service/fulfillment.py:35`. Tests pass:\n\n```\n32 passed in 0.11s\n```",
+ "nan_drops": 0,
+ "engine": {
+  "turns": 6,
+  "prompt_tokens": 45777,
+  "cached_tokens": 42079,
+  "fresh_tokens": 3698,
+  "first_turn": {
+   "prompt": 776,
+   "cached": 538,
+   "fresh": 238,
+   "prompt_ms": 31066,
+   "prompt_tok_s": 7.7,
+   "generated": 70,
+   "gen_ms": 23133,
+   "decode_tok_s": 3.03,
+   "drafts_kept": 35,
+   "drafts": 55
+  },
+  "ttft_first_s": 31.1,
+  "ttft_median_s": 31.1,
+  "ttft_total_s": 222.1,
+  "output_tokens": 1930,
+  "decode_tok_s": 4.14,
+  "drafts_kept": 1232,
+  "drafts": 1594
+ },
+ "disk_E_read_GB": 651.4
+}

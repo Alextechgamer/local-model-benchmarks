@@ -1,0 +1,12 @@
+﻿ Getting the newest Strata (git pull) ...
+Already up to date.
+Strata - Qwen3.8-Flash-Next on a normal PC (a GPU + system RAM + CPU)
+  [ok] numpy, jinja2, regex, pyyaml, tqdm, requests, pillow, psutil already installed
+  Updating the ready-made AMD engine (0.1.39 -> 0.1.45 or newer) ...
+  No ready-made AMD engine for v0.1.46.1 (HTTP Error 404: Not Found): the latest release instead
+  [!]  no ready-made AMD engine at https://github.com/Niko1221/Strata/releases/latest/download/ (HTTP Error 404: Not Found)
+  [!]  could not update the AMD engine (not published yet): starting the installed one
+  [ok] qwen3.8-flash-next-coder-iq1_m: up to date
+
+  [ok] Strata is updated (engine 0.1.39). Start the model with START-HERE.bat when you want it.
+Press any key to continue . . . 

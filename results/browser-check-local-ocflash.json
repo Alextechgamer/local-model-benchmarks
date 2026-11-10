@@ -1,0 +1,43 @@
+{
+ "label": "ocflash",
+ "file_kb": 61.2,
+ "console_errors": [],
+ "console_warnings": [],
+ "exceptions": [],
+ "logs": [
+  "[voxel garden] seed 20261005 -> 16350 voxels (opaque 16008 + emissive 95 + water 247)"
+ ],
+ "page": {
+  "title": "枡欋依 – Voxel Pagoda Garden",
+  "canvases": [
+   [
+    1600,
+    900
+   ]
+  ],
+  "sliders": 4,
+  "checkboxes": 0,
+  "buttons": [
+   "▶ play",
+   "auto-rotate",
+   "shadows",
+   "fireflies",
+   "water anim",
+   "wireframe",
+   "Overview",
+   "Pagoda",
+   "Pond",
+   "Torii",
+   "Blossoms",
+   "reset view",
+   "regenerate seed",
+   "?"
+  ],
+  "voxelText": "voxels 16350",
+  "fpsText": "fps 144",
+  "hasJapaneseTitle": false,
+  "loadingVisible": false,
+  "text": "枡欋依 – Voxel Pagoda Garden\nfive tiers · 80×80 units\n枡欋依–\nTIME OF DAY\nhour\n09.5\n▶ play\nspeed\nPETALS / WIND\ndensity\nwind\nTOGGLES\nauto-rotate\nshadows\nfireflies\nwater anim\nwireframe\nCAMERA\nOverview\nPagoda\nPond\nTorii\nBlossoms\nreset view\nregenerate seed\n?\nREADOUT\nvoxels 16350\nfps 144\ntime 9.5 h\nspace  auto-rotate\n1–5   preset cameras\nN      day / night\ndrag   orbit · wheel zoom"
+ },
+ "measured_fps_headless": 145
+}

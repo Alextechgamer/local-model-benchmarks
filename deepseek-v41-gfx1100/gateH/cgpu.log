@@ -1,0 +1,5 @@
+14:39:39
+relaunch rc 0 14:43:22
+[strata] 2026-11-09 14:41:59 engine started: E:\strata-dsv41\engine-dsv41\0.1.58-windows-x86_64-hip-gfx1100-self\strata-dsv41.exe --serve --pack E:\strata-dsv41\packs\deepseek-v4.1-flash-ist-das-1.75bpw --max-context 65532 --eos 1 --vision off --dspark-conf 0.65 --experts 6 --dspark on --ssd-cache 36
+{"run": "C-gpu-T1-r1", "wall_s": 635.2, "steps": 7, "killed": null, "ran_tests": true, "peeked": 0, "score": "{\"task\": \"T1\", \"label\": \"C-gpu-T1-r1\", \"score\": 1.0, \"package_changed\": true, \"tests_changed\": false, \"visible\": \"30/30\", \"hidden\": \"25/25 (task 7/7, keep 18/18)\"}"}
+DONE 14:53:59

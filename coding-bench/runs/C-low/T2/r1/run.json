@@ -1,0 +1,173 @@
+{
+ "model": "C",
+ "prompt_variant": "default",
+ "reasoning_effort": "low",
+ "task": "T2",
+ "rep": 1,
+ "t0": 1794258336.2943554,
+ "t1": 1794261037.3948894,
+ "wall_s": 2701.1,
+ "exit_code": 1,
+ "killed": "time limit",
+ "prompt_chars": 3507,
+ "cmd": [
+  "C:\\Users\\user\\AppData\\Roaming\\npm\\node_modules\\opencode-ai\\bin\\opencode.exe",
+  "run",
+  "--pure",
+  "-m",
+  "strata/deepseek",
+  "--format",
+  "json",
+  "<README on stdin>"
+ ],
+ "steps": 21,
+ "tool_calls": 34,
+ "tokens": {
+  "input": 27299,
+  "output": 9285,
+  "reasoning": 0,
+  "cache_read": 573027,
+  "cache_write": 0
+ },
+ "ran_visible_tests": false,
+ "pytest_calls": 0,
+ "tokens_per_step": [
+  {
+   "output": 85,
+   "reasoning": 0
+  },
+  {
+   "output": 387,
+   "reasoning": 0
+  },
+  {
+   "output": 347,
+   "reasoning": 0
+  },
+  {
+   "output": 1450,
+   "reasoning": 0
+  },
+  {
+   "output": 2567,
+   "reasoning": 0
+  },
+  {
+   "output": 294,
+   "reasoning": 0
+  },
+  {
+   "output": 132,
+   "reasoning": 0
+  },
+  {
+   "output": 268,
+   "reasoning": 0
+  },
+  {
+   "output": 898,
+   "reasoning": 0
+  },
+  {
+   "output": 209,
+   "reasoning": 0
+  },
+  {
+   "output": 284,
+   "reasoning": 0
+  },
+  {
+   "output": 187,
+   "reasoning": 0
+  },
+  {
+   "output": 477,
+   "reasoning": 0
+  },
+  {
+   "output": 124,
+   "reasoning": 0
+  },
+  {
+   "output": 166,
+   "reasoning": 0
+  },
+  {
+   "output": 296,
+   "reasoning": 0
+  },
+  {
+   "output": 223,
+   "reasoning": 0
+  },
+  {
+   "output": 490,
+   "reasoning": 0
+  },
+  {
+   "output": 191,
+   "reasoning": 0
+  },
+  {
+   "output": 210,
+   "reasoning": 0
+  }
+ ],
+ "peeked_outside": [],
+ "errors": [],
+ "final_text": "",
+ "engine_idle_wait_s": 35.0,
+ "nan_drops": 0,
+ "thinking_per_request": [
+  65,
+  20,
+  0,
+  50,
+  1309,
+  2128,
+  154,
+  0,
+  24,
+  300,
+  84,
+  0,
+  0,
+  283,
+  0,
+  0,
+  76,
+  0,
+  361,
+  0,
+  73,
+  0
+ ],
+ "thinking_total": 4927,
+ "thinking_max": 2128,
+ "engine": {
+  "turns": 22,
+  "prompt_tokens": 638479,
+  "cached_tokens": 609608,
+  "fresh_tokens": 28871,
+  "first_turn": {
+   "prompt": 1558,
+   "cached": 0,
+   "fresh": 1558,
+   "prompt_ms": 58621,
+   "prompt_tok_s": 26.6,
+   "generated": 74,
+   "gen_ms": 34249,
+   "decode_tok_s": 2.16,
+   "drafts_kept": 36,
+   "drafts": 57
+  },
+  "ttft_first_s": 58.6,
+  "ttft_median_s": 3.3,
+  "ttft_total_s": 402.1,
+  "output_tokens": 9574,
+  "decode_tok_s": 4.17,
+  "drafts_kept": 6453,
+  "drafts": 7970
+ },
+ "disk_E_read_GB": 2662.4
+}

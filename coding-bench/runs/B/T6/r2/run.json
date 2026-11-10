@@ -1,0 +1,35 @@
+{
+ "model": "B",
+ "task": "T6",
+ "rep": 2,
+ "t0": 1792488719.866907,
+ "t1": 1792489114.9536698,
+ "wall_s": 395.1,
+ "exit_code": 0,
+ "killed": null,
+ "prompt_chars": 1067,
+ "cmd": [
+  "C:\\Users\\user\\AppData\\Roaming\\npm\\node_modules\\opencode-ai\\bin\\opencode.exe",
+  "run",
+  "--pure",
+  "-m",
+  "llamacpp/qwen38-27b",
+  "--format",
+  "json",
+  "<README on stdin>"
+ ],
+ "steps": 21,
+ "tool_calls": 26,
+ "tokens": {
+  "input": 18204,
+  "output": 19401,
+  "reasoning": 0,
+  "cache_read": 606613,
+  "cache_write": 0
+ },
+ "ran_visible_tests": true,
+ "pytest_calls": 3,
+ "peeked_outside": [],
+ "errors": [],
+ "final_text": "Done. `tests/test_reports.py` has 24 tests covering all of `reports.py`, and the full suite passes (54/54).\n\n- **units_sold**: kept = bought minus refunded, across multiple refunds, missing SKU \u2192 0\n- **sales_by_category**: only counted statuses (shipped/partially_refunded/refunded; reserved/cancelled excluded), refunded units don't count, fully-refunded categories omitted, accumulation across orders, alphabetical key order, cent rounding\n- **top_products**: ranking most-first with SKU A-Z tie-break, default n=3, n larger than SKU count returns all, fully-refunded SKUs excluded, n=0 \u2192 [], negative n raises ValueError\n- **inventory_valuation**: on-hand (not available) \u00d7 price, unknown SKUs ignored, inactive excluded unless `include_inactive=True`, cent rounding\n- **low_stock_report**: exact `SKU name: N left` format, available (not on-hand) units, at-or-below threshold, default 5, custom threshold, active products only, SKU order\n- **average_order_value**: mean of total\u2212refunded over counted statuses, 0.00 when empty, half-up rounding\n\nVerified by a mutation sweep: 24 deliberate single-site bugs in `reports.py` (operators, bounds, rounding removal, status-filter removal, wrong fields, etc.) were all killed; `reports.py` is untouched."
+}

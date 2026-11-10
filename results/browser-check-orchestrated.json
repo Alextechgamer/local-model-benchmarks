@@ -1,0 +1,41 @@
+{
+ "label": "orch-v3",
+ "file_kb": 74.9,
+ "console_errors": [],
+ "console_warnings": [],
+ "exceptions": [],
+ "logs": [
+  "Voxel count: 17442"
+ ],
+ "page": {
+  "title": "桜の庭 – Voxel Pagoda Garden",
+  "canvases": [
+   [
+    1600,
+    900
+   ]
+  ],
+  "sliders": 4,
+  "checkboxes": 5,
+  "buttons": [
+   "☰",
+   "Pause",
+   "Overview",
+   "Night",
+   "Pagoda",
+   "Pond",
+   "Torii",
+   "Blossoms",
+   "Wide",
+   "Reset view",
+   "Regenerate seed",
+   "?"
+  ],
+  "voxelText": "voxels17,442",
+  "fpsText": "fps130",
+  "hasJapaneseTitle": true,
+  "loadingVisible": false,
+  "text": "桜の庭 – Voxel Pagoda Garden\n☰\nTIME OF DAY\nHour\n11:55\nSpeed\n1.0×/s\nPause\nOverview\nNight\nATMOSPHERE\nPetals\n900\nWind\n1.0\nDISPLAY\nAuto orbit\nShadows\nFireflies\nWater anim\nWireframe\nVIEWS\nPagoda\nPond\nTorii\nBlossoms\nWide\nReset view\nRegenerate seed\nvoxels17,442\nfps130\ntime11:55\n?"
+ },
+ "measured_fps_headless": 132
+}

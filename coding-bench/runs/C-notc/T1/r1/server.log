@@ -1,0 +1,335 @@
+[strata] thinking capped at 12288 of max_tokens 16384 to leave room for the answer (budget 32768)
+[strata] thinking capped at 12288 of max_tokens 16384 to leave room for the answer (budget 32768)
+[strata] reading the prompt: 741 tokens, 10 s so far
+[strata] reading the prompt: 741 tokens, 20 s so far
+[strata] reading the prompt: 741 tokens, 30 s so far
+[strata] reading the prompt: 741 tokens, 41 s so far
+[strata] reading the prompt: 741 of 741 tokens, 48 s so far
+[strata] thinking: 2 of budget 12288 (max 16384) tokens, 1.8 tok/s, 49 s
+[strata] thinking: 6 of budget 12288 (max 16384) tokens, 2.3 tok/s, 51 s
+[strata] thinking: 11 of budget 12288 (max 16384) tokens, 2.8 tok/s, 52 s
+[strata] thinking: 13 of budget 12288 (max 16384) tokens, 2.6 tok/s, 53 s
+[strata] thinking: 14 of budget 12288 (max 16384) tokens, 2.3 tok/s, 54 s
+[strata] thinking: 18 of budget 12288 (max 16384) tokens, 2.6 tok/s, 55 s
+[strata] thinking: 25 of budget 12288 (max 16384) tokens, 3.1 tok/s, 56 s
+[strata] thinking: 26 of budget 12288 (max 16384) tokens, 2.6 tok/s, 58 s
+[strata] thinking: 34 of budget 12288 (max 16384) tokens, 2.9 tok/s, 60 s
+[strata] thinking: 39 of budget 12288 (max 16384) tokens, 2.9 tok/s, 61 s
+[strata] thinking: 42 of budget 12288 (max 16384) tokens, 2.7 tok/s, 64 s
+[strata] done: 44 tokens in 64 s (2.9 tok/s) (stop, cancel=False)
+[strata] reading the prompt: 6,032 tokens, 10 s so far
+[strata] reading the prompt: 6,032 tokens, 20 s so far
+[strata] reading the prompt: 6,032 of 6,032 tokens, 26 s so far
+[strata] thinking: 2 of budget 12288 (max 16384) tokens, 1.3 tok/s, 27 s
+[strata] thinking: 7 of budget 12288 (max 16384) tokens, 2.2 tok/s, 29 s
+[strata] thinking: 13 of budget 12288 (max 16384) tokens, 3.0 tok/s, 30 s
+[strata] thinking: 19 of budget 12288 (max 16384) tokens, 3.3 tok/s, 31 s
+[strata] writing a tool call: bash: 31 of max 16384 tokens, 3.7 tok/s, 34 s
+[strata] writing a tool call: bash: 37 of max 16384 tokens, 3.7 tok/s, 35 s
+[strata] writing a tool call: glob: 49 of max 16384 tokens, 4.3 tok/s, 37 s
+[strata] writing a tool call: glob: 61 of max 16384 tokens, 4.5 tok/s, 39 s
+[strata] writing a tool call: glob: 73 of max 16384 tokens, 4.9 tok/s, 40 s
+[strata] done: 77 tokens in 40 s (5.2 tok/s) (stop, cancel=False)
+[strata] thinking capped at 12288 of max_tokens 16384 to leave room for the answer (budget 32768)
+[strata] reading the prompt: 6,706 tokens, 10 s so far
+[strata] reading the prompt: 6,706 tokens, 20 s so far
+[strata] reading the prompt: 6,706 of 6,706 tokens, 28 s so far
+[strata] thinking: 2 of budget 12288 (max 16384) tokens, 1.0 tok/s, 30 s
+[strata] thinking: 11 of budget 12288 (max 16384) tokens, 3.1 tok/s, 32 s
+[strata] writing a tool call: bash: 29 of max 16384 tokens, 5.7 tok/s, 33 s
+[strata] writing a tool call: bash: 35 of max 16384 tokens, 5.4 tok/s, 35 s
+[strata] writing a tool call: bash: 41 of max 16384 tokens, 5.2 tok/s, 36 s
+[strata] writing a tool call: bash: 46 of max 16384 tokens, 5.2 tok/s, 37 s
+[strata] writing a tool call: bash: 52 of max 16384 tokens, 5.0 tok/s, 39 s
+[strata] writing a tool call: bash: 55 of max 16384 tokens, 4.3 tok/s, 41 s
+[strata] writing a tool call: read: 61 of max 16384 tokens, 4.1 tok/s, 43 s
+[strata] writing a tool call: read: 67 of max 16384 tokens, 3.7 tok/s, 46 s
+[strata] writing a tool call: read: 73 of max 16384 tokens, 3.4 tok/s, 50 s
+[strata] writing a tool call: read: 76 of max 16384 tokens, 2.7 tok/s, 56 s
+[strata] writing a tool call: read: 82 of max 16384 tokens, 2.6 tok/s, 60 s
+[strata] writing a tool call: read: 85 of max 16384 tokens, 2.4 tok/s, 63 s
+[strata] writing a tool call: read: 88 of max 16384 tokens, 2.2 tok/s, 68 s
+[strata] writing a tool call: read: 93 of max 16384 tokens, 2.2 tok/s, 71 s
+[strata] writing a tool call: read: 99 of max 16384 tokens, 2.2 tok/s, 73 s
+[strata] writing a tool call: read: 104 of max 16384 tokens, 2.2 tok/s, 75 s
+[strata] writing a tool call: read: 110 of max 16384 tokens, 2.3 tok/s, 77 s
+[strata] writing a tool call: read: 116 of max 16384 tokens, 2.3 tok/s, 78 s
+[strata] writing a tool call: read: 122 of max 16384 tokens, 2.3 tok/s, 80 s
+[strata] writing a tool call: read: 128 of max 16384 tokens, 2.4 tok/s, 82 s
+[strata] writing a tool call: read: 134 of max 16384 tokens, 2.4 tok/s, 84 s
+[strata] writing a tool call: read: 140 of max 16384 tokens, 2.4 tok/s, 86 s
+[strata] writing a tool call: read: 146 of max 16384 tokens, 2.4 tok/s, 88 s
+[strata] done: 151 tokens in 88 s (2.5 tok/s) (stop, cancel=False)
+[strata] thinking capped at 12288 of max_tokens 16384 to leave room for the answer (budget 32768)
+[strata] reading the prompt: 8,088 tokens, 10 s so far
+[strata] reading the prompt: 8,088 tokens, 20 s so far
+[strata] reading the prompt: 8,088 tokens, 30 s so far
+[strata] reading the prompt: 8,088 tokens, 41 s so far
+[strata] reading the prompt: 8,088 tokens, 51 s so far
+[strata] reading the prompt: 8,088 of 8,088 tokens, 56 s so far
+[strata] thinking: 2 of budget 12288 (max 16384) tokens, 0.8 tok/s, 59 s
+[strata] thinking: 6 of budget 12288 (max 16384) tokens, 1.2 tok/s, 61 s
+[strata] thinking: 14 of budget 12288 (max 16384) tokens, 2.3 tok/s, 62 s
+[strata] writing a tool call: read: 26 of max 16384 tokens, 3.5 tok/s, 63 s
+[strata] writing a tool call: read: 38 of max 16384 tokens, 4.2 tok/s, 65 s
+[strata] writing a tool call: read: 46 of max 16384 tokens, 4.2 tok/s, 67 s
+[strata] writing a tool call: read: 56 of max 16384 tokens, 4.5 tok/s, 68 s
+[strata] writing a tool call: read: 68 of max 16384 tokens, 4.9 tok/s, 70 s
+[strata] writing a tool call: read: 80 of max 16384 tokens, 5.4 tok/s, 71 s
+[strata] writing a tool call: read: 92 of max 16384 tokens, 5.7 tok/s, 72 s
+[strata] writing a tool call: read: 104 of max 16384 tokens, 6.0 tok/s, 73 s
+[strata] writing a tool call: read: 122 of max 16384 tokens, 6.5 tok/s, 75 s
+[strata] writing a tool call: read: 140 of max 16384 tokens, 6.9 tok/s, 76 s
+[strata] writing a tool call: read: 152 of max 16384 tokens, 7.1 tok/s, 77 s
+[strata] writing a tool call: read: 159 of max 16384 tokens, 6.7 tok/s, 80 s
+[strata] done: 162 tokens in 80 s (6.8 tok/s) (stop, cancel=False)
+[strata] thinking capped at 12288 of max_tokens 16384 to leave room for the answer (budget 32768)
+[strata] reading the prompt: 13,693 tokens, 10 s so far
+[strata] reading the prompt: 13,693 tokens, 20 s so far
+[strata] reading the prompt: 13,693 tokens, 31 s so far
+[strata] reading the prompt: 13,693 tokens, 41 s so far
+[strata] reading the prompt: 13,693 tokens, 51 s so far
+[strata] reading the prompt: 13,693 tokens, 61 s so far
+[strata] reading the prompt: 13,693 of 13,693 tokens, 69 s so far
+[strata] thinking: 2 of budget 12288 (max 16384) tokens, 0.6 tok/s, 72 s
+[strata] thinking: 8 of budget 12288 (max 16384) tokens, 1.7 tok/s, 74 s
+[strata] thinking: 11 of budget 12288 (max 16384) tokens, 1.9 tok/s, 75 s
+[strata] thinking: 14 of budget 12288 (max 16384) tokens, 2.1 tok/s, 76 s
+[strata] thinking: 17 of budget 12288 (max 16384) tokens, 2.1 tok/s, 77 s
+[strata] thinking: 20 of budget 12288 (max 16384) tokens, 2.1 tok/s, 79 s
+[strata] thinking: 23 of budget 12288 (max 16384) tokens, 2.2 tok/s, 80 s
+[strata] thinking: 28 of budget 12288 (max 16384) tokens, 2.4 tok/s, 81 s
+[strata] thinking: 32 of budget 12288 (max 16384) tokens, 2.4 tok/s, 82 s
+[strata] thinking: 33 of budget 12288 (max 16384) tokens, 2.2 tok/s, 84 s
+[strata] thinking: 41 of budget 12288 (max 16384) tokens, 2.5 tok/s, 85 s
+[strata] thinking: 48 of budget 12288 (max 16384) tokens, 2.8 tok/s, 87 s
+[strata] thinking: 56 of budget 12288 (max 16384) tokens, 2.9 tok/s, 88 s
+[strata] thinking: 61 of budget 12288 (max 16384) tokens, 3.0 tok/s, 90 s
+[strata] thinking: 67 of budget 12288 (max 16384) tokens, 3.1 tok/s, 91 s
+[strata] thinking: 69 of budget 12288 (max 16384) tokens, 3.0 tok/s, 92 s
+[strata] thinking: 77 of budget 12288 (max 16384) tokens, 3.2 tok/s, 93 s
+[strata] thinking: 81 of budget 12288 (max 16384) tokens, 3.3 tok/s, 94 s
+[strata] thinking: 88 of budget 12288 (max 16384) tokens, 3.4 tok/s, 95 s
+[strata] thinking: 96 of budget 12288 (max 16384) tokens, 3.5 tok/s, 97 s
+[strata] thinking: 102 of budget 12288 (max 16384) tokens, 3.6 tok/s, 98 s
+[strata] thinking: 111 of budget 12288 (max 16384) tokens, 3.8 tok/s, 99 s
+[strata] thinking: 116 of budget 12288 (max 16384) tokens, 3.8 tok/s, 100 s
+[strata] thinking: 124 of budget 12288 (max 16384) tokens, 3.9 tok/s, 101 s
+[strata] thinking: 131 of budget 12288 (max 16384) tokens, 4.0 tok/s, 102 s
+[strata] thinking: 135 of budget 12288 (max 16384) tokens, 4.0 tok/s, 103 s
+[strata] thinking: 141 of budget 12288 (max 16384) tokens, 4.0 tok/s, 104 s
+[strata] thinking: 148 of budget 12288 (max 16384) tokens, 4.1 tok/s, 105 s
+[strata] thinking: 153 of budget 12288 (max 16384) tokens, 4.0 tok/s, 107 s
+[strata] thinking: 162 of budget 12288 (max 16384) tokens, 4.2 tok/s, 108 s
+[strata] thinking: 169 of budget 12288 (max 16384) tokens, 4.2 tok/s, 109 s
+[strata] thinking: 180 of budget 12288 (max 16384) tokens, 4.2 tok/s, 112 s
+[strata] thinking: 187 of budget 12288 (max 16384) tokens, 4.2 tok/s, 113 s
+[strata] thinking: 192 of budget 12288 (max 16384) tokens, 4.2 tok/s, 115 s
+[strata] thinking: 199 of budget 12288 (max 16384) tokens, 4.3 tok/s, 116 s
+[strata] thinking: 205 of budget 12288 (max 16384) tokens, 4.3 tok/s, 117 s
+[strata] thinking: 213 of budget 12288 (max 16384) tokens, 4.2 tok/s, 120 s
+[strata] thinking: 219 of budget 12288 (max 16384) tokens, 4.2 tok/s, 122 s
+[strata] thinking: 225 of budget 12288 (max 16384) tokens, 4.2 tok/s, 123 s
+[strata] writing a tool call: read: 231 of max 16384 tokens, 4.2 tok/s, 124 s
+[strata] writing a tool call: read: 237 of max 16384 tokens, 4.2 tok/s, 125 s
+[strata] writing a tool call: read: 243 of max 16384 tokens, 4.2 tok/s, 127 s
+[strata] writing a tool call: read: 248 of max 16384 tokens, 4.2 tok/s, 128 s
+[strata] writing a tool call: read: 258 of max 16384 tokens, 4.3 tok/s, 130 s
+[strata] writing a tool call: read: 261 of max 16384 tokens, 4.2 tok/s, 131 s
+[strata] writing a tool call: read: 267 of max 16384 tokens, 4.3 tok/s, 132 s
+[strata] writing a tool call: read: 279 of max 16384 tokens, 4.4 tok/s, 133 s
+[strata] writing a tool call: read: 291 of max 16384 tokens, 4.5 tok/s, 135 s
+[strata] writing a tool call: read: 303 of max 16384 tokens, 4.6 tok/s, 136 s
+[strata] writing a tool call: read: 314 of max 16384 tokens, 4.6 tok/s, 137 s
+[strata] writing a tool call: read: 332 of max 16384 tokens, 4.8 tok/s, 138 s
+[strata] writing a tool call: read: 350 of max 16384 tokens, 5.0 tok/s, 140 s
+[strata] writing a tool call: read: 362 of max 16384 tokens, 5.1 tok/s, 141 s
+[strata] writing a tool call: read: 380 of max 16384 tokens, 5.2 tok/s, 142 s
+[strata] writing a tool call: read: 392 of max 16384 tokens, 5.3 tok/s, 143 s
+[strata] writing a tool call: read: 404 of max 16384 tokens, 5.4 tok/s, 144 s
+[strata] writing a tool call: read: 422 of max 16384 tokens, 5.5 tok/s, 146 s
+[strata] writing a tool call: read: 440 of max 16384 tokens, 5.7 tok/s, 147 s
+[strata] writing a tool call: read: 458 of max 16384 tokens, 5.8 tok/s, 148 s
+[strata] writing a tool call: read: 464 of max 16384 tokens, 5.7 tok/s, 151 s
+[strata] done: 467 tokens in 151 s (5.7 tok/s) (stop, cancel=False)
+[strata] thinking capped at 12288 of max_tokens 16384 to leave room for the answer (budget 32768)
+[strata] reading the prompt: 20,115 tokens, 10 s so far
+[strata] reading the prompt: 20,115 tokens, 20 s so far
+[strata] reading the prompt: 20,115 tokens, 31 s so far
+[strata] reading the prompt: 20,115 tokens, 41 s so far
+[strata] reading the prompt: 20,115 tokens, 51 s so far
+[strata] reading the prompt: 20,115 tokens, 61 s so far
+[strata] reading the prompt: 20,115 of 20,115 tokens, 68 s so far
+[strata] thinking: 2 of budget 12288 (max 16384) tokens, 1.4 tok/s, 69 s
+[strata] thinking: 4 of budget 12288 (max 16384) tokens, 1.3 tok/s, 71 s
+[strata] thinking: 6 of budget 12288 (max 16384) tokens, 1.4 tok/s, 72 s
+[strata] thinking: 11 of budget 12288 (max 16384) tokens, 1.8 tok/s, 74 s
+[strata] thinking: 16 of budget 12288 (max 16384) tokens, 2.1 tok/s, 75 s
+[strata] thinking: 19 of budget 12288 (max 16384) tokens, 2.1 tok/s, 77 s
+[strata] thinking: 23 of budget 12288 (max 16384) tokens, 2.1 tok/s, 79 s
+[strata] thinking: 29 of budget 12288 (max 16384) tokens, 2.3 tok/s, 80 s
+[strata] thinking: 38 of budget 12288 (max 16384) tokens, 2.6 tok/s, 83 s
+[strata] thinking: 44 of budget 12288 (max 16384) tokens, 2.7 tok/s, 84 s
+[strata] writing a tool call: read: 50 of max 16384 tokens, 2.9 tok/s, 85 s
+[strata] writing a tool call: read: 62 of max 16384 tokens, 3.1 tok/s, 88 s
+[strata] writing a tool call: read: 67 of max 16384 tokens, 3.1 tok/s, 89 s
+[strata] writing a tool call: read: 76 of max 16384 tokens, 3.2 tok/s, 91 s
+[strata] writing a tool call: read: 82 of max 16384 tokens, 3.3 tok/s, 93 s
+[strata] writing a tool call: read: 88 of max 16384 tokens, 3.3 tok/s, 94 s
+[strata] done: 92 tokens in 94 s (3.5 tok/s) (stop, cancel=False)
+[strata] thinking capped at 12288 of max_tokens 16384 to leave room for the answer (budget 32768)
+[strata] reading the prompt: 21,037 tokens, 10 s so far
+[strata] reading the prompt: 21,037 tokens, 20 s so far
+[strata] reading the prompt: 21,037 tokens, 30 s so far
+[strata] reading the prompt: 21,037 tokens, 41 s so far
+[strata] reading the prompt: 21,037 of 21,037 tokens, 43 s so far
+[strata] thinking: 3 of budget 12288 (max 16384) tokens, 2.7 tok/s, 44 s
+[strata] thinking: 6 of budget 12288 (max 16384) tokens, 2.7 tok/s, 45 s
+[strata] the engine reported an error: the model's numbers went non-finite (NaN reached the router), so the answer would be nonsense: the request is stopped and the conversation dropped
+[strata] done: 8 tokens in 46 s (2.3 tok/s) (error, cancel=False)
+[strata] thinking capped at 12288 of max_tokens 16384 to leave room for the answer (budget 32768)
+[strata] reading the prompt: 21,037 tokens, 10 s so far
+[strata] reading the prompt: 21,037 tokens, 20 s so far
+[strata] reading the prompt: 21,037 tokens, 31 s so far
+[strata] reading the prompt: 21,037 tokens, 41 s so far
+[strata] reading the prompt: 21,037 tokens, 51 s so far
+[strata] reading the prompt: 21,037 tokens, 61 s so far
+[strata] reading the prompt: 21,037 of 21,037 tokens, 69 s so far
+[strata] thinking: 6 of budget 12288 (max 16384) tokens, 4.6 tok/s, 70 s
+[strata] thinking: 9 of budget 12288 (max 16384) tokens, 3.2 tok/s, 72 s
+[strata] thinking: 11 of budget 12288 (max 16384) tokens, 2.7 tok/s, 73 s
+[strata] thinking: 16 of budget 12288 (max 16384) tokens, 3.1 tok/s, 74 s
+[strata] thinking: 20 of budget 12288 (max 16384) tokens, 3.2 tok/s, 75 s
+[strata] thinking: 23 of budget 12288 (max 16384) tokens, 2.9 tok/s, 77 s
+[strata] thinking: 25 of budget 12288 (max 16384) tokens, 2.7 tok/s, 78 s
+[strata] thinking: 27 of budget 12288 (max 16384) tokens, 2.6 tok/s, 79 s
+[strata] thinking: 33 of budget 12288 (max 16384) tokens, 2.8 tok/s, 81 s
+[strata] thinking: 38 of budget 12288 (max 16384) tokens, 2.9 tok/s, 82 s
+[strata] thinking: 43 of budget 12288 (max 16384) tokens, 3.0 tok/s, 83 s
+[strata] thinking: 49 of budget 12288 (max 16384) tokens, 3.2 tok/s, 84 s
+[strata] thinking: 58 of budget 12288 (max 16384) tokens, 3.5 tok/s, 85 s
+[strata] thinking: 61 of budget 12288 (max 16384) tokens, 3.4 tok/s, 87 s
+[strata] thinking: 65 of budget 12288 (max 16384) tokens, 3.3 tok/s, 89 s
+[strata] thinking: 76 of budget 12288 (max 16384) tokens, 3.6 tok/s, 90 s
+[strata] thinking: 79 of budget 12288 (max 16384) tokens, 3.5 tok/s, 91 s
+[strata] thinking: 82 of budget 12288 (max 16384) tokens, 3.4 tok/s, 93 s
+[strata] thinking: 88 of budget 12288 (max 16384) tokens, 3.4 tok/s, 95 s
+[strata] thinking: 94 of budget 12288 (max 16384) tokens, 3.4 tok/s, 96 s
+[strata] writing a tool call: edit: 100 of max 16384 tokens, 3.5 tok/s, 98 s
+[strata] writing a tool call: edit: 102 of max 16384 tokens, 3.4 tok/s, 99 s
+[strata] writing a tool call: edit: 110 of max 16384 tokens, 3.4 tok/s, 101 s
+[strata] writing a tool call: edit: 115 of max 16384 tokens, 3.4 tok/s, 103 s
+[strata] writing a tool call: edit: 120 of max 16384 tokens, 3.5 tok/s, 104 s
+[strata] writing a tool call: edit: 126 of max 16384 tokens, 3.5 tok/s, 105 s
+[strata] writing a tool call: edit: 138 of max 16384 tokens, 3.6 tok/s, 107 s
+[strata] writing a tool call: edit: 144 of max 16384 tokens, 3.7 tok/s, 108 s
+[strata] writing a tool call: edit: 149 of max 16384 tokens, 3.6 tok/s, 110 s
+[strata] writing a tool call: edit: 155 of max 16384 tokens, 3.6 tok/s, 112 s
+[strata] writing a tool call: edit: 161 of max 16384 tokens, 3.6 tok/s, 114 s
+[strata] writing a tool call: edit: 167 of max 16384 tokens, 3.6 tok/s, 115 s
+[strata] writing a tool call: edit: 173 of max 16384 tokens, 3.7 tok/s, 116 s
+[strata] writing a tool call: edit: 179 of max 16384 tokens, 3.7 tok/s, 117 s
+[strata] writing a tool call: edit: 185 of max 16384 tokens, 3.8 tok/s, 118 s
+[strata] writing a tool call: edit: 197 of max 16384 tokens, 3.9 tok/s, 120 s
+[strata] writing a tool call: edit: 209 of max 16384 tokens, 4.0 tok/s, 122 s
+[strata] writing a tool call: edit: 221 of max 16384 tokens, 4.1 tok/s, 123 s
+[strata] writing a tool call: edit: 233 of max 16384 tokens, 4.1 tok/s, 125 s
+[strata] tool call complete: 239 of max 16384 tokens, 4.2 tok/s, 126 s
+[strata] writing a tool call: edit: 251 of max 16384 tokens, 4.3 tok/s, 128 s
+[strata] writing a tool call: edit: 257 of max 16384 tokens, 4.3 tok/s, 129 s
+[strata] writing a tool call: edit: 263 of max 16384 tokens, 4.2 tok/s, 131 s
+[strata] writing a tool call: edit: 267 of max 16384 tokens, 4.2 tok/s, 132 s
+[strata] writing a tool call: edit: 273 of max 16384 tokens, 4.2 tok/s, 133 s
+[strata] writing a tool call: edit: 285 of max 16384 tokens, 4.3 tok/s, 135 s
+[strata] writing a tool call: edit: 291 of max 16384 tokens, 4.3 tok/s, 136 s
+[strata] writing a tool call: edit: 297 of max 16384 tokens, 4.3 tok/s, 138 s
+[strata] writing a tool call: edit: 303 of max 16384 tokens, 4.3 tok/s, 140 s
+[strata] writing a tool call: edit: 308 of max 16384 tokens, 4.3 tok/s, 141 s
+[strata] writing a tool call: edit: 314 of max 16384 tokens, 4.2 tok/s, 143 s
+[strata] writing a tool call: edit: 317 of max 16384 tokens, 4.2 tok/s, 144 s
+[strata] writing a tool call: edit: 323 of max 16384 tokens, 4.2 tok/s, 145 s
+[strata] writing a tool call: edit: 335 of max 16384 tokens, 4.3 tok/s, 147 s
+[strata] writing a tool call: edit: 347 of max 16384 tokens, 4.4 tok/s, 149 s
+[strata] writing a tool call: edit: 359 of max 16384 tokens, 4.4 tok/s, 151 s
+[strata] writing a tool call: edit: 365 of max 16384 tokens, 4.4 tok/s, 152 s
+[strata] writing a tool call: edit: 377 of max 16384 tokens, 4.4 tok/s, 154 s
+[strata] writing a tool call: edit: 383 of max 16384 tokens, 4.4 tok/s, 155 s
+[strata] writing a tool call: edit: 389 of max 16384 tokens, 4.4 tok/s, 157 s
+[strata] writing a tool call: edit: 395 of max 16384 tokens, 4.4 tok/s, 158 s
+[strata] writing a tool call: edit: 401 of max 16384 tokens, 4.5 tok/s, 159 s
+[strata] writing a tool call: edit: 413 of max 16384 tokens, 4.5 tok/s, 161 s
+[strata] writing a tool call: edit: 419 of max 16384 tokens, 4.5 tok/s, 162 s
+[strata] writing a tool call: edit: 425 of max 16384 tokens, 4.5 tok/s, 164 s
+[strata] writing a tool call: edit: 431 of max 16384 tokens, 4.5 tok/s, 165 s
+[strata] writing a tool call: edit: 437 of max 16384 tokens, 4.5 tok/s, 167 s
+[strata] writing a tool call: edit: 443 of max 16384 tokens, 4.5 tok/s, 168 s
+[strata] writing a tool call: edit: 449 of max 16384 tokens, 4.5 tok/s, 169 s
+[strata] writing a tool call: edit: 461 of max 16384 tokens, 4.5 tok/s, 171 s
+[strata] writing a tool call: edit: 473 of max 16384 tokens, 4.6 tok/s, 173 s
+[strata] writing a tool call: edit: 485 of max 16384 tokens, 4.6 tok/s, 175 s
+[strata] writing a tool call: edit: 497 of max 16384 tokens, 4.6 tok/s, 176 s
+[strata] writing a tool call: edit: 503 of max 16384 tokens, 4.6 tok/s, 177 s
+[strata] writing a tool call: edit: 509 of max 16384 tokens, 4.6 tok/s, 180 s
+[strata] done: 510 tokens in 180 s (4.6 tok/s) (stop, cancel=False)
+[strata] thinking capped at 12288 of max_tokens 16384 to leave room for the answer (budget 32768)
+[strata] reading the prompt: 21,475 tokens, 10 s so far
+[strata] reading the prompt: 21,475 tokens, 20 s so far
+[strata] reading the prompt: 21,475 tokens, 31 s so far
+[strata] reading the prompt: 21,475 of 21,475 tokens, 34 s so far
+[strata] thinking: 2 of budget 12288 (max 16384) tokens, 0.7 tok/s, 36 s
+[strata] thinking: 4 of budget 12288 (max 16384) tokens, 1.1 tok/s, 37 s
+[strata] thinking: 10 of budget 12288 (max 16384) tokens, 1.9 tok/s, 39 s
+[strata] writing a tool call: edit: 21 of max 16384 tokens, 2.9 tok/s, 41 s
+[strata] writing a tool call: edit: 27 of max 16384 tokens, 3.2 tok/s, 42 s
+[strata] writing a tool call: edit: 33 of max 16384 tokens, 3.4 tok/s, 43 s
+[strata] writing a tool call: edit: 39 of max 16384 tokens, 3.5 tok/s, 45 s
+[strata] writing a tool call: edit: 44 of max 16384 tokens, 3.6 tok/s, 46 s
+[strata] writing a tool call: edit: 50 of max 16384 tokens, 3.7 tok/s, 47 s
+[strata] writing a tool call: edit: 62 of max 16384 tokens, 4.1 tok/s, 48 s
+[strata] writing a tool call: edit: 68 of max 16384 tokens, 4.1 tok/s, 50 s
+[strata] writing a tool call: edit: 72 of max 16384 tokens, 4.1 tok/s, 51 s
+[strata] writing a tool call: edit: 75 of max 16384 tokens, 3.8 tok/s, 53 s
+[strata] writing a tool call: edit: 81 of max 16384 tokens, 3.9 tok/s, 54 s
+[strata] writing a tool call: edit: 87 of max 16384 tokens, 3.9 tok/s, 56 s
+[strata] writing a tool call: edit: 93 of max 16384 tokens, 4.0 tok/s, 57 s
+[strata] writing a tool call: edit: 99 of max 16384 tokens, 4.1 tok/s, 58 s
+[strata] writing a tool call: edit: 105 of max 16384 tokens, 4.1 tok/s, 59 s
+[strata] writing a tool call: edit: 117 of max 16384 tokens, 4.3 tok/s, 61 s
+[strata] writing a tool call: edit: 129 of max 16384 tokens, 4.5 tok/s, 62 s
+[strata] writing a tool call: edit: 141 of max 16384 tokens, 4.7 tok/s, 64 s
+[strata] writing a tool call: edit: 153 of max 16384 tokens, 4.8 tok/s, 65 s
+[strata] writing a tool call: edit: 159 of max 16384 tokens, 4.8 tok/s, 66 s
+[strata] writing a tool call: edit: 165 of max 16384 tokens, 4.6 tok/s, 69 s
+[strata] done: 166 tokens in 69 s (4.7 tok/s) (stop, cancel=False)
+[strata] thinking capped at 12288 of max_tokens 16384 to leave room for the answer (budget 32768)
+[strata] reading the prompt: 21,654 tokens, 10 s so far
+[strata] reading the prompt: 21,654 of 21,654 tokens, 16 s so far
+[strata] thinking: 2 of budget 12288 (max 16384) tokens, 0.9 tok/s, 19 s
+[strata] thinking: 14 of budget 12288 (max 16384) tokens, 3.3 tok/s, 21 s
+[strata] writing a tool call: bash: 20 of max 16384 tokens, 3.8 tok/s, 22 s
+[strata] writing a tool call: bash: 26 of max 16384 tokens, 4.0 tok/s, 23 s
+[strata] writing a tool call: bash: 32 of max 16384 tokens, 4.0 tok/s, 24 s
+[strata] writing a tool call: bash: 38 of max 16384 tokens, 3.9 tok/s, 26 s
+[strata] writing a tool call: bash: 50 of max 16384 tokens, 4.5 tok/s, 28 s
+[strata] done: 54 tokens in 28 s (4.8 tok/s) (stop, cancel=False)
+[strata] thinking capped at 12288 of max_tokens 16384 to leave room for the answer (budget 32768)
+[strata] reading the prompt: 21,737 of 21,737 tokens, 5 s so far
+[strata] thinking: 2 of budget 12288 (max 16384) tokens, 1.5 tok/s, 6 s
+[strata] thinking: 5 of budget 12288 (max 16384) tokens, 1.7 tok/s, 8 s
+[strata] answering: 9 of max 16384 tokens, 2.2 tok/s, 9 s
+[strata] answering: 15 of max 16384 tokens, 2.5 tok/s, 11 s
+[strata] answering: 16 of max 16384 tokens, 2.2 tok/s, 12 s
+[strata] answering: 21 of max 16384 tokens, 2.5 tok/s, 13 s
+[strata] answering: 25 of max 16384 tokens, 2.6 tok/s, 15 s
+[strata] answering: 27 of max 16384 tokens, 2.5 tok/s, 16 s
+[strata] answering: 30 of max 16384 tokens, 2.5 tok/s, 17 s
+[strata] answering: 35 of max 16384 tokens, 2.6 tok/s, 19 s
+[strata] answering: 42 of max 16384 tokens, 2.8 tok/s, 20 s
+[strata] answering: 46 of max 16384 tokens, 2.7 tok/s, 22 s
+[strata] answering: 53 of max 16384 tokens, 2.8 tok/s, 24 s
+[strata] answering: 59 of max 16384 tokens, 2.9 tok/s, 25 s
+[strata] answering: 66 of max 16384 tokens, 3.0 tok/s, 27 s
+[strata] answering: 77 of max 16384 tokens, 3.2 tok/s, 29 s
+[strata] answering: 79 of max 16384 tokens, 3.1 tok/s, 31 s
+[strata] answering: 85 of max 16384 tokens, 3.1 tok/s, 33 s
+[strata] done: 86 tokens in 33 s (3.1 tok/s) (stop, cancel=False)

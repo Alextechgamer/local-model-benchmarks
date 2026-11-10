@@ -1,0 +1,33 @@
+{
+ "task": "T4",
+ "source_dir": "E:\\strata-dsv41\\pagoda\\coding-bench\\runs\\C-smallest\\T4\\r1\\work",
+ "label": "C-smallest-T4-r1",
+ "scored_at": "2026-11-09T06:48:51.688984",
+ "package_changed": true,
+ "tests_changed": false,
+ "visible": {
+  "total": 32,
+  "passed": 32,
+  "failed": 0,
+  "returncode": 0,
+  "timed_out": false,
+  "seconds": 0.8
+ },
+ "hidden": {
+  "total": 28,
+  "passed": 27,
+  "failed": 1,
+  "task_total": 13,
+  "task_passed": 12,
+  "keep_total": 15,
+  "keep_passed": 15,
+  "failures": [
+   "test_task_split_walks_priority_and_stops_when_covered"
+  ],
+  "returncode": 1,
+  "timed_out": false,
+  "seconds": 0.8,
+  "output_tail": ".................F..........                                             [100%]\n================================== FAILURES ===================================\n____________ test_task_split_walks_priority_and_stops_when_covered ____________\n\n    def test_task_split_walks_priority_and_stops_when_covered():\n        stock = {\"n\": {A: 2}, \"s\": {A: 3}, \"w\": {A: 4}}\n        assert plan([(A, 6)], stock, [\"n\", \"s\", \"w\"]) == {\"n\": [(A, 2)], \"s\": [(A, 3)], \"w\": [(A, 1)]}\n>       assert plan([(A, 5)], stock, [\"w\", \"s\", \"n\"]) == {\"w\": [(A, 4)], \"s\": [(A, 1)]}\nE       AssertionError: assert {'w': [('AAA-...AA-0001', 0)]} == {'w': [('AAA-...AA-0001', 1)]}\nE         \nE         Omitting 2 identical items, use -vv to show\nE         Left contains 1 more item:\nE         {'n': [('AAA-0001', 0)]}\nE         Use -v to get more diff\n\ntest_t4_plan_shipments.py:27: AssertionError\n=========================== short test summary info ===========================\nFAILED test_t4_plan_shipments.py::test_task_split_walks_priority_and_stops_when_covered\n1 failed, 27 passed in 0.22s\n"
+ },
+ "score": 0.9642857142857143
+}

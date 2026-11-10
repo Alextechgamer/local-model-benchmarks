@@ -1,0 +1,18 @@
+ds4 slots: took back a 538-token conversation at token 538 of 1647 from the folder (0.0 s); 203 new tokens to read
+maya ds4 serve: prompt 741 tokens = 538 reused + 203 read in 26435 ms (7.7 tok/s), 59 generated in 19560 ms (3.02 tok/s); CPU lane 33.2% of the experts
+maya ds4 serve: drafts 33 of 39 kept; per position (kept / reached): 1: 17/18 94% 2: 9/12 75% 3: 4/6 67% 4: 2/2 100% 5: 1/1 100%
+ds4 slots: took back a 6031-token conversation at token 6031 of 15948 from the folder (0.1 s); 1 new tokens to read
+maya ds4 serve: prompt 6032 tokens = 6031 reused + 1 read in 281 ms (3.6 tok/s), 61 generated in 16227 ms (3.76 tok/s); CPU lane 47.4% of the experts
+maya ds4 serve: drafts 47 of 65 kept; per position (kept / reached): 1: 12/13 92% 2: 9/12 75% 3: 9/9 100% 4: 9/9 100% 5: 8/9 89%
+maya ds4 serve: prompt 6452 tokens = 6092 reused + 360 read in 22278 ms (16.2 tok/s), 56 generated in 8489 ms (6.60 tok/s); CPU lane 30.4% of the experts
+maya ds4 serve: drafts 45 of 49 kept; per position (kept / reached): 1: 11/11 100% 2: 10/11 91% 3: 9/10 90% 4: 8/9 89% 5: 7/7 100%
+maya ds4 serve: prompt 7390 tokens = 6508 reused + 882 read in 43278 ms (20.4 tok/s), 306 generated in 39726 ms (7.70 tok/s); CPU lane 29.1% of the experts
+maya ds4 serve: drafts 249 of 279 kept; per position (kept / reached): 1: 53/57 93% 2: 51/53 96% 3: 50/51 98% 4: 49/49 100% 5: 46/49 94%
+maya ds4 serve: prompt 16472 tokens = 7696 reused + 8776 read in 67347 ms (130.3 tok/s), 236 generated in 51096 ms (4.62 tok/s); CPU lane 10.6% of the experts
+maya ds4 serve: drafts 163 of 199 kept; per position (kept / reached): 1: 44/57 77% 2: 36/37 97% 3: 30/31 97% 4: 28/29 97% 5: 25/28 89%
+maya ds4 serve: prompt 20157 tokens = 16708 reused + 3449 read in 55673 ms (62.0 tok/s), 575 generated in 120503 ms (4.77 tok/s); CPU lane 12.4% of the experts
+maya ds4 serve: drafts 425 of 482 kept; per position (kept / reached): 1: 106/129 82% 2: 95/96 99% 3: 82/86 95% 4: 75/79 95% 5: 67/70 96%
+maya ds4 serve: prompt 20768 tokens = 20731 reused + 37 read in 5459 ms (6.8 tok/s), 54 generated in 10738 ms (5.03 tok/s); CPU lane 13.1% of the experts
+maya ds4 serve: drafts 44 of 50 kept; per position (kept / reached): 1: 10/10 100% 2: 10/10 100% 3: 8/10 80% 4: 8/8 100% 5: 8/8 100%
+maya ds4 serve: prompt 20851 tokens = 20822 reused + 29 read in 4634 ms (6.3 tok/s), 103 generated in 31076 ms (3.31 tok/s); CPU lane 14.3% of the experts
+maya ds4 serve: drafts 69 of 98 kept; per position (kept / reached): 1: 25/30 83% 2: 19/21 90% 3: 12/14 86% 4: 8/10 80% 5: 5/6 83%

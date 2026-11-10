@@ -1,0 +1,63 @@
+{
+ "model": "C",
+ "prompt_variant": "smallest",
+ "task": "T1",
+ "rep": 1,
+ "t0": 1794233335.4694173,
+ "t1": 1794233955.5986483,
+ "wall_s": 620.1,
+ "exit_code": 0,
+ "killed": null,
+ "prompt_chars": 691,
+ "cmd": [
+  "C:\\Users\\user\\AppData\\Roaming\\npm\\node_modules\\opencode-ai\\bin\\opencode.exe",
+  "run",
+  "--pure",
+  "-m",
+  "strata/deepseek",
+  "--format",
+  "json",
+  "<README on stdin>"
+ ],
+ "steps": 6,
+ "tool_calls": 13,
+ "tokens": {
+  "input": 16771,
+  "output": 1216,
+  "reasoning": 0,
+  "cache_read": 56510,
+  "cache_write": 0
+ },
+ "ran_visible_tests": true,
+ "pytest_calls": 2,
+ "peeked_outside": [],
+ "errors": [],
+ "final_text": "Fixed three bugs:\n- `inventory.py:89` \u2014 `release` returned inside the loop after the first reservation.\n- `csv_io.py:60` \u2014 empty optional `weight_kg` was not replaced with its default.\n- `pricing.py:90` \u2014 bulk discount required `> 10` instead of `>= 10`.\n\n```\n30 passed in 0.11s\n```",
+ "nan_drops": 0,
+ "engine": {
+  "turns": 7,
+  "prompt_tokens": 74022,
+  "cached_tokens": 57048,
+  "fresh_tokens": 16974,
+  "first_turn": {
+   "prompt": 741,
+   "cached": 538,
+   "fresh": 203,
+   "prompt_ms": 37072,
+   "prompt_tok_s": 5.5,
+   "generated": 76,
+   "gen_ms": 36321,
+   "decode_tok_s": 2.09,
+   "drafts_kept": 37,
+   "drafts": 54
+  },
+  "ttft_first_s": 37.1,
+  "ttft_median_s": 37.1,
+  "ttft_total_s": 286.3,
+  "output_tokens": 1292,
+  "decode_tok_s": 3.98,
+  "drafts_kept": 960,
+  "drafts": 1090
+ },
+ "disk_E_read_GB": 622.1
+}

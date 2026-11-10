@@ -1,0 +1,43 @@
+﻿    These files are DeepSeek-V4.1-Flash ISTA-DAS 1.75 bpw; they are used where they are.
+[!] DeepSeek has not been tested on RX 7000 cards yet; please report how it runs. If something fails, tell us at https://github.com/Niko1221/Strata/issues (attach the engine log).
+    DeepSeek runs on its own engine package, so the Strata engine is not downloaded for it.
+    The model already installed here is somewhere else than the folder you gave, so Strata uses the folder you gave and points this launch at it.
+    Getting your model ready
+    Checking your computer
+    Getting the helper packages ready
+    Checking the engine for this PC
+    Getting the model files
+    The model files are on this computer; checking them
+    Checking that the model files are complete (a few minutes for a big model; nothing is downloaded)
+    Checking that the model files are complete (a few minutes for a big model; nothing is downloaded): 4.2 of 40.0 GB
+    Checking that the model files are complete (a few minutes for a big model; nothing is downloaded): 8.7 of 40.0 GB
+    Checking that the model files are complete (a few minutes for a big model; nothing is downloaded): 13.2 of 40.0 GB
+    Checking that the model files are complete (a few minutes for a big model; nothing is downloaded): 17.9 of 40.0 GB
+    Checking that the model files are complete (a few minutes for a big model; nothing is downloaded): 21.8 of 40.0 GB
+    Checking that the model files are complete (a few minutes for a big model; nothing is downloaded): 25.9 of 40.0 GB
+    Checking that the model files are complete (a few minutes for a big model; nothing is downloaded): 29.9 of 40.0 GB
+    Checking that the model files are complete (a few minutes for a big model; nothing is downloaded): 33.8 of 40.0 GB
+    Checking that the model files are complete (a few minutes for a big model; nothing is downloaded): 39.4 of 40.0 GB
+    Preparing your model for Strata (one time)
+    Preparing your model for Strata (one time) (still working, 31 s so far)
+    Preparing your model for Strata (one time)
+    Saving the model's settings
+    DeepSeek-V4.1-Flash IST-DAS-1.75bpw is ready.
+    Writing this launch's settings…
+    Settings are saved.
+    Starting the engine and loading the model. The first start can take a few minutes.
+    Loading the model… 15 s
+    Loading the model… 30 s
+    Loading the model… 45 s
+    The model is loaded and answering.
+    Ready: http://127.0.0.1:8091
+    Strata is serving.
+
+Strata is serving.
+  This computer  http://127.0.0.1:8091/v1
+  Anthropic apps http://127.0.0.1:8091   (Claude Code: ANTHROPIC_BASE_URL, no /v1 at the end)
+  Speed          Full quality (default on this PC): all 6 experts per word
+  Engine log     C:\Users\user\AppData\Local\Strata\launch\ist-das-1-75bpw-65-532k.engine.log   (follow it: strata logs --follow)
+  Watch it:    strata monitor --url http://127.0.0.1:8091
+  Connect an app:  strata connect opencode      Stop:  strata launch --stop
+  To keep these settings for next time, add --save-preset NAME.

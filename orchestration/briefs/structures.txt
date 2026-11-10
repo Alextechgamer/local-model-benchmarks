@@ -1,0 +1,3 @@
+YOUR MODULE: structures. Write the file structures.js (see the contract: buildPagoda, buildTree, buildTrees).
+Voxel budget: pagoda about 2,500 voxels, each tree about 200-300 (so 7 trees about 1,800). Use S.roofTier for roofs, S.box/S.cylinder/S.sphere for the rest.
+The pagoda stands on the hill at L.PAGODA: base it on groundY(L.PAGODA.cx, L.PAGODA.cz). Keep it about 30 voxels tall.

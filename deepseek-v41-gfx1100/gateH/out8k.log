@@ -1,0 +1,6 @@
+start 2026-11-09 16:18:01
+relaunch rc=0
+server 16:20:47
+{"run": "C-gpu-out8k-T6-r1", "wall_s": 2701.0, "steps": 6, "killed": "time limit", "ran_tests": false, "peeked": 0, "score": "{\"task\": \"T6\", \"label\": \"C-gpu-out8k-T6-r1\", \"score\": 0.0, \"package_changed\": false, \"tests_changed\": false, \"visible\": \"30/30\", \"mutation\": \"0/10 killed (no tests/test_reports.py)\"}"}
+run rc=0
+end 17:06:27

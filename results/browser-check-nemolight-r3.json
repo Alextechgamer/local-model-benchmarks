@@ -1,0 +1,26 @@
+{
+ "label": "nemolight-r3",
+ "file_kb": 39.7,
+ "console_errors": [],
+ "console_warnings": [],
+ "exceptions": [
+  "SyntaxError: Invalid or unexpected token"
+ ],
+ "logs": [],
+ "page": {
+  "title": "桜の庭 – Voxel Pagoda Garden",
+  "canvases": [],
+  "sliders": 4,
+  "checkboxes": 0,
+  "buttons": [
+   "Regenerate seed",
+   "Reset view"
+  ],
+  "voxelText": null,
+  "fpsText": null,
+  "hasJapaneseTitle": true,
+  "loadingVisible": true,
+  "text": "桜の庭 – Voxel Pagoda Garden\nGardening...\nCONTROLS\nTime of day: 12\nSpeed: 1x\nVoxel count: 0\nPetal density: 1\nWind strength: 0\nRegenerate seed Reset view\nAuto-rotate:\nShadows:\nFireflies:\nWater:\nWireframe:\nKeyboard shortcuts\nSpace auto-rotate\n1 Overview\n2 Pagoda\n3 Pond\n4 Torii\n5 Blossoms\nN Day/Night"
+ },
+ "measured_fps_headless": 132
+}

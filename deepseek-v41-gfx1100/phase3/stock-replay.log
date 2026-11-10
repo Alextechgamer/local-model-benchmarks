@@ -1,0 +1,6 @@
+{"label": "stock-tc-r1", "run": 1, "wall_s": 209.1, "garbage": false, "error": null, "tool_calls": "bash{\"command\":\"cd tests && for f in *.py; do echo \\\"=== $f ===\\\"; cat \\\"$f\\\"; done\",\"description\":\"read tests\"}"}
+{"label": "stock-replay-r1", "disk_E_read_GB": 188.9, "wall_s": 209.7, "rc": 0}
+{"label": "stock-tc-r2", "run": 1, "wall_s": 142.6, "garbage": false, "error": null, "tool_calls": "bash{\"command\":\"cd tests && for f in *.py; do echo \\\"=== $f ===\\\"; cat \\\"$f\\\"; done\",\"description\":\"look tests\"}"}
+{"label": "stock-replay-r2", "disk_E_read_GB": 171.5, "wall_s": 143.2, "rc": 0}
+{"label": "stock-tc-r3", "run": 1, "wall_s": 138.2, "garbage": false, "error": null, "tool_calls": "bash{\"command\":\"cd tests && for f in *.py; do echo \\\"=== $f ===\\\"; cat \\\"$f\\\"; done\",\"description\":\"read tests\"}"}
+{"label": "stock-replay-r3", "disk_E_read_GB": 164.0, "wall_s": 138.8, "rc": 0}

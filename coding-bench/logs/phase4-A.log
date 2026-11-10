@@ -1,0 +1,29 @@
+power logging started: gpu pid 6868, cpu pid 30812, mem pid 9052
+{"event": "p4_power_start", "session": "p4-A-20261020-023914", "model": "A", "t": 1792489155.1487718}
+{"event": "server_ready", "model": "A", "pid": 31008, "load_s": 21.5, "free_gb": 50.7, "t": 1792489177.4353914}
+{"model": "A", "size": "8k", "rep": 1, "status": "ok", "error": null, "prompt_tokens": 8186, "ttft_s": 5.856695652008057, "prompt_tps": 1397.7164746802757, "output_tps": 76.5427112415127, "answers_correct": 3}
+{"model": "A", "size": "8k", "rep": 2, "status": "ok", "error": null, "prompt_tokens": 8191, "ttft_s": 5.190409421920776, "prompt_tps": 1578.102868996569, "output_tps": 80.30363042119893, "answers_correct": 3}
+{"model": "A", "size": "8k", "rep": 3, "status": "ok", "error": null, "prompt_tokens": 8186, "ttft_s": 5.196181774139404, "prompt_tps": 1575.3875356594451, "output_tps": 80.41392315921748, "answers_correct": 3}
+{"model": "A", "size": "32k", "rep": 1, "status": "ok", "error": null, "prompt_tokens": 31854, "ttft_s": 19.979294776916504, "prompt_tps": 1594.35056921044, "output_tps": 76.69753353075535, "answers_correct": 3}
+{"model": "A", "size": "32k", "rep": 2, "status": "ok", "error": null, "prompt_tokens": 31852, "ttft_s": 19.86893129348755, "prompt_tps": 1603.105850511454, "output_tps": 78.88688587555566, "answers_correct": 3}
+{"model": "A", "size": "32k", "rep": 3, "status": "ok", "error": null, "prompt_tokens": 31852, "ttft_s": 19.875871419906616, "prompt_tps": 1602.5460885251416, "output_tps": 73.41867806853, "answers_correct": 3}
+{"model": "A", "size": "64k", "rep": 1, "status": "ok", "error": null, "prompt_tokens": 63967, "ttft_s": 41.364553689956665, "prompt_tps": 1546.4206498988824, "output_tps": 76.79100465948837, "answers_correct": 3}
+{"model": "A", "size": "64k", "rep": 2, "status": "ok", "error": null, "prompt_tokens": 63968, "ttft_s": 41.44563150405884, "prompt_tps": 1543.4196000544837, "output_tps": 78.57369195507269, "answers_correct": 3}
+{"model": "A", "size": "64k", "rep": 3, "status": "ok", "error": null, "prompt_tokens": 63968, "ttft_s": 41.54664468765259, "prompt_tps": 1539.667053282185, "output_tps": 75.47348356397671, "answers_correct": 3}
+{"model": "A", "size": "96k", "rep": 1, "status": "ok", "error": null, "prompt_tokens": 94777, "ttft_s": 64.13885927200317, "prompt_tps": 1477.6845281588985, "output_tps": 76.21680750559584, "answers_correct": 3}
+{"model": "A", "size": "96k", "rep": 2, "status": "ok", "error": null, "prompt_tokens": 94781, "ttft_s": 64.19694399833679, "prompt_tps": 1476.40984284946, "output_tps": 76.95645108590249, "answers_correct": 3}
+{"model": "A", "size": "96k", "rep": 3, "status": "ok", "error": null, "prompt_tokens": 94781, "ttft_s": 64.1908392906189, "prompt_tps": 1476.550253080297, "output_tps": 77.512917425138, "answers_correct": 3}
+{"model": "A", "size": "128k", "rep": 1, "status": "ok", "error": null, "prompt_tokens": 125213, "ttft_s": 88.15483236312866, "prompt_tps": 1420.3759072925327, "output_tps": 77.92738935680494, "answers_correct": 3}
+{"model": "A", "size": "128k", "rep": 2, "status": "ok", "error": null, "prompt_tokens": 125206, "ttft_s": 88.22041773796082, "prompt_tps": 1419.2406158390302, "output_tps": 75.26952011475561, "answers_correct": 3}
+{"model": "A", "size": "128k", "rep": 3, "status": "ok", "error": null, "prompt_tokens": 125207, "ttft_s": 88.24492979049683, "prompt_tps": 1418.85772131334, "output_tps": 76.37426742769081, "answers_correct": 3}
+{"model": "A", "size": "200k", "rep": 1, "status": "ok", "error": null, "prompt_tokens": 198702, "ttft_s": 153.96363139152527, "prompt_tps": 1290.5775097932465, "output_tps": 73.26243281306425, "answers_correct": 3}
+{"model": "A", "size": "200k", "rep": 2, "status": "ok", "error": null, "prompt_tokens": 198704, "ttft_s": 154.06382250785828, "prompt_tps": 1289.7512002849649, "output_tps": 73.80371673017693, "answers_correct": 3}
+{"model": "A", "size": "200k", "rep": 3, "status": "ok", "error": null, "prompt_tokens": 198699, "ttft_s": 154.26851892471313, "prompt_tps": 1288.00743913909, "output_tps": 78.42050035874192, "answers_correct": 3}
+{"model": "A", "size": "250k", "rep": 1, "status": "ok", "error": null, "prompt_tokens": 248953, "ttft_s": 202.33111691474915, "prompt_tps": 1230.4236925894827, "output_tps": 73.38333756989415, "answers_correct": 3}
+{"model": "A", "size": "250k", "rep": 2, "status": "ok", "error": null, "prompt_tokens": 248957, "ttft_s": 202.37214946746826, "prompt_tps": 1230.1939800269818, "output_tps": 75.62196920299158, "answers_correct": 3}
+{"model": "A", "size": "250k", "rep": 3, "status": "ok", "error": null, "prompt_tokens": 248957, "ttft_s": 202.42832255363464, "prompt_tps": 1229.8526058972666, "output_tps": 72.89300921034429, "answers_correct": 3}
+{"event": "server_stopped", "pid": 31008, "t": 1792491111.749141}
+stopped 6868 (python)
+stopped 30812 (typeperf)
+stopped 9052 (powershell)
+{"event": "p4_power_stop", "session": "p4-A-20261020-023914", "model": "A", "t": 1792491112.0358708}

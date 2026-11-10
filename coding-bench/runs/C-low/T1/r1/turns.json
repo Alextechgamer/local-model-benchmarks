@@ -1,0 +1,26 @@
+[
+ {
+  "prompt": 741,
+  "cached": 538,
+  "fresh": 203,
+  "prompt_ms": 36001,
+  "prompt_tok_s": 5.6,
+  "generated": 85,
+  "gen_ms": 29937,
+  "decode_tok_s": 2.84,
+  "drafts_kept": 40,
+  "drafts": 62
+ },
+ {
+  "prompt": 6032,
+  "cached": 5836,
+  "fresh": 196,
+  "prompt_ms": 29531,
+  "prompt_tok_s": 6.6,
+  "generated": 67,
+  "gen_ms": 22386,
+  "decode_tok_s": 2.99,
+  "drafts_kept": 43,
+  "drafts": 73
+ }
+]

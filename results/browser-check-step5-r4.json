@@ -1,0 +1,47 @@
+{
+ "label": "step5-r4",
+ "file_kb": 65.9,
+ "console_errors": [],
+ "console_warnings": [
+  "THREE.Material: 'flatShading' is not a property of THREE.MeshBasicMaterial."
+ ],
+ "exceptions": [],
+ "logs": [
+  "[pagoda] voxel count: 16500 | seed: 10203"
+ ],
+ "page": {
+  "title": "桜の庭 – Voxel Pagoda Garden",
+  "canvases": [
+   [
+    1600,
+    900
+   ]
+  ],
+  "sliders": 4,
+  "checkboxes": 0,
+  "buttons": [
+   "?",
+   "–",
+   "⏸ Pause",
+   "Auto-rot",
+   "Shadows",
+   "Fireflies",
+   "Water",
+   "Wireframe",
+   "Petals",
+   "1 Overview",
+   "2 Pagoda",
+   "3 Pond",
+   "4 Torii",
+   "5 Blossoms",
+   "Reset view",
+   "Regenerate seed"
+  ],
+  "voxelText": "Voxels 16,500",
+  "fpsText": "FPS 144",
+  "hasJapaneseTitle": true,
+  "loadingVisible": false,
+  "text": "桜の庭\n\nVOXEL PAGODA GARDEN\n\n庭園コントロール / CONTROLS\n? –\nTIME OF DAY\n17:43\n⏸ Pause\nSpeed\n1.0x\nPETALS & WIND\nDensity 1200\nWind 0.60\nTOGGLES\nAuto-rot\nShadows\nFireflies\nWater\nWireframe\nPetals\nCAMERA PRESETS\n1 Overview\n2 Pagoda\n3 Pond\n4 Torii\n5 Blossoms\nReset view\nRegenerate seed\nVoxels 16,500\nFPS 144\nTime 17:43\nSeed 10203"
+ },
+ "measured_fps_headless": 145
+}

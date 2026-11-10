@@ -1,0 +1,3 @@
+YOUR MODULE: world. Write the file world.js (see the contract: buildTerrain, buildPond, buildTorii, buildLantern, buildBamboo, buildRocks, buildBench, buildHedges).
+Voxel budget for your module: roughly 11,000 voxels in total (terrain columns dominate: keep them to ground surface + 2 layers beneath, with grass on top,
+and do NOT fill below that). Use S.set/S.box/S.fillRect/S.cylinder from core, L and groundY from core, and the passed rng for all randomness.

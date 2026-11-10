@@ -1,0 +1,5 @@
+00:35:37 START C default T1
+00:59:39 END T1 rc 0 {"run": "C-T1-r1", "wall_s": 1440.4, "steps": 12, "killed": null, "ran_tests": true, "peeked": 0, "score": "{\"task\": \"T1\", \"label\": \"C-T1-r1\", \"score\": 1.0, \"package_changed\": true, \"tests_changed\": false, \"visible\": \"30/30\", \"hidden\": \"25/25 (task 7/7, keep 18/18)\"}"} 
+00:59:39 START C default T2
+01:25:48 END T2 rc 0 {"run": "C-T2-r1", "wall_s": 1565.4, "steps": 15, "killed": null, "ran_tests": false, "peeked": 0, "score": "{\"task\": \"T2\", \"label\": \"C-T2-r1\", \"score\": 0.5714285714285714, \"package_changed\": false, \"tests_changed\": false, \"visible\": \"30/32\", \"hidden\": \"16/28 (task 0/12, keep 16/16)\"}"} 
+01:25:48 START C default T3

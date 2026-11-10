@@ -1,0 +1,4 @@
+YOUR MODULE: core. Write the file core.js (see the contract: CFG, L, mulberry32, groundY, VoxelScene).
+Notes: key voxels in a Map by integer key (e.g. (x+64)*65536 + (z+64)*256 + y style packing, or a string). groundY must be pure and deterministic
+(hash-based value noise is fine) and must return the same integer for the same x,z every call. build() must create the InstancedMesh with
+exactly count() instances and use a reusable THREE.Matrix4 / THREE.Color. Jitter lightness by +-4% using a position hash.

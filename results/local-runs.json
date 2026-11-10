@@ -1,0 +1,8 @@
+[
+ {"run":"claude-code-run1","date":"2026-10-05","harness":"Claude Code CLI pointed at the local server (claude-local.bat), one shot","model":"qwen3.8-flash-next-coder-iq1_m","seconds":2647,"turns":53,"errors":0,"voxels":16500,"fps":133},
+ {"run":"claude-code-run2","date":"2026-10-05","harness":"same as run1, rerun with the PC otherwise idle","model":"qwen3.8-flash-next-coder-iq1_m","seconds":1210,"turns":61,"errors":2,"voxels":16500,"fps":135,"note":"2 console errors (sun.target / DirectionalLightShadow)"},
+ {"run":"claude-code-run2-hand-patched","date":"2026-10-05","harness":"run2 plus a 2-line manual fix in the sun.target code","model":"qwen3.8-flash-next-coder-iq1_m","errors":0,"voxels":16500,"fps":135},
+ {"run":"claude-code-guided","date":"2026-10-05","harness":"Claude Code CLI, the spec fed in 5 stages by a script","model":"qwen3.8-flash-next-coder-iq1_m","seconds":3799,"errors":0,"voxels":15465,"fps":134},
+ {"run":"opencode-flash-next","date":"2026-10-05","harness":"opencode run, provider 'strata' (same local server)","model":"qwen3.8-flash-next-coder-iq1_m","seconds":2921,"errors":0,"voxels":16350,"fps":145,"note":"page title renders as garbled characters"},
+ {"run":"opencode-qwen3.8-27b","date":"2026-10-05","harness":"opencode run --thinking, llama.cpp server on port 8090, 160K context","model":"qwen3.8-27b IQ4_XS","seconds":3753,"errors":2,"voxels":16001,"fps":144,"note":"vertex shader fails to compile (uInt undeclared); pond renders as a dark pit"}
+]

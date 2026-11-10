@@ -1,0 +1,63 @@
+{
+ "model": "C",
+ "prompt_variant": "default",
+ "task": "T3",
+ "rep": 1,
+ "t0": 1794226120.6244376,
+ "t1": 1794227825.9143314,
+ "wall_s": 1705.3,
+ "exit_code": 0,
+ "killed": null,
+ "prompt_chars": 1549,
+ "cmd": [
+  "C:\\Users\\user\\AppData\\Roaming\\npm\\node_modules\\opencode-ai\\bin\\opencode.exe",
+  "run",
+  "--pure",
+  "-m",
+  "strata/deepseek",
+  "--format",
+  "json",
+  "<README on stdin>"
+ ],
+ "steps": 8,
+ "tool_calls": 11,
+ "tokens": {
+  "input": 13710,
+  "output": 4166,
+  "reasoning": 0,
+  "cache_read": 75899,
+  "cache_write": 0
+ },
+ "ran_visible_tests": true,
+ "pytest_calls": 1,
+ "peeked_outside": [],
+ "errors": [],
+ "final_text": "Refactored `pricing.py` into helper functions (`_validate_order`, `_price_line`, `_price_lines`, `_coupon_discount`); all functions are \u226420 lines and all 31 tests pass, including the 40-line structure check.",
+ "nan_drops": 0,
+ "engine": {
+  "turns": 8,
+  "prompt_tokens": 90613,
+  "cached_tokens": 76437,
+  "fresh_tokens": 14176,
+  "first_turn": {
+   "prompt": 1004,
+   "cached": 538,
+   "fresh": 466,
+   "prompt_ms": 47537,
+   "prompt_tok_s": 9.8,
+   "generated": 206,
+   "gen_ms": 61696,
+   "decode_tok_s": 3.34,
+   "drafts_kept": 120,
+   "drafts": 154
+  },
+  "ttft_first_s": 47.5,
+  "ttft_median_s": 45.1,
+  "ttft_total_s": 360.7,
+  "output_tokens": 4372,
+  "decode_tok_s": 3.99,
+  "drafts_kept": 3203,
+  "drafts": 3721
+ },
+ "disk_E_read_GB": 1644.5
+}

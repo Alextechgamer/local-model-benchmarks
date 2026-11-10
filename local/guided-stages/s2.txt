@@ -1,0 +1,6 @@
+STAGE 2 of 5 - architecture. Read pagoda.html first, then add (all in voxels, through the existing builder helpers):
+- roofTier helper and buildPagoda: the centrepiece on the hill. Stone base; five tiers, each tier = dark-red pillars at the corners, white walls with small window openings, and a layered dark roof that steps inward going up and flares upward at the four corners; a golden finial (sorin) on top. Put emissive warm-yellow voxels inside the window openings. Total height about 30 units. It must clearly read as a five-tier pagoda with white walls visible between the roofs.
+- buildTorii: a vermilion torii gate at the south entrance of the path, two pillars on stone bases, a vermilion lower beam and a black kasagi top beam that overhangs both sides. About 9 wide and 9 tall.
+- buildLantern: stone lantern (toro) about 5 tall with an emissive warm voxel inside; place 5 of them along the path and near where the pond will be (the pond goes to the east of the pagoda, about 14x10 units).
+- 4-5 large mossy rocks (grey with green tops), a wooden bench, and low dark-green hedges along part of the path.
+Keep the voxel-count readout working. Aim for about 12,000 voxels in total after this stage.

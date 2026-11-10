@@ -1,0 +1,81 @@
+{
+ "exe": "E:\\strata-dsv41\\engine-dsv41\\0.1.58-windows-x86_64-hip-gfx1100-self\\strata-dsv41.exe",
+ "args": [
+  "--pack",
+  "E:\\strata-dsv41\\packs\\deepseek-v4.1-flash-ist-das-1.75bpw",
+  "--max-context",
+  "65532",
+  "--eos",
+  "1",
+  "--vision",
+  "off",
+  "--dspark-conf",
+  "0.65",
+  "--dspark",
+  "on",
+  "--ssd-cache",
+  "36",
+  "--experts",
+  "6"
+ ],
+ "cwd": "C:\\Strata\\terminal\\0.1.58",
+ "tokenizer": "E:\\strata-dsv41\\packs\\deepseek-v4.1-flash-ist-das-1.75bpw\\tokenizer",
+ "model_name": "deepseek-v4.1-flash",
+ "arch": "deepseek41",
+ "log": "C:\\Users\\user\\AppData\\Local\\Strata\\launch\\ist-das-1-75bpw-65-532k.engine.log",
+ "lib_dirs": [
+  "E:\\strata-dsv41\\engine-dsv41\\0.1.58-windows-x86_64-hip-gfx1100-self",
+  "E:\\strata-dsv41\\engine-dsv41\\0.1.58-windows-x86_64-hip-gfx1100-self\\rocm\\bin"
+ ],
+ "port": 8091,
+ "engine_ready_s": 3600,
+ "backend": "hip",
+ "args_written": [
+  "--pack",
+  "E:\\strata-dsv41\\packs\\deepseek-v4.1-flash-ist-das-1.75bpw",
+  "--max-context",
+  "65532",
+  "--eos",
+  "1",
+  "--vision",
+  "off",
+  "--dspark-conf",
+  "0.65",
+  "--dspark",
+  "on",
+  "--ssd-cache",
+  "36",
+  "--experts",
+  "6"
+ ],
+ "host": "127.0.0.1",
+ "open_browser": false,
+ "user_args": [
+  "--dspark",
+  "on",
+  "--ssd-cache",
+  "36"
+ ],
+ "launch_set": [
+  "--dspark",
+  "--ssd-cache"
+ ],
+ "args_derived": [
+  "--pack",
+  "E:\\strata-dsv41\\packs\\deepseek-v4.1-flash-ist-das-1.75bpw",
+  "--max-context",
+  "65532",
+  "--eos",
+  "1",
+  "--vision",
+  "off",
+  "--dspark-conf",
+  "0.65",
+  "--dspark",
+  "on",
+  "--ssd-cache",
+  "36",
+  "--experts",
+  "6"
+ ]
+}

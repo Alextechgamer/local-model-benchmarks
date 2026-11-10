@@ -1,0 +1,63 @@
+{
+ "model": "C",
+ "prompt_variant": "smallest",
+ "task": "T3",
+ "rep": 1,
+ "t0": 1794233955.9531987,
+ "t1": 1794235036.1265216,
+ "wall_s": 1080.2,
+ "exit_code": 0,
+ "killed": null,
+ "prompt_chars": 1549,
+ "cmd": [
+  "C:\\Users\\user\\AppData\\Roaming\\npm\\node_modules\\opencode-ai\\bin\\opencode.exe",
+  "run",
+  "--pure",
+  "-m",
+  "strata/deepseek",
+  "--format",
+  "json",
+  "<README on stdin>"
+ ],
+ "steps": 6,
+ "tool_calls": 9,
+ "tokens": {
+  "input": 7654,
+  "output": 3045,
+  "reasoning": 0,
+  "cache_read": 63315,
+  "cache_write": 0
+ },
+ "ran_visible_tests": true,
+ "pytest_calls": 1,
+ "peeked_outside": [],
+ "errors": [],
+ "final_text": "Refactored `inventory_service/pricing.py` into `_line_details`, `_coupon_discount`, and a shorter `compute_order_total`. All 31 tests pass, including `test_pricing_structure.py`.",
+ "nan_drops": 0,
+ "engine": {
+  "turns": 7,
+  "prompt_tokens": 71973,
+  "cached_tokens": 63853,
+  "fresh_tokens": 8120,
+  "first_turn": {
+   "prompt": 1004,
+   "cached": 538,
+   "fresh": 466,
+   "prompt_ms": 43357,
+   "prompt_tok_s": 10.7,
+   "generated": 109,
+   "gen_ms": 31538,
+   "decode_tok_s": 3.46,
+   "drafts_kept": 58,
+   "drafts": 84
+  },
+  "ttft_first_s": 43.4,
+  "ttft_median_s": 42.6,
+  "ttft_total_s": 296.0,
+  "output_tokens": 3154,
+  "decode_tok_s": 4.05,
+  "drafts_kept": 2420,
+  "drafts": 2750
+ },
+ "disk_E_read_GB": 1083.7
+}

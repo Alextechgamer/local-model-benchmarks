@@ -1,0 +1,28 @@
+{
+ "label": "g-s1",
+ "file_kb": 9.1,
+ "console_errors": [],
+ "console_warnings": [],
+ "exceptions": [
+  "TypeError: Cannot set properties of null (setting 'textContent')\n    at buildGarden (file:///C:/Users/user/strata-tests/pagoda-guided/pagoda.html:254:23)\n    at file:///C:/Users/user/strata-tests/pagoda-guided/pagoda.html:271:1"
+ ],
+ "logs": [],
+ "page": {
+  "title": "Voxel Pagoda Garden",
+  "canvases": [
+   [
+    1600,
+    900
+   ]
+  ],
+  "sliders": 0,
+  "checkboxes": 0,
+  "buttons": [],
+  "voxelText": null,
+  "fpsText": null,
+  "hasJapaneseTitle": false,
+  "loadingVisible": false,
+  "text": ""
+ },
+ "measured_fps_headless": 137
+}

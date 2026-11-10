@@ -1,0 +1,48 @@
+Build a voxel-style Japanese pagoda garden as a single self-contained HTML file using Three.js. All HTML, CSS and JavaScript must live in that one file. Load Three.js and OrbitControls via an ES-module importmap from a CDN (e.g. https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js and .../examples/jsm/controls/OrbitControls.js). No build step, no bundler, no external textures, models or images — every shape is built from cubes in code and colored with flat materials. The file must open directly in a browser and run with zero console errors.
+ Voxel system
+ Write a small voxel engine: a Scene builder that collects voxels as {x, y, z, colorHex} into a map keyed by position (so overlapping voxels dedupe), then renders them with THREE.InstancedMesh (one shared BoxGeometry, per-instance color via setColorAt). Do not create one Mesh per cube.
+ Target ~16,500 voxels total (acceptable range 15,000–18,000). Print the final count to the console and show it in the UI.
+ Use a seeded pseudo-random generator so the garden is identical on every load.
+ Voxel size 1 unit, scene roughly 80×80 units, with a slight per-voxel color jitter (±4% lightness) so large surfaces don't look flat.
+ Scene contents (all in voxels)
+ Terrain – gently rolling ground with grass, dirt and gravel patches; a raked-sand zen area; a stone path from the torii gate to the pagoda.
+ Five-tier pagoda – centerpiece on a small hill: stone base, dark-red pillars, white walls, layered roofs that step inward and flare at the corners, a golden finial (sōrin) on top. Small warm lights inside the windows.
+ Cherry blossom trees – 6–8 trees with brown trunks/branches and blossom canopies in 3–4 shades of pink/white, placed around the pond and path.
+ Pond – irregular shape, water rendered as a separate slightly-transparent, animated mesh (subtle vertex ripple + color shift), with stone edging, lily pads, koi fish (2–3 orange/white voxel fish that slowly swim in loops), and a small arched wooden bridge.
+ Torii gate – vermilion gate at the garden entrance with black kasagi (top beam) and stone base.
+ Details – 4–6 stone lanterns (tōrō) with glowing interiors, a bamboo grove cluster, a few large mossy rocks, a wooden bench, and low hedges.
+ Particles
+ Falling cherry petals: 800–1,500 petals using THREE.Points or a small InstancedMesh, drifting down with wind sway and rotation; they respawn at the top when they hit the ground. Wind strength is adjustable.
+ Fireflies: 100–200 softly pulsing points that appear only at night, hovering near the pond and grass.
+ Faint mist/fog layer over the pond at dawn.
+ Lighting
+ Directional "sun" with shadow mapping (PCFSoft, 2048 shadow map, shadow camera bounded to the garden).
+ Hemisphere light for sky/ground bounce, plus low ambient.
+ Point lights inside the pagoda windows and each stone lantern, warm color, intensity tied to time of day.
+ Day/night cycle: a time-of-day value (0–24 h) drives sun position, sun/sky colors, background color, fog color and density, and lantern intensity. Include sunrise/sunset orange tones and a deep-blue night with visible stars (Points on a sky sphere).
+ Use ACESFilmicToneMapping and sRGB output.
+ Camera & controls
+ OrbitControls with damping, min/max distance, and polar-angle limits so the camera never goes below ground.
+ Auto-rotate toggle.
+ Preset camera buttons: Overview, Pagoda, Pond, Torii, Blossoms — each smoothly tweens the camera and target (write a small lerp-based tween, no external tween library).
+ Keyboard: Space toggles auto-rotate, 1–5 jump to presets, N toggles day/night.
+ Interactive UI
+ A semi-transparent glass-style overlay panel (top-left, collapsible) built with plain HTML/CSS containing:
+ Time-of-day slider (0–24) with a "play" toggle that animates the cycle (speed slider).
+ Petal density slider and wind strength slider.
+ Toggles: auto-rotate, shadows, fireflies, water animation, wireframe mode.
+ Preset camera buttons (listed above).
+ A "Regenerate seed" button that rebuilds the garden with a new random seed (trees, rocks, and petal positions change; pagoda, pond and torii layout stay).
+ Live readouts: voxel count, FPS, current time of day.
+ A small "Reset view" button and a help tooltip listing keyboard shortcuts.
+ Also add a title in the top-right ("桜の庭 – Voxel Pagoda Garden") and a brief loading overlay that fades out once the scene is built.
+ Technical requirements
+ Organize code into clearly commented sections: config/constants → seeded RNG → voxel builder helpers (box, fillRect, cylinder, sphere, roofTier) → scene assembly functions (buildTerrain, buildPagoda, buildTree, buildPond, buildTorii, buildLantern, etc.) → lighting → particles → UI wiring → animation loop.
+ Handle window resize.
+ Keep it at 60 fps on a mid-range laptop: one InstancedMesh per material type (opaque voxels, emissive voxels, water), frustum culling on, no per-frame allocations in the render loop.
+ Use requestAnimationFrame with a clock-based delta so animation speed is frame-rate independent.
+ Dispose old geometry/instances when regenerating.
+ Output the complete HTML file in one code block, with no truncation or placeholder
+
+
+Save the complete file as pagoda.html in the current folder (write it with your file tool) instead of printing it in the chat. Do not ask questions; make reasonable choices and finish in this one run.

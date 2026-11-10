@@ -1,0 +1,39 @@
+{
+ "task": "T1",
+ "source_dir": "E:\\strata-dsv41\\pagoda\\coding-bench\\runs\\C-low\\T1\\r1\\work",
+ "label": "C-low-T1-r1",
+ "scored_at": "2026-11-09T14:38:57.344432",
+ "package_changed": false,
+ "tests_changed": false,
+ "visible": {
+  "total": 30,
+  "passed": 27,
+  "failed": 3,
+  "returncode": 1,
+  "timed_out": false,
+  "seconds": 0.9
+ },
+ "hidden": {
+  "total": 25,
+  "passed": 18,
+  "failed": 7,
+  "task_total": 7,
+  "task_passed": 0,
+  "keep_total": 18,
+  "keep_passed": 18,
+  "failures": [
+   "test_task_bulk_at_threshold_kettles_silver",
+   "test_task_bulk_at_threshold_through_order_service",
+   "test_task_cancel_three_line_order_frees_everything",
+   "test_task_release_returns_all_units",
+   "test_task_failed_order_rolls_back_earlier_lines",
+   "test_task_blank_weight_cells_use_default",
+   "test_task_blank_weight_on_update"
+  ],
+  "returncode": 1,
+  "timed_out": false,
+  "seconds": 0.9,
+  "output_tail": "scounts\"] == D(\"6.25\")\nE       AssertionError: assert Decimal('0.00') == Decimal('6.25')\nE        +  where Decimal('6.25') = D('6.25')\n\ntest_t1_bugs.py:21: AssertionError\n_____________ test_task_cancel_three_line_order_frees_everything ______________\n\n    def test_task_cancel_three_line_order_frees_everything():\n        cat, inv, svc, _ = world(stock=20)\n        o = svc.create_order(\"C1\", [(\"TOO-0001\", 3), (\"LIT-0001\", 4), (\"KIT-0001\", 5)])\n        svc.cancel(o.id)\n>       assert [inv.available(s) for s in (\"TOO-0001\", \"LIT-0001\", \"KIT-0001\")] == [20, 20, 20]\nE       assert [20, 16, 15] == [20, 20, 20]\nE         \nE         At index 1 diff: 16 != 20\nE         Use -v to get more diff\n\ntest_t1_bugs.py:37: AssertionError\n_____________________ test_task_release_returns_all_units _____________________\n\n    def test_task_release_returns_all_units():\n        _, inv, _, _ = world()\n        inv.reserve(\"X1\", \"TOO-0001\", 2)\n        inv.reserve(\"X1\", \"TOO-0002\", 3)\n        inv.reserve(\"X2\", \"TOO-0001\", 4)\n>       assert inv.release(\"X1\") == 5\nE       AssertionError: assert 2 == 5\nE        +  where 2 = release('X1')\nE        +    where release = <inventory_service.inventory.Inventory object at 0x000001E9C1E17CB0>.release\n\ntest_t1_bugs.py:46: AssertionError\n_______________ test_task_failed_order_rolls_back_earlier_lines _______________\n\n    def test_task_failed_order_rolls_back_earlier_lines():\n        from inventory_service.inventory import InsufficientStock\n        cat, inv, svc, _ = world(stock=10)\n        with pytest.raises(InsufficientStock):\n            svc.create_order(\"C1\", [(\"TOO-0001\", 2), (\"GAR-0001\", 3), (\"LIT-0001\", 11)])\n>       assert inv.available(\"TOO-0001\") == 10 and inv.available(\"GAR-0001\") == 10\nE       AssertionError: assert (10 == 10 and 7 == 10)\nE        +  where 10 = available('TOO-0001')\nE        +    where available = <inventory_service.inventory.Inventory object at 0x000001E9C1E16CF0>.available\nE        +  and   7 = available('GAR-0001')\nE        +    where available = <inventory_service.inventory.Inventory object at 0x000001E9C1E16CF0>.available\n\ntest_t1_bugs.py:55: AssertionError\n__________________ test_task_blank_weight_cells_use_default ___________________\n\n    def test_task_blank_weight_cells_use_default():\n        from inventory_service.catalog import Catalog\n        from inventory_service.csv_io import import_products\n        c = Catalog()\n        text = (\"sku,name,price,category,weight_kg\\nAAA-0001,One,1.00,misc,\\nAAA-0002,Two,2.00,misc,   \\n\"\n                \"AAA-0003,Three,3.00,misc,1.5\\n\")\n        r = import_products(text, c)\n>       assert r.ok and r.added == 3\nE       assert (False)\nE        +  where False = ImportResult(added=1, updated=0, errors=[(2, \"not an amount: ''\"), (3, \"not an amount: ''\")]).ok\n\ntest_t1_bugs.py:72: AssertionError\n______________________ test_task_blank_weight_on_update _______________________\n\n    def test_task_blank_weight_on_update():\n        from inventory_service.csv_io import import_products\n        cat, *_ = world()\n        r = import_products(\"sku,name,price,category,weight_kg\\nGAR-0002,Hose 25m,29.99,garden,\\n\", cat)\n>       assert r.updated == 1 and r.ok\nE       assert (0 == 1)\nE        +  where 0 = ImportResult(added=0, updated=0, errors=[(2, \"not an amount: ''\")]).updated\n\ntest_t1_bugs.py:80: AssertionError\n=========================== short test summary info ===========================\nFAILED test_t1_bugs.py::test_task_bulk_at_threshold_kettles_silver - Assertio...\nFAILED test_t1_bugs.py::test_task_bulk_at_threshold_through_order_service - A...\nFAILED test_t1_bugs.py::test_task_cancel_three_line_order_frees_everything - ...\nFAILED test_t1_bugs.py::test_task_release_returns_all_units - AssertionError:...\nFAILED test_t1_bugs.py::test_task_failed_order_rolls_back_earlier_lines - Ass...\nFAILED test_t1_bugs.py::test_task_blank_weight_cells_use_default - assert (Fa...\nFAILED test_t1_bugs.py::test_task_blank_weight_on_update - assert (0 == 1)\n7 failed, 18 passed in 0.26s\n"
+ },
+ "score": 0.72
+}

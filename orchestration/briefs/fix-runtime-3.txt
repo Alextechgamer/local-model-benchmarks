@@ -1,0 +1,10 @@
+
+FIX ROUND 2. runtime.js already exists in your working directory. EDIT IT IN PLACE (small edits only, do not rewrite), then run node --check.
+Lead's review after screenshotting the assembled garden at 1600x900:
+1. NO STARS are visible at night (23:00): the sky is a flat navy. The spec requires visible stars (THREE.Points on a sky sphere). Fix it: 1200+ stars on a sphere of
+   radius ~300 centred on the camera or the origin, PointsMaterial with sizeAttenuation:false, size 2.5 (pixels), transparent, depthWrite:false, fog:false,
+   white to pale blue colours, and make sure the sphere radius is inside camera.far and OUTSIDE the scene fog range (fog:false on the material).
+   Opacity must ramp from 0 (day) to 1 (night) with the same nightF factor used for the fireflies, and stars must be above the horizon (y > 0) mostly.
+2. The 'Pond' preset still has a cherry tree filling the left half of the screen. Raise it: Pond pos (-4, 27, 31), target (-14, 1, 10). Blossoms: pos (-4, 20, 22), target (-17, 4, 8).
+   Do not change any other preset.
+3. Keep every api method and the console.log('Voxel count:', n) line unchanged.

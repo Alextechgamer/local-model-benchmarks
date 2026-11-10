@@ -1,0 +1,35 @@
+{
+ "model": "A",
+ "task": "T6",
+ "rep": 1,
+ "t0": 1792484928.9483688,
+ "t1": 1792485389.0778456,
+ "wall_s": 460.1,
+ "exit_code": 0,
+ "killed": null,
+ "prompt_chars": 1067,
+ "cmd": [
+  "C:\\Users\\user\\AppData\\Roaming\\npm\\node_modules\\opencode-ai\\bin\\opencode.exe",
+  "run",
+  "--pure",
+  "-m",
+  "strata/coder",
+  "--format",
+  "json",
+  "<README on stdin>"
+ ],
+ "steps": 21,
+ "tool_calls": 29,
+ "tokens": {
+  "input": 31553,
+  "output": 23034,
+  "reasoning": 0,
+  "cache_read": 652161,
+  "cache_write": 0
+ },
+ "ran_visible_tests": true,
+ "pytest_calls": 3,
+ "peeked_outside": [],
+ "errors": [],
+ "final_text": "All done. `tests/test_reports.py` adds 15 tests covering every docstring rule in `reports.py` (status filtering, kept units, line-price vs catalog price, category sorting, cent rounding, tie-break ordering, inactive-product inclusion, available vs on-hand, boundary thresholds, exact line format, negative-n `ValueError`). A 35-mutant sweep in a scratch copy killed all but one semantically-equivalent mutant; full suite passes (45 tests)."
+}

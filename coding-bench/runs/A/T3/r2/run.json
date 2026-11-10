@@ -1,0 +1,35 @@
+{
+ "model": "A",
+ "task": "T3",
+ "rep": 2,
+ "t0": 1792485763.722284,
+ "t1": 1792485853.7467973,
+ "wall_s": 90.0,
+ "exit_code": 0,
+ "killed": null,
+ "prompt_chars": 1549,
+ "cmd": [
+  "C:\\Users\\user\\AppData\\Roaming\\npm\\node_modules\\opencode-ai\\bin\\opencode.exe",
+  "run",
+  "--pure",
+  "-m",
+  "strata/coder",
+  "--format",
+  "json",
+  "<README on stdin>"
+ ],
+ "steps": 9,
+ "tool_calls": 8,
+ "tokens": {
+  "input": 13108,
+  "output": 4215,
+  "reasoning": 0,
+  "cache_read": 100454,
+  "cache_write": 0
+ },
+ "ran_visible_tests": true,
+ "pytest_calls": 1,
+ "peeked_outside": [],
+ "errors": [],
+ "final_text": "Done. Refactored `pricing.py` into helper functions, all well under 40 lines (max 21). Behavior, error order/messages, and all public names + signatures preserved; all 31 tests pass including the structure check."
+}

@@ -1,0 +1,35 @@
+{
+ "model": "A",
+ "task": "T5",
+ "rep": 1,
+ "t0": 1792484851.6931474,
+ "t1": 1792484926.7138267,
+ "wall_s": 75.0,
+ "exit_code": 0,
+ "killed": null,
+ "prompt_chars": 1063,
+ "cmd": [
+  "C:\\Users\\user\\AppData\\Roaming\\npm\\node_modules\\opencode-ai\\bin\\opencode.exe",
+  "run",
+  "--pure",
+  "-m",
+  "strata/coder",
+  "--format",
+  "json",
+  "<README on stdin>"
+ ],
+ "steps": 15,
+ "tool_calls": 14,
+ "tokens": {
+  "input": 15626,
+  "output": 2777,
+  "reasoning": 0,
+  "cache_read": 172194,
+  "cache_write": 0
+ },
+ "ran_visible_tests": true,
+ "pytest_calls": 2,
+ "peeked_outside": [],
+ "errors": [],
+ "final_text": "Fixed at `inventory_service/orders.py:105`: refund tax was computed on the line's net (`net`) instead of the amount after the order-level discount share (`taxable = net - share`), so refunds on discounted orders paid tax on too much. The ticket scenario now refunds $73.84 + $73.84 = $147.68, and all 30 tests still pass."
+}

@@ -1,0 +1,9 @@
+06:08:55 START C smallest T1
+06:19:15 END T1 rc 0 {"run": "C-T1-r1", "wall_s": 620.1, "steps": 6, "killed": null, "ran_tests": true, "peeked": 0, "score": "E:\\strata-dsv41\\pagoda\\coding-bench\\scoring\\C-T1-r1 exists already; pick another --label"} 
+06:19:15 START C smallest T3
+06:37:16 END T3 rc 0 {"run": "C-T3-r1", "wall_s": 1080.2, "steps": 6, "killed": null, "ran_tests": true, "peeked": 0, "score": "E:\\strata-dsv41\\pagoda\\coding-bench\\scoring\\C-T3-r1 exists already; pick another --label"} 
+06:37:16 START C smallest T4
+06:48:53 END T4 rc 0 {"run": "C-smallest-T4-r1", "wall_s": 695.1, "steps": 5, "killed": null, "ran_tests": true, "peeked": 0, "score": "{\"task\": \"T4\", \"label\": \"C-smallest-T4-r1\", \"score\": 0.9642857142857143, \"package_changed\": true, \"tests_changed\": false, \"visible\": \"32/32\", \"hidden\": \"27/28 (task 12/13, keep 15/15)\"}"} 
+06:48:53 START C smallest T5
+07:03:05 END T5 rc 0 {"run": "C-smallest-T5-r1", "wall_s": 850.1, "steps": 9, "killed": null, "ran_tests": true, "peeked": 0, "score": "{\"task\": \"T5\", \"label\": \"C-smallest-T5-r1\", \"score\": 1.0, \"package_changed\": true, \"tests_changed\": false, \"visible\": \"30/30\", \"hidden\": \"21/21 (task 5/5, keep 16/16)\"}"} 
+07:03:05 ALL-DONE

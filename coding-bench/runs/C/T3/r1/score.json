@@ -1,0 +1,31 @@
+{
+ "task": "T3",
+ "source_dir": "E:\\strata-dsv41\\pagoda\\coding-bench\\runs\\C\\T3\\r1\\work",
+ "label": "C-T3-r1",
+ "scored_at": "2026-11-09T04:37:06.033211",
+ "package_changed": true,
+ "tests_changed": false,
+ "visible": {
+  "total": 31,
+  "passed": 31,
+  "failed": 0,
+  "returncode": 0,
+  "timed_out": false,
+  "seconds": 0.7
+ },
+ "hidden": {
+  "total": 25,
+  "passed": 25,
+  "failed": 0,
+  "task_total": 1,
+  "task_passed": 1,
+  "keep_total": 24,
+  "keep_passed": 24,
+  "failures": [],
+  "returncode": 0,
+  "timed_out": false,
+  "seconds": 0.7,
+  "output_tail": ".........................                                                [100%]\n25 passed in 0.14s\n"
+ },
+ "score": 1.0
+}

@@ -1,0 +1,108 @@
+{
+ "model": "C-gpu",
+ "prompt_variant": "default",
+ "reasoning_effort": "medium",
+ "task": "T1",
+ "rep": 1,
+ "t0": 1794264202.7425704,
+ "t1": 1794264837.9181182,
+ "wall_s": 635.2,
+ "exit_code": 0,
+ "killed": null,
+ "prompt_chars": 691,
+ "cmd": [
+  "C:\\Users\\user\\AppData\\Roaming\\npm\\node_modules\\opencode-ai\\bin\\opencode.exe",
+  "run",
+  "--pure",
+  "-m",
+  "strata/deepseek",
+  "--format",
+  "json",
+  "<README on stdin>"
+ ],
+ "nan_restarts": [],
+ "restart_s_total": 0,
+ "steps": 7,
+ "tool_calls": 13,
+ "tokens": {
+  "input": 15838,
+  "output": 1166,
+  "reasoning": 0,
+  "cache_read": 68114,
+  "cache_write": 0
+ },
+ "ran_visible_tests": true,
+ "pytest_calls": 2,
+ "tokens_per_step": [
+  {
+   "output": 77,
+   "reasoning": 0
+  },
+  {
+   "output": 95,
+   "reasoning": 0
+  },
+  {
+   "output": 157,
+   "reasoning": 0
+  },
+  {
+   "output": 292,
+   "reasoning": 0
+  },
+  {
+   "output": 445,
+   "reasoning": 0
+  },
+  {
+   "output": 51,
+   "reasoning": 0
+  },
+  {
+   "output": 49,
+   "reasoning": 0
+  }
+ ],
+ "peeked_outside": [],
+ "errors": [],
+ "final_text": "All 30 tests pass. Fixed three bugs: `release` returned early after one reservation, empty optional CSV weight fell back to \"\" instead of \"0\", and bulk discount used `>` instead of `>=` at ten units.",
+ "nan_drops": 0,
+ "thinking_per_request": [
+  108,
+  18,
+  0,
+  8,
+  195,
+  18,
+  0,
+  0
+ ],
+ "thinking_total": 347,
+ "thinking_max": 195,
+ "engine": {
+  "turns": 8,
+  "prompt_tokens": 84693,
+  "cached_tokens": 68114,
+  "fresh_tokens": 16579,
+  "first_turn": {
+   "prompt": 741,
+   "cached": 0,
+   "fresh": 741,
+   "prompt_ms": 50626,
+   "prompt_tok_s": 14.6,
+   "generated": 117,
+   "gen_ms": 32857,
+   "decode_tok_s": 3.56,
+   "drafts_kept": 56,
+   "drafts": 90
+  },
+  "ttft_first_s": 50.6,
+  "ttft_median_s": 54.1,
+  "ttft_total_s": 348.8,
+  "output_tokens": 1283,
+  "decode_tok_s": 4.62,
+  "drafts_kept": 946,
+  "drafts": 1088
+ },
+ "disk_E_read_GB": 661.2
+}

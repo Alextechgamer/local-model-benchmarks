@@ -1,0 +1,3 @@
+YOUR MODULE: ui. Write TWO files: ui.html (fragment) and ui.js (defines bindUI). See the contract for the exact ids. Make it look good: glass panel with
+backdrop-filter blur, rounded corners, readable on both bright and dark scenes, mobile-friendly font sizes. The loading overlay fades with a CSS transition when
+it gets class "hide" and then should not block clicks.

@@ -1,0 +1,39 @@
+{
+ "label": "pickle-r4",
+ "file_kb": 49.4,
+ "console_errors": [],
+ "console_warnings": [],
+ "exceptions": [],
+ "logs": [
+  "[Voxel Pagoda Garden] voxel count: 16264"
+ ],
+ "page": {
+  "title": "桜の庭 – Voxel Pagoda Garden",
+  "canvases": [
+   [
+    1600,
+    900
+   ]
+  ],
+  "sliders": 4,
+  "checkboxes": 6,
+  "buttons": [
+   "–",
+   "▶ Play cycle",
+   "Overview",
+   "Pagoda",
+   "Pond",
+   "Torii",
+   "Blossoms",
+   "Reset",
+   "↻ Regenerate seed",
+   "? Shortcuts"
+  ],
+  "voxelText": "Voxels\n16,264",
+  "fpsText": "FPS\n144",
+  "hasJapaneseTitle": true,
+  "loadingVisible": false,
+  "text": "桜の庭\nVOXEL PAGODA GARDEN\n庭園 Controls\n–\nTime of day\n08:00\n▶ Play cycle\n1×\nPetal density\n1200\nWind strength\n1.0\nAuto-rotate\nShadows\nFireflies\nWater anim\nWireframe\nMist\nOverview\nPagoda\nPond\nTorii\nBlossoms\nReset\n↻ Regenerate seed\n? Shortcuts\nVoxels\n16,264\nFPS\n144\nTime\n08:00"
+ },
+ "measured_fps_headless": 144
+}

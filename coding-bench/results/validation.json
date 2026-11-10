@@ -1,0 +1,102 @@
+{
+ "run": "20261020-010101",
+ "ok": true,
+ "rows": [
+  {
+   "task": "T1",
+   "kind": "start",
+   "ok": true,
+   "detail": "hidden 18/25 (task 0/7, keep 18/18); visible 27/30",
+   "problems": [],
+   "label": "validate-20261020-010101-T1-start"
+  },
+  {
+   "task": "T1",
+   "kind": "reference",
+   "ok": true,
+   "detail": "hidden 25/25 (task 7/7, keep 18/18); visible 30/30",
+   "problems": [],
+   "label": "validate-20261020-010101-T1-reference"
+  },
+  {
+   "task": "T2",
+   "kind": "start",
+   "ok": true,
+   "detail": "hidden 16/28 (task 0/12, keep 16/16); visible 30/32",
+   "problems": [],
+   "label": "validate-20261020-010101-T2-start"
+  },
+  {
+   "task": "T2",
+   "kind": "reference",
+   "ok": true,
+   "detail": "hidden 28/28 (task 12/12, keep 16/16); visible 34/34",
+   "problems": [],
+   "label": "validate-20261020-010101-T2-reference"
+  },
+  {
+   "task": "T3",
+   "kind": "start",
+   "ok": true,
+   "detail": "hidden 24/25 (task 0/1, keep 24/24); visible 30/31",
+   "problems": [],
+   "label": "validate-20261020-010101-T3-start"
+  },
+  {
+   "task": "T3",
+   "kind": "reference",
+   "ok": true,
+   "detail": "hidden 25/25 (task 1/1, keep 24/24); visible 31/31",
+   "problems": [],
+   "label": "validate-20261020-010101-T3-reference"
+  },
+  {
+   "task": "T4",
+   "kind": "start",
+   "ok": true,
+   "detail": "hidden 15/28 (task 0/13, keep 15/15); visible 30/32",
+   "problems": [],
+   "label": "validate-20261020-010101-T4-start"
+  },
+  {
+   "task": "T4",
+   "kind": "reference",
+   "ok": true,
+   "detail": "hidden 28/28 (task 13/13, keep 15/15); visible 32/32",
+   "problems": [],
+   "label": "validate-20261020-010101-T4-reference"
+  },
+  {
+   "task": "T5",
+   "kind": "start",
+   "ok": true,
+   "detail": "hidden 16/21 (task 0/5, keep 16/16); visible 30/30",
+   "problems": [],
+   "label": "validate-20261020-010101-T5-start"
+  },
+  {
+   "task": "T5",
+   "kind": "reference",
+   "ok": true,
+   "detail": "hidden 21/21 (task 5/5, keep 16/16); visible 30/30",
+   "problems": [],
+   "label": "validate-20261020-010101-T5-reference"
+  },
+  {
+   "task": "T6",
+   "kind": "start",
+   "ok": true,
+   "detail": "mutants killed 0/10 (no tests/test_reports.py); visible 30/30",
+   "problems": [],
+   "label": "validate-20261020-010101-T6-start"
+  },
+  {
+   "task": "T6",
+   "kind": "reference",
+   "ok": true,
+   "detail": "mutants killed 10/10; visible 37/37",
+   "problems": [],
+   "label": "validate-20261020-010101-T6-reference"
+  }
+ ]
+}

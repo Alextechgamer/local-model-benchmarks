@@ -1,0 +1,47 @@
+﻿power logging started: gpu pid 21728, cpu pid 40596, mem pid 24580
+{"event": "power_start", "session": "p3-A-20261020-010736", "model": "A", "t": 1792483656.3868651}
+power logging started: gpu pid 28608, cpu pid 33112, mem pid 40012
+{"event": "power_start", "session": "p3-A-20261020-011324", "model": "A", "t": 1792484005.1977024}
+{"event": "server_ready", "model": "A", "pid": 26516, "load_s": 21.6, "free_gb": 50.9, "t": 1792484027.4447925}
+{"event": "cache_check", "model": "A", "usage": {"prompt_tokens": 2750, "completion_tokens": 3, "total_tokens": 2753, "prompt_tokens_details": {"cached_tokens": 2723}}, "t": 1792484031.380666}
+{"event": "run_start", "model": "A", "task": "T1", "rep": 1, "power_session": "p3-A-20261020-011324", "t": 1792484031.7399912}
+{"run": "A-T1-r1", "wall_s": 50.0, "steps": 7, "killed": null, "ran_tests": true, "peeked": 0, "score": "{\"task\": \"T1\", \"label\": \"A-T1-r1\", \"score\": 1.0, \"package_changed\": true, \"tests_changed\": false, \"visible\": \"30/30\", \"hidden\": \"25/25 (task 7/7, keep 18/18)\"}"}
+{"event": "run_end", "model": "A", "task": "T1", "rep": 1, "t": 1792484083.695196}
+{"event": "run_start", "model": "A", "task": "T2", "rep": 1, "power_session": "p3-A-20261020-011324", "t": 1792484083.9911222}
+{"run": "A-T2-r1", "wall_s": 590.3, "steps": 70, "killed": null, "ran_tests": true, "peeked": 0, "score": "{\"task\": \"T2\", \"label\": \"A-T2-r1\", \"score\": 1.0, \"package_changed\": true, \"tests_changed\": true, \"visible\": \"47/47\", \"hidden\": \"28/28 (task 12/12, keep 16/16)\"}"}
+{"event": "run_end", "model": "A", "task": "T2", "rep": 1, "t": 1792484676.3140905}
+{"event": "run_start", "model": "A", "task": "T3", "rep": 1, "power_session": "p3-A-20261020-011324", "t": 1792484676.7456038}
+{"run": "A-T3-r1", "wall_s": 85.0, "steps": 12, "killed": null, "ran_tests": true, "peeked": 0, "score": "{\"task\": \"T3\", \"label\": \"A-T3-r1\", \"score\": 0.96, \"package_changed\": true, \"tests_changed\": false, \"visible\": \"31/31\", \"hidden\": \"24/25 (task 1/1, keep 23/24)\"}"}
+{"event": "run_end", "model": "A", "task": "T3", "rep": 1, "t": 1792484763.8766446}
+{"event": "run_start", "model": "A", "task": "T4", "rep": 1, "power_session": "p3-A-20261020-011324", "t": 1792484764.2006578}
+{"run": "A-T4-r1", "wall_s": 85.0, "steps": 9, "killed": null, "ran_tests": true, "peeked": 0, "score": "{\"task\": \"T4\", \"label\": \"A-T4-r1\", \"score\": 1.0, \"package_changed\": true, \"tests_changed\": true, \"visible\": \"42/42\", \"hidden\": \"28/28 (task 13/13, keep 15/15)\"}"}
+{"event": "run_end", "model": "A", "task": "T4", "rep": 1, "t": 1792484851.1379247}
+{"event": "run_start", "model": "A", "task": "T5", "rep": 1, "power_session": "p3-A-20261020-011324", "t": 1792484851.4138746}
+{"run": "A-T5-r1", "wall_s": 75.0, "steps": 15, "killed": null, "ran_tests": true, "peeked": 0, "score": "{\"task\": \"T5\", \"label\": \"A-T5-r1\", \"score\": 1.0, \"package_changed\": true, \"tests_changed\": false, \"visible\": \"30/30\", \"hidden\": \"21/21 (task 5/5, keep 16/16)\"}"}
+{"event": "run_end", "model": "A", "task": "T5", "rep": 1, "t": 1792484928.3407722}
+{"event": "run_start", "model": "A", "task": "T6", "rep": 1, "power_session": "p3-A-20261020-011324", "t": 1792484928.683894}
+{"run": "A-T6-r1", "wall_s": 460.1, "steps": 21, "killed": null, "ran_tests": true, "peeked": 0, "score": "{\"task\": \"T6\", \"label\": \"A-T6-r1\", \"score\": 1.0, \"package_changed\": false, \"tests_changed\": true, \"visible\": \"45/45\", \"mutation\": \"10/10 killed\"}"}
+{"event": "run_end", "model": "A", "task": "T6", "rep": 1, "t": 1792485398.245483}
+{"event": "run_start", "model": "A", "task": "T1", "rep": 2, "power_session": "p3-A-20261020-011324", "t": 1792485398.6632442}
+{"run": "A-T1-r2", "wall_s": 55.0, "steps": 13, "killed": null, "ran_tests": true, "peeked": 0, "score": "{\"task\": \"T1\", \"label\": \"A-T1-r2\", \"score\": 1.0, \"package_changed\": true, \"tests_changed\": false, \"visible\": \"30/30\", \"hidden\": \"25/25 (task 7/7, keep 18/18)\"}"}
+{"event": "run_end", "model": "A", "task": "T1", "rep": 2, "t": 1792485455.6277401}
+{"event": "run_start", "model": "A", "task": "T2", "rep": 2, "power_session": "p3-A-20261020-011324", "t": 1792485455.9374835}
+{"run": "A-T2-r2", "wall_s": 305.1, "steps": 50, "killed": null, "ran_tests": true, "peeked": 0, "score": "{\"task\": \"T2\", \"label\": \"A-T2-r2\", \"score\": 1.0, \"package_changed\": true, \"tests_changed\": true, \"visible\": \"51/51\", \"hidden\": \"28/28 (task 12/12, keep 16/16)\"}"}
+{"event": "run_end", "model": "A", "task": "T2", "rep": 2, "t": 1792485763.0526154}
+{"event": "run_start", "model": "A", "task": "T3", "rep": 2, "power_session": "p3-A-20261020-011324", "t": 1792485763.4573975}
+{"run": "A-T3-r2", "wall_s": 90.0, "steps": 9, "killed": null, "ran_tests": true, "peeked": 0, "score": "{\"task\": \"T3\", \"label\": \"A-T3-r2\", \"score\": 1.0, \"package_changed\": true, \"tests_changed\": false, \"visible\": \"31/31\", \"hidden\": \"25/25 (task 1/1, keep 24/24)\"}"}
+{"event": "run_end", "model": "A", "task": "T3", "rep": 2, "t": 1792485855.4615104}
+{"event": "run_start", "model": "A", "task": "T4", "rep": 2, "power_session": "p3-A-20261020-011324", "t": 1792485855.7644565}
+{"run": "A-T4-r2", "wall_s": 70.0, "steps": 7, "killed": null, "ran_tests": true, "peeked": 0, "score": "{\"task\": \"T4\", \"label\": \"A-T4-r2\", \"score\": 1.0, \"package_changed\": true, \"tests_changed\": true, \"visible\": \"39/39\", \"hidden\": \"28/28 (task 13/13, keep 15/15)\"}"}
+{"event": "run_end", "model": "A", "task": "T4", "rep": 2, "t": 1792485927.7073195}
+{"event": "run_start", "model": "A", "task": "T5", "rep": 2, "power_session": "p3-A-20261020-011324", "t": 1792485928.0297723}
+{"run": "A-T5-r2", "wall_s": 95.0, "steps": 16, "killed": null, "ran_tests": true, "peeked": 0, "score": "{\"task\": \"T5\", \"label\": \"A-T5-r2\", \"score\": 1.0, \"package_changed\": true, \"tests_changed\": false, \"visible\": \"30/30\", \"hidden\": \"21/21 (task 5/5, keep 16/16)\"}"}
+{"event": "run_end", "model": "A", "task": "T5", "rep": 2, "t": 1792486024.9802976}
+{"event": "run_start", "model": "A", "task": "T6", "rep": 2, "power_session": "p3-A-20261020-011324", "t": 1792486025.3220854}
+{"run": "A-T6-r2", "wall_s": 330.1, "steps": 19, "killed": null, "ran_tests": true, "peeked": 1, "score": "{\"task\": \"T6\", \"label\": \"A-T6-r2\", \"score\": 1.0, \"package_changed\": false, \"tests_changed\": true, \"visible\": \"42/42\", \"mutation\": \"10/10 killed\"}"}
+{"event": "run_end", "model": "A", "task": "T6", "rep": 2, "t": 1792486364.75895}
+{"event": "server_stopped", "pid": 26516, "t": 1792486364.8501942}
+stopped 28608 (python)
+stopped 33112 (typeperf)
+stopped 40012 (powershell)
+{"event": "power_stop", "session": "p3-A-20261020-011324", "model": "A", "t": 1792486365.130575}

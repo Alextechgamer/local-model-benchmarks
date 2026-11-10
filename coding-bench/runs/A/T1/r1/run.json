@@ -1,0 +1,35 @@
+{
+ "model": "A",
+ "task": "T1",
+ "rep": 1,
+ "t0": 1792484032.0576363,
+ "t1": 1792484082.0754642,
+ "wall_s": 50.0,
+ "exit_code": 0,
+ "killed": null,
+ "prompt_chars": 691,
+ "cmd": [
+  "C:\\Users\\user\\AppData\\Roaming\\npm\\node_modules\\opencode-ai\\bin\\opencode.exe",
+  "run",
+  "--pure",
+  "-m",
+  "strata/coder",
+  "--format",
+  "json",
+  "<README on stdin>"
+ ],
+ "steps": 7,
+ "tool_calls": 10,
+ "tokens": {
+  "input": 13593,
+  "output": 1758,
+  "reasoning": 0,
+  "cache_read": 64229,
+  "cache_write": 0
+ },
+ "ran_visible_tests": true,
+ "pytest_calls": 2,
+ "peeked_outside": [],
+ "errors": [],
+ "final_text": "All 30 tests pass. Fixed three bugs:\n\n1. `inventory.py:89` \u2014 `release()` returned inside the loop, freeing only the first reservation line\n2. `csv_io.py:59` \u2014 empty `weight_kg` cell wasn't getting its default (`\"0\"`)\n3. `pricing.py:90` \u2014 bulk discount used `>` instead of `>=`, so 10 units got no discount"
+}

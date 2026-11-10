@@ -1,0 +1,38 @@
+{
+ "label": "luna",
+ "file_kb": 41.8,
+ "console_errors": [],
+ "console_warnings": [],
+ "exceptions": [],
+ "logs": [
+  "Voxel Garden: 19,978 voxels (seed 721031)"
+ ],
+ "page": {
+  "title": "桜の庭 – Voxel Pagoda Garden",
+  "canvases": [
+   [
+    1600,
+    900
+   ]
+  ],
+  "sliders": 4,
+  "checkboxes": 5,
+  "buttons": [
+   "−",
+   "▶",
+   "Overview",
+   "Pagoda",
+   "Pond",
+   "Torii",
+   "Blossoms",
+   "↻ Regenerate seed",
+   "Reset view"
+  ],
+  "voxelText": "Voxel count\n19,978",
+  "fpsText": "135 fps",
+  "hasJapaneseTitle": true,
+  "loadingVisible": false,
+  "text": "庭園 · SEASONAL SANCTUARY\nGarden controls\n\nA quiet place beneath the blossoms\n\n−\nTIME OF DAY\n08:19\n▶\nCycle speed\n1×\nATMOSPHERE\nPetal density\n1,100\nWind strength\n0.7\nCAMERA\n?\nSPACE — AUTO-ROTATE\n1–5 — CAMERA PRESETS\nN — DAY / NIGHT\nDRAG — ORBIT · SCROLL — ZOOM\nOverview\nPagoda\nPond\nTorii\nBlossoms\nSCENE OPTIONS\nAuto-rotate\nShadows\nFireflies\nWater motion\nWireframe\n↻ Regenerate seed\nReset view\nVoxel count\n19,978\nFrame rate\n135 fps\nGarden time\n08:19\n桜の庭 – Voxel Pagoda Garden\nFIVE ROOFS · ONE FLEETING SPRING"
+ },
+ "measured_fps_headless": 135
+}

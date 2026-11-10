@@ -1,0 +1,4 @@
+YOUR MODULE: runtime. Write the file runtime.js (see the contract: setupRuntime and the api object). This is the largest module: be complete, no placeholders.
+Use THREE and OrbitControls (already imported by the lead). Do not allocate objects inside the animation loop. Keep time of day in a variable;
+when playing, advance it by speed * delta and wrap at 24. The camera presets are your choice of positions (all within the 80x80 garden, looking at
+the pagoda (14,~12,-14), pond (-14,2,10), torii (0,5,35), blossoms near the pond, overview from (60,45,60) looking at the centre).

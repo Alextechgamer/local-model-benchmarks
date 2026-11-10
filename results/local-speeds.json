@@ -1,0 +1,19 @@
+{
+  "_about": "Per-request speeds read from the local servers' own logs on the RX 7900 XT (20 GB) + Ryzen 9 5900X + 64 GB DDR4 PC. 'Prompt' is prompt processing (prefill), 'output' is generation (decode).",
+  "qwen3.8-27b_iq4xs_llamacpp": {
+    "source": "llama.cpp server log (llama-27b.log) from the opencode 27B run",
+    "requests": 39,
+    "prompt_tokens": 196605, "prompt_seconds": 651.4, "prompt_tok_s_overall": 301.8,
+    "prompt_tok_s_range_on_prompts_over_8k": [203, 498],
+    "output_tokens": 100752, "output_seconds": 3088.6, "output_tok_s_overall": 32.6,
+    "example": "a 91,530-token prompt took 308 s before the first output token"
+  },
+  "qwen3.8-flash-next-coder_iq1m_strata": {
+    "source": "Strata server log (strata-server.out) from a later session on the same PC, not the pagoda runs themselves",
+    "requests": 19,
+    "output_tok_s_median": 86.0, "output_tok_s_range": [48.3, 94.4], "output_requests_counted": 13, "output_counted_if_at_least_tokens": 100,
+    "prompt_tok_s_on_prompts_over_8k": {"n": 4, "min": 658, "median": 696, "max": 727},
+    "largest_prompt": {"tokens": 244210, "seconds": 351},
+    "expert_cache_hit_median_pct": 92.7
+  }
+}

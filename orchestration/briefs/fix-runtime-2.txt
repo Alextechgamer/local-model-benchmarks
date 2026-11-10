@@ -1,0 +1,10 @@
+
+FIX ROUND. runtime.js already exists in your working directory (your earlier version). EDIT IT IN PLACE (small edits only, do not rewrite the file), then run node --check.
+Review feedback from the lead, after assembling and screenshotting the whole garden in a browser:
+1. The 'Pond' and 'Blossoms' camera presets put the camera INSIDE the bamboo grove (bamboo stands at about x -36..-24, z 14..26, stalks up to 12 tall), so the
+   screen is a wall of green. Move both cameras out of that zone. Use: Pond: pos (-2, 15, 27), target (-14, 2, 10). Blossoms: pos (-3, 11, 18), target (-17, 6, 8).
+   Check the other presets too: no camera position may lie inside the footprint x -40..-22 / z 12..28 (bamboo), x 8..20 / z -20..-8 (pagoda, up to y 35), or near hedges on the borders.
+2. Night: the whole scene was almost black at 23:00 (ground, pond and trees invisible, only a few specks). Make night readable: deep blue, not black. Raise the night
+   hemisphere/ambient light so the ground and canopy keep a dim blue tone, add a faint moonlight (a cool, weak directional light from above), keep the stars visible
+   and the lanterns and pagoda windows clearly glowing. Daytime must stay as it is.
+3. Keep every api method and the console.log('Voxel count:', n) line unchanged.

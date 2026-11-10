@@ -1,0 +1,29 @@
+{
+ "model_dir": "E:\\strata-dsv41\\models\\stock-iq1_m",
+ "files": {
+  "DeepSeek-V4.1-Flash-1017-GSQ-RCO-IQ1_M-00001-of-00004.gguf": [
+   39358830464,
+   1794200868218029900
+  ],
+  "DeepSeek-V4.1-Flash-1017-GSQ-RCO-IQ1_M-00002-of-00004.gguf": [
+   39176113248,
+   1794201299378719200
+  ],
+  "DeepSeek-V4.1-Flash-1017-GSQ-RCO-IQ1_M-00003-of-00004.gguf": [
+   39997334720,
+   1794253595506114300
+  ],
+  "DeepSeek-V4.1-Flash-1017-GSQ-RCO-IQ1_M-00004-of-00004.gguf": [
+   2188841824,
+   1794249657465925400
+  ],
+  "DeepSeek-V4.1-Flash-Engram-IQ4_NL.gguf": [
+   110595290816,
+   1794203120582960500
+  ],
+  "dspark-DeepSeek-V4.1-Flash-1017-Q8_0.gguf": [
+   7976914240,
+   1794203351721124100
+  ]
+ }
+}

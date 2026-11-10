@@ -1,0 +1,7 @@
+13:05:36 START C default low T2
+13:51:14 END T2 rc 0 {"run": "C-low-T2-r1", "wall_s": 2701.1, "steps": 21, "killed": "time limit", "ran_tests": false, "peeked": 0, "score": "{\"task\": \"T2\", \"label\": \"C-low-T2-r1\", \"score\": 0.8214285714285714, \"package_changed\": true, \"tests_changed\": false, \"visible\": \"30/32\", \"hidden\": \"23/28 (task 9/12, keep 14/16)\"}"} 
+13:51:14 START C default low T6
+14:36:51 END T6 rc 0 {"run": "C-low-T6-r1", "wall_s": 2700.7, "steps": 5, "killed": "time limit", "ran_tests": false, "peeked": 0, "score": "{\"task\": \"T6\", \"label\": \"C-low-T6-r1\", \"score\": 0.0, \"package_changed\": false, \"tests_changed\": false, \"visible\": \"30/30\", \"mutation\": \"0/10 killed (no tests/test_reports.py)\"}"} 
+14:36:51 START C default low T1
+14:38:59 END T1 rc 0 {"run": "C-low-T1-r1", "wall_s": 125.0, "steps": 1, "killed": null, "ran_tests": false, "peeked": 0, "score": "{\"task\": \"T1\", \"label\": \"C-low-T1-r1\", \"score\": 0.72, \"package_changed\": false, \"tests_changed\": false, \"visible\": \"27/30\", \"hidden\": \"18/25 (task 0/7, keep 18/18)\"}"} 
+14:38:59 ALL-DONE

@@ -1,0 +1,7 @@
+07:06:20 START C5 default T1
+07:15:12 END T1 rc 0 {"run": "C5-T1-r1", "wall_s": 530.1, "steps": 7, "killed": null, "ran_tests": true, "peeked": 0, "score": "{\"task\": \"T1\", \"label\": \"C5-T1-r1\", \"score\": 1.0, \"package_changed\": true, \"tests_changed\": false, \"visible\": \"30/30\", \"hidden\": \"25/25 (task 7/7, keep 18/18)\"}"} 
+07:15:12 START C5 default T4
+07:30:49 END T4 rc 0 {"run": "C5-T4-r1", "wall_s": 935.1, "steps": 8, "killed": null, "ran_tests": true, "peeked": 0, "score": "{\"task\": \"T4\", \"label\": \"C5-T4-r1\", \"score\": 1.0, \"package_changed\": true, \"tests_changed\": true, \"visible\": \"39/39\", \"hidden\": \"28/28 (task 13/13, keep 15/15)\"}"} 
+07:30:49 START C5 default T5
+07:49:01 END T5 rc 0 {"run": "C5-T5-r1", "wall_s": 1090.2, "steps": 11, "killed": null, "ran_tests": true, "peeked": 0, "score": "{\"task\": \"T5\", \"label\": \"C5-T5-r1\", \"score\": 1.0, \"package_changed\": true, \"tests_changed\": true, \"visible\": \"31/31\", \"hidden\": \"21/21 (task 5/5, keep 16/16)\"}"} 
+07:49:01 ALL-DONE

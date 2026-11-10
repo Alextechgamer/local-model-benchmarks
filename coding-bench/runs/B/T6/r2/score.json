@@ -1,0 +1,85 @@
+{
+ "task": "T6",
+ "source_dir": "E:\\strata-tests\\coding-bench\\runs\\B\\T6\\r2\\work",
+ "label": "B-T6-r2",
+ "scored_at": "2026-10-20T02:38:35.098052",
+ "package_changed": true,
+ "tests_changed": true,
+ "visible": {
+  "total": 54,
+  "passed": 54,
+  "failed": 0,
+  "returncode": 0,
+  "timed_out": false,
+  "seconds": 0.8
+ },
+ "mutation": {
+  "has_tests": true,
+  "mutants": {
+   "m01_counts_reserved": {
+    "killed": true,
+    "failed_tests": 3,
+    "timed_out": false
+   },
+   "m02_sales_ignores_refunds": {
+    "killed": true,
+    "failed_tests": 2,
+    "timed_out": false
+   },
+   "m03_sales_keeps_zero_categories": {
+    "killed": true,
+    "failed_tests": 2,
+    "timed_out": false
+   },
+   "m04_top_tie_order_reversed": {
+    "killed": true,
+    "failed_tests": 1,
+    "timed_out": false
+   },
+   "m05_top_off_by_one": {
+    "killed": true,
+    "failed_tests": 2,
+    "timed_out": false
+   },
+   "m06_top_keeps_zero_units": {
+    "killed": true,
+    "failed_tests": 1,
+    "timed_out": false
+   },
+   "m07_valuation_ignores_inactive_flag": {
+    "killed": true,
+    "failed_tests": 1,
+    "timed_out": false
+   },
+   "m08_low_stock_strict": {
+    "killed": true,
+    "failed_tests": 2,
+    "timed_out": false
+   },
+   "m09_low_stock_uses_on_hand": {
+    "killed": true,
+    "failed_tests": 1,
+    "timed_out": false
+   },
+   "m10_aov_ignores_refunds": {
+    "killed": true,
+    "failed_tests": 1,
+    "timed_out": false
+   }
+  },
+  "killed": 10,
+  "mutant_total": 10,
+  "original": {
+   "total": 24,
+   "passed": 24,
+   "failed": 0,
+   "returncode": 0,
+   "timed_out": false,
+   "seconds": 0.7,
+   "failures": []
+  },
+  "score": 1.0
+ },
+ "score": 1.0,
+ "hidden": null
+}

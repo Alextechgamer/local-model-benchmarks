@@ -1,0 +1,35 @@
+{
+ "model": "A",
+ "task": "T2",
+ "rep": 1,
+ "t0": 1792484084.2654057,
+ "t1": 1792484674.546231,
+ "wall_s": 590.3,
+ "exit_code": 0,
+ "killed": null,
+ "prompt_chars": 3507,
+ "cmd": [
+  "C:\\Users\\user\\AppData\\Roaming\\npm\\node_modules\\opencode-ai\\bin\\opencode.exe",
+  "run",
+  "--pure",
+  "-m",
+  "strata/coder",
+  "--format",
+  "json",
+  "<README on stdin>"
+ ],
+ "steps": 70,
+ "tool_calls": 69,
+ "tokens": {
+  "input": 46719,
+  "output": 34719,
+  "reasoning": 0,
+  "cache_read": 2926663,
+  "cache_write": 0
+ },
+ "ran_visible_tests": true,
+ "pytest_calls": 3,
+ "peeked_outside": [],
+ "errors": [],
+ "final_text": "Done \u2014 47 tests pass (15 new).\n\n- `inventory_service/currency.py:1` \u2014 `RATES`, `DECIMALS`, `UnsupportedCurrency`, `currency_code`, `convert` (half-up to the currency's decimals, `\" eur \"` accepted), `format_amount`.\n- `inventory_service/pricing.py:74` \u2014 `currency=\"USD\"` kw on `compute_order_total`/`quote`; all rules stay USD (coupon minimums, FLAT5, BIG25 cap, shipping fees, free-shipping threshold); the six components are `convert()`ed, then `taxable`/`total` are rebuilt from them, and each breakdown line's `gross`/`discount`/`net` too; `PriceBreakdown.currency` is a new last field, `to_dict()` keys unchanged.\n- `inventory_service/models.py:88` \u2014 `Order.currency` (default `\"USD\"`, saved/loaded, missing \u2192 `\"USD\"`).\n- `inventory_service/orders.py:42` \u2014 `create_order(..., currency=\"USD\")`; `orders.py:116` \u2014 refunding a non-USD order raises `ValidationError`.\n- `inventory_service/cli.py:47` \u2014 `--currency CODE` on `quote`/`order`; amounts print e.g. `total: 96.21 EUR` / `order O1001 reserved, total 96.21 EUR`; unknown code exits 2; USD output byte-identical.\n- `inventory_service/csv_io.py:18` \u2014 `currency` as the last export column; amount columns use the order's decimals (`0` for JPY)."
+}

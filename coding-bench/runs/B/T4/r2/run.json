@@ -1,0 +1,35 @@
+{
+ "model": "B",
+ "task": "T4",
+ "rep": 2,
+ "t0": 1792488533.82348,
+ "t1": 1792488628.8455634,
+ "wall_s": 95.0,
+ "exit_code": 0,
+ "killed": null,
+ "prompt_chars": 808,
+ "cmd": [
+  "C:\\Users\\user\\AppData\\Roaming\\npm\\node_modules\\opencode-ai\\bin\\opencode.exe",
+  "run",
+  "--pure",
+  "-m",
+  "llamacpp/qwen38-27b",
+  "--format",
+  "json",
+  "<README on stdin>"
+ ],
+ "steps": 14,
+ "tool_calls": 15,
+ "tokens": {
+  "input": 4720,
+  "output": 5279,
+  "reasoning": 0,
+  "cache_read": 149446,
+  "cache_write": 0
+ },
+ "ran_visible_tests": true,
+ "pytest_calls": 3,
+ "peeked_outside": [],
+ "errors": [],
+ "final_text": "Done. `plan_shipments` is implemented in `inventory_service/fulfillment.py:36-62`:\n\n- Copies stock into a working `remaining` map (rule 6)\n- Validates each line in order: negative \u2192 `ValueError`, zero \u2192 skip (rule 5)\n- Raises `InsufficientStock(sku, wanted, available)` when priority warehouses can't cover a line (rule 4)\n- Ships the whole line from the first warehouse that can (rule 2), otherwise splits across warehouses in priority order (rule 3), consuming units so later lines see the remainder (rule 1)\n\nAll 43 tests pass (13 in `test_fulfillment.py`, including 11 new ones covering splitting across lines, priority exclusion, missing SKUs, exact-fit, error cases, and immutability), plus the doctests."
+}

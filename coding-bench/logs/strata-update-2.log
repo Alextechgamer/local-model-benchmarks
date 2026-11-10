@@ -1,0 +1,29 @@
+﻿ Getting the newest Strata (git pull) ...
+Already up to date.
+Strata - Qwen3.8-Flash-Next on a normal PC (a GPU + system RAM + CPU)
+  [ok] numpy, jinja2, regex, pyyaml, tqdm, requests, pillow, psutil already installed
+  Updating the ready-made AMD engine (0.1.39 -> 0.1.45 or newer) ...
+  Downloading the ready-made Strata engine for AMD GPUs (with the ROCm libraries it uses) ...
+
+  Strata AMD engine:   0.08 / 0.64 GB (12%)   
+  Strata AMD engine:   0.15 / 0.64 GB (23%)   
+  Strata AMD engine:   0.22 / 0.64 GB (34%)   
+  Strata AMD engine:   0.29 / 0.64 GB (46%)   
+  Strata AMD engine:   0.37 / 0.64 GB (57%)   
+  Strata AMD engine:   0.44 / 0.64 GB (69%)   
+  Strata AMD engine:   0.48 / 0.64 GB (75%)   
+  Strata AMD engine:   0.51 / 0.64 GB (80%)   
+  Strata AMD engine:   0.55 / 0.64 GB (86%)   
+  Strata AMD engine:   0.58 / 0.64 GB (90%)   
+  Strata AMD engine:   0.60 / 0.64 GB (93%)   
+  Strata AMD engine:   0.61 / 0.64 GB (95%)   
+  Strata AMD engine:   0.64 / 0.64 GB (100%)   
+  Strata AMD engine:   0.64 / 0.64 GB (100%)   
+  [ok] Strata AMD engine downloaded
+  [ok] strata-windows-x64-hip.zip: SHA-256 checksum verified against GitHub's (75a2ff9c71a4...)
+  [ok] the engine it replaced (0.1.39) is kept in C:\Users\user\Strata\engine\.previous; setup.py --rollback-engine puts it back
+  [ok] ready-made AMD engine 0.1.45 for gfx1100, gfx1101, gfx1102, gfx1200, gfx1201, gfx1030, gfx1151 (ROCm 10.2.0a20260930)
+  [ok] qwen3.8-flash-next-coder-iq1_m: up to date
+
+  [ok] Strata is updated (engine 0.1.45). Start the model with START-HERE.bat when you want it.
+Press any key to continue . . . 

@@ -1,0 +1,63 @@
+{
+ "model": "C",
+ "prompt_variant": "default",
+ "task": "T4",
+ "rep": 1,
+ "t0": 1794227827.7412472,
+ "t1": 1794229062.9422343,
+ "wall_s": 1235.2,
+ "exit_code": 0,
+ "killed": null,
+ "prompt_chars": 808,
+ "cmd": [
+  "C:\\Users\\user\\AppData\\Roaming\\npm\\node_modules\\opencode-ai\\bin\\opencode.exe",
+  "run",
+  "--pure",
+  "-m",
+  "strata/deepseek",
+  "--format",
+  "json",
+  "<README on stdin>"
+ ],
+ "steps": 11,
+ "tool_calls": 14,
+ "tokens": {
+  "input": 7688,
+  "output": 3495,
+  "reasoning": 0,
+  "cache_read": 140549,
+  "cache_write": 0
+ },
+ "ran_visible_tests": true,
+ "pytest_calls": 4,
+ "peeked_outside": [],
+ "errors": [],
+ "final_text": "Implemented `plan_shipments` in `inventory_service/fulfillment.py` per the docstring, and added extra tests for repeated SKUs, zero/negative quantities, insufficient stock, and stock immutability. `python -m pytest` passes all 37 tests.",
+ "nan_drops": 0,
+ "engine": {
+  "turns": 12,
+  "prompt_tokens": 149013,
+  "cached_tokens": 141087,
+  "fresh_tokens": 7926,
+  "first_turn": {
+   "prompt": 776,
+   "cached": 538,
+   "fresh": 238,
+   "prompt_ms": 31686,
+   "prompt_tok_s": 7.5,
+   "generated": 113,
+   "gen_ms": 35398,
+   "decode_tok_s": 3.19,
+   "drafts_kept": 53,
+   "drafts": 85
+  },
+  "ttft_first_s": 31.7,
+  "ttft_median_s": 28.8,
+  "ttft_total_s": 277.0,
+  "output_tokens": 3608,
+  "decode_tok_s": 3.81,
+  "drafts_kept": 2480,
+  "drafts": 3069
+ },
+ "disk_E_read_GB": 1202.4
+}

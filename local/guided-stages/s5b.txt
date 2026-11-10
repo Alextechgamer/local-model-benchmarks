@@ -1,0 +1,8 @@
+STAGE 5 of 5 - interface. Read pagoda.html first, then add, in plain HTML/CSS (no libraries):
+- A semi-transparent glass-style panel, top-left, collapsible, containing: a time-of-day slider (0-24) with a play toggle that animates the cycle and a speed slider; a petal density slider (0-1500) and a wind strength slider; checkbox toggles for auto-rotate, shadows, fireflies, water animation and wireframe mode; camera preset buttons Overview, Pagoda, Pond, Torii, Blossoms, each smoothly tweening camera position and target with a small lerp-based tween (no tween library); a "Regenerate seed" button that picks a new seed and rebuilds trees, rocks and petals while pagoda, pond and torii stay in place (dispose old geometry and instances); a "Reset view" button; live readouts for voxel count, FPS and current time of day; and a help tooltip listing the keyboard shortcuts.
+- Keyboard: Space toggles auto-rotate, 1-5 jump to the five presets, N toggles day/night (noon <-> 22:00).
+- A title in the top-right: 桜の庭 – Voxel Pagoda Garden.
+- A brief loading overlay that fades out once the scene is built.
+- Remove the temporary stage-1 readout if it duplicates the new one.
+Then re-read the whole file once and fix anything that would throw at load or when a control is used.
+Also fix one defect I saw in the browser after stage 4: from the default overview the pond, its water surface and the bridge cannot be seen at all, because cherry tree canopies cover them. Move the trees so none stands within 6 units of the pond edge on the camera side, and make the Pond camera preset look at the water and the bridge from a low angle.

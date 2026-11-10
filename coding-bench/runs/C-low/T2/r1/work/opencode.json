@@ -1,0 +1,52 @@
+{
+ "$schema": "https://opencode.ai/config.json",
+ "provider": {
+  "strata": {
+   "npm": "@ai-sdk/openai-compatible",
+   "name": "DeepSeek-V4.1-Flash uncensored 1.75bpw (Strata)",
+   "options": {
+    "baseURL": "http://127.0.0.1:8091/v1",
+    "apiKey": "none",
+    "timeout": false
+   },
+   "models": {
+    "deepseek": {
+     "name": "DeepSeek-V4.1-Flash uncensored 1.75bpw (Strata)",
+     "limit": {
+      "context": 65532,
+      "output": 16384
+     },
+     "options": {
+      "reasoningEffort": "low"
+     }
+    }
+   }
+  }
+ },
+ "mcp": {
+  "unityMCP": {
+   "enabled": false
+  },
+  "ghidra": {
+   "enabled": false
+  },
+  "rea": {
+   "enabled": false
+  }
+ },
+ "agent": {
+  "build": {
+   "steps": 150
+  }
+ },
+ "permission": {
+  "edit": "allow",
+  "bash": "allow",
+  "webfetch": "deny",
+  "websearch": "deny",
+  "task": "deny",
+  "skill": {
+   "*": "deny"
+  }
+ }
+}

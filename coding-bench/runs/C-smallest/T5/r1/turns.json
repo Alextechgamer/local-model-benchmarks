@@ -1,0 +1,122 @@
+[
+ {
+  "prompt": 860,
+  "cached": 859,
+  "fresh": 1,
+  "prompt_ms": 503,
+  "prompt_tok_s": 2.0,
+  "generated": 124,
+  "gen_ms": 37173,
+  "decode_tok_s": 3.34,
+  "drafts_kept": 58,
+  "drafts": 90
+ },
+ {
+  "prompt": 6236,
+  "cached": 5921,
+  "fresh": 315,
+  "prompt_ms": 38186,
+  "prompt_tok_s": 8.2,
+  "generated": 62,
+  "gen_ms": 19559,
+  "decode_tok_s": 3.17,
+  "drafts_kept": 51,
+  "drafts": 54
+ },
+ {
+  "prompt": 6658,
+  "cached": 6298,
+  "fresh": 360,
+  "prompt_ms": 24821,
+  "prompt_tok_s": 14.5,
+  "generated": 215,
+  "gen_ms": 38299,
+  "decode_tok_s": 5.61,
+  "drafts_kept": 172,
+  "drafts": 211
+ },
+ {
+  "prompt": 13244,
+  "cached": 6873,
+  "fresh": 6371,
+  "prompt_ms": 59029,
+  "prompt_tok_s": 107.9,
+  "generated": 163,
+  "gen_ms": 49315,
+  "decode_tok_s": 3.31,
+  "drafts_kept": 115,
+  "drafts": 153
+ },
+ {
+  "prompt": 15738,
+  "cached": 13407,
+  "fresh": 2331,
+  "prompt_ms": 53117,
+  "prompt_tok_s": 43.9,
+  "generated": 120,
+  "gen_ms": 23932,
+  "decode_tok_s": 5.01,
+  "drafts_kept": 97,
+  "drafts": 105
+ },
+ {
+  "prompt": 17539,
+  "cached": 15857,
+  "fresh": 1682,
+  "prompt_ms": 51127,
+  "prompt_tok_s": 32.9,
+  "generated": 758,
+  "gen_ms": 166366,
+  "decode_tok_s": 4.56,
+  "drafts_kept": 480,
+  "drafts": 625
+ },
+ {
+  "prompt": 18326,
+  "cached": 18297,
+  "fresh": 29,
+  "prompt_ms": 7363,
+  "prompt_tok_s": 3.9,
+  "generated": 144,
+  "gen_ms": 43340,
+  "decode_tok_s": 3.32,
+  "drafts_kept": 111,
+  "drafts": 131
+ },
+ {
+  "prompt": 18484,
+  "cached": 18470,
+  "fresh": 14,
+  "prompt_ms": 2820,
+  "prompt_tok_s": 5.0,
+  "generated": 435,
+  "gen_ms": 97620,
+  "decode_tok_s": 4.46,
+  "drafts_kept": 336,
+  "drafts": 374
+ },
+ {
+  "prompt": 19036,
+  "cached": 18919,
+  "fresh": 117,
+  "prompt_ms": 14749,
+  "prompt_tok_s": 7.9,
+  "generated": 80,
+  "gen_ms": 19320,
+  "decode_tok_s": 4.14,
+  "drafts_kept": 63,
+  "drafts": 80
+ },
+ {
+  "prompt": 19145,
+  "cached": 19116,
+  "fresh": 29,
+  "prompt_ms": 5433,
+  "prompt_tok_s": 5.3,
+  "generated": 287,
+  "gen_ms": 92106,
+  "decode_tok_s": 3.12,
+  "drafts_kept": 127,
+  "drafts": 206
+ }
+]

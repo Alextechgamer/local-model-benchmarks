@@ -1,0 +1,39 @@
+{
+ "label": "local2p",
+ "file_kb": 52.3,
+ "console_errors": [],
+ "console_warnings": [],
+ "exceptions": [],
+ "logs": [
+  "[Voxel Pagoda Garden] voxel count = 16521 | opaque = 16072 | emissive = 84 | water = 365",
+  "[桜の庭] voxels built: 16500 (seed 20261005) target 16500"
+ ],
+ "page": {
+  "title": "桜の庭 – Voxel Pagoda Garden",
+  "canvases": [
+   [
+    1600,
+    900
+   ]
+  ],
+  "sliders": 4,
+  "checkboxes": 6,
+  "buttons": [
+   "▾",
+   "?",
+   "Overview",
+   "Pagoda",
+   "Pond",
+   "Torii",
+   "Blossoms",
+   "Regenerate seed",
+   "Reset view"
+  ],
+  "voxelText": "voxels 16500",
+  "fpsText": "fps 134",
+  "hasJapaneseTitle": true,
+  "loadingVisible": false,
+  "text": "桜の庭\n– Voxel Pagoda Garden –\n桜の庭 · controls\n▾\nTIME OF DAY\nhour\ncycle speed\nplay\nATMOSPHERE\npetal density\nwind strength\nTOGGLES\nauto-rotate\nshadows\nfireflies\nwater ripple\nwireframe\nhelp\n?\nCAMERAS\nOverview\nPagoda\nPond\nTorii\nBlossoms\nGARDEN\nRegenerate seed\nReset view\nvoxels 16500 · fps 134 · time 16:12"
+ },
+ "measured_fps_headless": 135
+}

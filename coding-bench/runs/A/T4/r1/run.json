@@ -1,0 +1,35 @@
+{
+ "model": "A",
+ "task": "T4",
+ "rep": 1,
+ "t0": 1792484764.470511,
+ "t1": 1792484849.495276,
+ "wall_s": 85.0,
+ "exit_code": 0,
+ "killed": null,
+ "prompt_chars": 808,
+ "cmd": [
+  "C:\\Users\\user\\AppData\\Roaming\\npm\\node_modules\\opencode-ai\\bin\\opencode.exe",
+  "run",
+  "--pure",
+  "-m",
+  "strata/coder",
+  "--format",
+  "json",
+  "<README on stdin>"
+ ],
+ "steps": 9,
+ "tool_calls": 10,
+ "tokens": {
+  "input": 8783,
+  "output": 4625,
+  "reasoning": 0,
+  "cache_read": 83710,
+  "cache_write": 0
+ },
+ "ran_visible_tests": true,
+ "pytest_calls": 1,
+ "peeked_outside": [],
+ "errors": [],
+ "final_text": "Done \u2014 `plan_shipments` implemented in inventory_service/fulfillment.py:25 and 10 new tests added to tests/test_fulfillment.py. All 42 tests pass."
+}

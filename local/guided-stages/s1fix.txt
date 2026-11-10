@@ -1,0 +1,7 @@
+FIX for stage 1. I loaded pagoda.html in a browser. The page shows only the sky-blue background, no terrain, and the console has this exception:
+
+TypeError: Cannot set properties of null (setting 'textContent')
+    at buildGarden (pagoda.html:254:23)
+    at pagoda.html:271:1
+
+So buildGarden() looks up the voxel-count readout element and gets null (the element does not exist yet when the script runs, or its id does not match), and the throw stops everything after it. Read pagoda.html, fix the cause (make sure the readout element exists in the HTML before the module script, with the same id the code uses), and check that nothing else in the load path can throw. Also confirm that the instanced meshes are added to the scene, that the camera looks at the garden centre from a distance that shows the whole 80x80 terrain, and that the voxel count is printed with console.log. Do not call any tool named advisor; it does not exist here.

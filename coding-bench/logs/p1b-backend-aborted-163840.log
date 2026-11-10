@@ -1,0 +1,12 @@
+﻿>>> backend-vk10752
+{"event": "start", "pid": 10400, "free_gb": 46.4, "cmd": ["C:\\Users\\user\\AppData\\Local\\Microsoft\\WinGet\\Packages\\ggml.llamacpp_Microsoft.Winget.Source_8wekyb3d8bbwe\\llama-server.exe", "-m", "C:\\models\\qwen38\\Qwen\\Qwen3.8-27B\\Qwen3.8-27B-IQ4_XS.gguf", "-ngl", "99", "-c", "163840", "-np", "1", "-fa", "on", "-ctk", "q4_0", "-ctv", "q4_0", "-b", "2048", "-ub", "512", "-fit", "off", "--host", "127.0.0.1", "--port", "8090", "--spec-type", "draft-mtp", "--spec-draft-n-max", "3", "--temp", "1.0", "--top-k", "20", "--top-p", "0.95", "--min-p", "0", "--presence-penalty", "0", "--repeat-penalty", "1.0", "--reasoning-format", "deepseek", "--reasoning-budget", "8192", "--reasoning-effort", "medium"], "env": [], "tag": "B-backend-vk10752", "t": 1792475081.5039485}
+{"event": "loaded", "load_s": 10.1, "tag": "B-backend-vk10752", "t": 1792475091.6132946}
+python : E:\strata-tests\coding-bench\tools\tune_run.py:3: SyntaxWarning: "\<" is an invalid escape sequence. Such 
+sequences will not work in the future. Did you mean "\\<"? A raw string is also an option.
+At line:1 char:302
++ ... tch {} } }; python E:\strata-tests\coding-bench\tools\p1b.py backend  ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (E:\strata-tests...also an option.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  usage: python tune_run.py --url URL --tag NAME --mem-csv power\<session>-mem.csv [--runs 3] [--extra JSON]

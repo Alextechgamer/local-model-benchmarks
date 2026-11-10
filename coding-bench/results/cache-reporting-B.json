@@ -1,0 +1,32 @@
+{
+ "model": "B",
+ "first_usage": {
+  "completion_tokens": 4,
+  "prompt_tokens": 2715,
+  "total_tokens": 2719,
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  }
+ },
+ "second_usage": {
+  "completion_tokens": 3,
+  "prompt_tokens": 2735,
+  "total_tokens": 2738,
+  "prompt_tokens_details": {
+   "cached_tokens": 2711
+  }
+ },
+ "second_timings": {
+  "cache_n": 2711,
+  "prompt_n": 24,
+  "prompt_ms": 403.395,
+  "prompt_per_token_ms": 16.808125,
+  "prompt_per_second": 59.49503588294352,
+  "predicted_n": 3,
+  "predicted_ms": 43.063,
+  "predicted_per_token_ms": 21.5315,
+  "predicted_per_second": 46.44358265796623,
+  "draft_n": 2,
+  "draft_n_accepted": 2
+ }
+}

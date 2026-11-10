@@ -1,0 +1,42 @@
+{
+ "label": "local1",
+ "file_kb": 53.1,
+ "console_errors": [],
+ "console_warnings": [],
+ "exceptions": [],
+ "logs": [
+  "[桜の庭] voxel count = 16500 (opaque 15909 / water 522 / emissive 69)"
+ ],
+ "page": {
+  "title": "桜の庭 – Voxel Pagoda Garden",
+  "canvases": [
+   [
+    1600,
+    900
+   ]
+  ],
+  "sliders": 4,
+  "checkboxes": 0,
+  "buttons": [
+   "▶ play cycle",
+   "auto-rotate",
+   "shadows",
+   "fireflies",
+   "water ripple",
+   "wireframe",
+   "Overview",
+   "Pagoda",
+   "Pond",
+   "Torii",
+   "Blossoms",
+   "Reset view",
+   "Regenerate seed"
+  ],
+  "voxelText": "voxels 16,500",
+  "fpsText": "fps 125",
+  "hasJapaneseTitle": true,
+  "loadingVisible": false,
+  "text": "庭は正在生成…\n桜の庭 – Voxel Pagoda Garden\nThree.js · instanced voxels\n桜の庭 — controls\n▾\nTIME OF DAY\nhour\nspeed\n▶ play cycle\nGARDEN\npetals\nwind\nauto-rotate\nshadows\nfireflies\nwater ripple\nwireframe\nCAMERA\nOverview\nPagoda\nPond\nTorii\nBlossoms\nReset view\nRegenerate seed\nREADOUTS\nvoxels 16,500\nfps 125\ntime 10:00\nkeys: space rotate · 1-5 presets · N day/night · hover for help\nspace = auto-rotate · 1 Overview · 2 Pagoda · 3 Pond · 4 Torii · 5 Blossoms · N = day/night · R = reseed"
+ },
+ "measured_fps_headless": 133
+}

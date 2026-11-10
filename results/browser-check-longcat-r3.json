@@ -1,0 +1,39 @@
+{
+ "label": "longcat-r3",
+ "file_kb": 37.7,
+ "console_errors": [],
+ "console_warnings": [],
+ "exceptions": [],
+ "logs": [
+  "Voxel count: 15395"
+ ],
+ "page": {
+  "title": "桜の庭 – Voxel Pagoda Garden",
+  "canvases": [
+   [
+    1600,
+    900
+   ]
+  ],
+  "sliders": 4,
+  "checkboxes": 5,
+  "buttons": [
+   "–",
+   "▶ Play",
+   "Overview",
+   "Pagoda",
+   "Pond",
+   "Torii",
+   "Blossoms",
+   "Reset view",
+   "Regenerate seed",
+   "?"
+  ],
+  "voxelText": "Voxels: 15395",
+  "fpsText": "FPS: 131",
+  "hasJapaneseTitle": true,
+  "loadingVisible": false,
+  "text": "桜の庭 — Controls\n–\nTime\n10:00\n▶ Play\nSpeed\nPetals\nWind\nAuto-rotate\nShadows\nFireflies\nWater\nWireframe\nOverview\nPagoda\nPond\nTorii\nBlossoms\nReset view\nRegenerate seed\n?\nVoxels: 15395\nFPS: 131\n桜の庭\nVOXEL PAGODA GARDEN\nBuilding the garden…"
+ },
+ "measured_fps_headless": 132
+}

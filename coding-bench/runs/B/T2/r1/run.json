@@ -1,0 +1,35 @@
+{
+ "model": "B",
+ "task": "T2",
+ "rep": 1,
+ "t0": 1792486622.3212793,
+ "t1": 1792487482.6254091,
+ "wall_s": 860.3,
+ "exit_code": 0,
+ "killed": null,
+ "prompt_chars": 3507,
+ "cmd": [
+  "C:\\Users\\user\\AppData\\Roaming\\npm\\node_modules\\opencode-ai\\bin\\opencode.exe",
+  "run",
+  "--pure",
+  "-m",
+  "llamacpp/qwen38-27b",
+  "--format",
+  "json",
+  "<README on stdin>"
+ ],
+ "steps": 48,
+ "tool_calls": 61,
+ "tokens": {
+  "input": 95852,
+  "output": 37696,
+  "reasoning": 0,
+  "cache_read": 1769358,
+  "cache_write": 0
+ },
+ "ran_visible_tests": true,
+ "pytest_calls": 5,
+ "peeked_outside": [],
+ "errors": [],
+ "final_text": "Done \u2014 all 64 tests pass (30 original + 2 seed + 32 new).\n\nMulti-currency support is complete:\n- `inventory_service/currency.py`: RATES/DECIMALS tables, `UnsupportedCurrency` (a `ValidationError`), `normalize_currency` (case/space-insensitive), `convert` (ROUND_HALF_UP to per-currency decimals), `format_amount`\n- `pricing.py`: `currency` kwarg on `quote`/`compute_order_total` \u2014 all USD rules (coupons, free shipping, tax, shipping) evaluate in USD, then every field converts; `total = taxable + tax + shipping` after conversion; USD path byte-identical (fixed a variable-shadow bug where the coupon block's `code` clobbered the currency code)\n- `models.py`/`orders.py`: `Order.currency` (defaults \"USD\", old state files load as USD), `create_order(currency=...)`, refund of non-USD orders raises `ValidationError`\n- `cli.py`: `--currency` on `quote`/`order` (e.g. `total: 29.26 EUR`, `total 4812 JPY`), unknown code \u2192 exit 2\n- `csv_io.py`: `currency` column; USD rows unchanged, JPY rows have no decimal point\n\nTests in `tests/test_currency.py` cover conversion/formatting edge cases, all-currency pricing fields, coupon/free-shipping rules staying in USD, state round-trips, the refund guard, CLI output (including case-insensitivity and exit code 2), and mixed-currency CSV export rows."
+}

@@ -1,0 +1,98 @@
+[
+ {
+  "prompt": 741,
+  "cached": 538,
+  "fresh": 203,
+  "prompt_ms": 26435,
+  "prompt_tok_s": 7.7,
+  "generated": 59,
+  "gen_ms": 19560,
+  "decode_tok_s": 3.02,
+  "drafts_kept": 33,
+  "drafts": 39
+ },
+ {
+  "prompt": 6032,
+  "cached": 6031,
+  "fresh": 1,
+  "prompt_ms": 281,
+  "prompt_tok_s": 3.6,
+  "generated": 61,
+  "gen_ms": 16227,
+  "decode_tok_s": 3.76,
+  "drafts_kept": 47,
+  "drafts": 65
+ },
+ {
+  "prompt": 6452,
+  "cached": 6092,
+  "fresh": 360,
+  "prompt_ms": 22278,
+  "prompt_tok_s": 16.2,
+  "generated": 56,
+  "gen_ms": 8489,
+  "decode_tok_s": 6.6,
+  "drafts_kept": 45,
+  "drafts": 49
+ },
+ {
+  "prompt": 7390,
+  "cached": 6508,
+  "fresh": 882,
+  "prompt_ms": 43278,
+  "prompt_tok_s": 20.4,
+  "generated": 306,
+  "gen_ms": 39726,
+  "decode_tok_s": 7.7,
+  "drafts_kept": 249,
+  "drafts": 279
+ },
+ {
+  "prompt": 16472,
+  "cached": 7696,
+  "fresh": 8776,
+  "prompt_ms": 67347,
+  "prompt_tok_s": 130.3,
+  "generated": 236,
+  "gen_ms": 51096,
+  "decode_tok_s": 4.62,
+  "drafts_kept": 163,
+  "drafts": 199
+ },
+ {
+  "prompt": 20157,
+  "cached": 16708,
+  "fresh": 3449,
+  "prompt_ms": 55673,
+  "prompt_tok_s": 62.0,
+  "generated": 575,
+  "gen_ms": 120503,
+  "decode_tok_s": 4.77,
+  "drafts_kept": 425,
+  "drafts": 482
+ },
+ {
+  "prompt": 20768,
+  "cached": 20731,
+  "fresh": 37,
+  "prompt_ms": 5459,
+  "prompt_tok_s": 6.8,
+  "generated": 54,
+  "gen_ms": 10738,
+  "decode_tok_s": 5.03,
+  "drafts_kept": 44,
+  "drafts": 50
+ },
+ {
+  "prompt": 20851,
+  "cached": 20822,
+  "fresh": 29,
+  "prompt_ms": 4634,
+  "prompt_tok_s": 6.3,
+  "generated": 103,
+  "gen_ms": 31076,
+  "decode_tok_s": 3.31,
+  "drafts_kept": 69,
+  "drafts": 98
+ }
+]

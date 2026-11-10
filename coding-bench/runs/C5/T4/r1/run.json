@@ -1,0 +1,63 @@
+{
+ "model": "C5",
+ "prompt_variant": "default",
+ "task": "T4",
+ "rep": 1,
+ "t0": 1794237312.558141,
+ "t1": 1794238247.7056856,
+ "wall_s": 935.1,
+ "exit_code": 0,
+ "killed": null,
+ "prompt_chars": 808,
+ "cmd": [
+  "C:\\Users\\user\\AppData\\Roaming\\npm\\node_modules\\opencode-ai\\bin\\opencode.exe",
+  "run",
+  "--pure",
+  "-m",
+  "strata/deepseek",
+  "--format",
+  "json",
+  "<README on stdin>"
+ ],
+ "steps": 8,
+ "tool_calls": 10,
+ "tokens": {
+  "input": 6687,
+  "output": 3632,
+  "reasoning": 0,
+  "cache_read": 87133,
+  "cache_write": 0
+ },
+ "ran_visible_tests": true,
+ "pytest_calls": 3,
+ "peeked_outside": [],
+ "errors": [],
+ "final_text": "Implemented `plan_shipments` in `inventory_service/fulfillment.py`, following all docstring rules: sequential line handling, single-warehouse preference, priority-order splitting, `InsufficientStock` with remaining total, zero/negative quantity handling, and no mutation of `stock`.\n\nAdded edge-case tests; `python -m pytest` passes (39 tests).",
+ "nan_drops": 0,
+ "engine": {
+  "turns": 9,
+  "prompt_tokens": 94596,
+  "cached_tokens": 87671,
+  "fresh_tokens": 6925,
+  "first_turn": {
+   "prompt": 776,
+   "cached": 538,
+   "fresh": 238,
+   "prompt_ms": 28069,
+   "prompt_tok_s": 8.5,
+   "generated": 276,
+   "gen_ms": 55693,
+   "decode_tok_s": 4.96,
+   "drafts_kept": 159,
+   "drafts": 217
+  },
+  "ttft_first_s": 28.1,
+  "ttft_median_s": 5.9,
+  "ttft_total_s": 168.5,
+  "output_tokens": 3908,
+  "decode_tok_s": 5.16,
+  "drafts_kept": 2594,
+  "drafts": 3165
+ },
+ "disk_E_read_GB": 894.3
+}

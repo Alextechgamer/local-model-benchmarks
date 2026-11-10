@@ -1,0 +1,78 @@
+Below is the source of several Python modules from an inference server. Read all of it, then write a thorough code review: for each module, list concrete bugs, risky edge cases and refactoring ideas, quoting the function names. Be long and detailed; do not stop early.
+
+# ===== file: serve/__init__.py =====
+"""serve - plan v0.3 P8: the API layer (text in, token ids to the engine, text deltas out)."""
+
+# ===== file: serve/frontend.py =====
+"""serve/frontend.py - plan v0.3 P8: the request/response layer between API clients and the engine.
+
+Everything here is text: no model, no GPU. The engine consumes token ids and produces text deltas; this module
+
+  * normalizes OpenAI Chat Completions and Anthropic Messages requests into the chat template's message form,
+  * renders the model's own Jinja chat template (pack `tokenizer/chat_template.jinja`) exactly as Hugging Face
+    does (checked against the pack's `chat_golden.json`, 10 cases incl. thinking and tools),
+  * parses the streamed output incrementally into reasoning (`<think>...</think>`), content and tool calls in
+    the template's XML form (`<tool_call><function=NAME><parameter=P>VALUE</parameter>...</function></tool_call>`),
+    never emitting a partial tag to the client.
+
+Design note: plan v0.3 describes a single C++ process. The frontend is Python first because the template is Jinja
+and the formats change often; the engine boundary is token ids in, text deltas out, which keeps a later C++ port
+(or a pybind wrapper) a local change.
+"""
+from __future__ import annotations
+
+import json
+import re
+import uuid
+from dataclasses import dataclass, field
+from pathlib import Path
+
+import jinja2
+from jinja2.sandbox import ImmutableSandboxedEnvironment
+
+
+# ------------------------------------------------------------------------------------------------ template
+class TemplateRequestError(jinja2.exceptions.TemplateError, ValueError):
+    """The template refused the request's messages (e.g. "No user query found in messages."): a ValueError, so the
+    client gets a 400 with the template's message instead of a dropped connection (#365)."""
+
+
+class ChatTemplate:
+    """The model's chat template, rendered with the same Jinja settings as transformers' apply_chat_template."""
+
+    def __init__(self, path: str | Path):
+        def raise_exception(message):
+            raise TemplateRequestError(message)
+
+        def tojson(x, ensure_ascii=False, indent=None, separators=None, sort_keys=False):
+            return json.dumps(x, ensure_ascii=ensure_ascii, indent=indent, separators=separators, sort_keys=sort_keys)
+
+        env = ImmutableSandboxedEnvironment(trim_blocks=True, lstrip_blocks=True, extensions=["jinja2.ext.loopcontrols"])
+        env.filters["tojson"] = tojson
+        env.globals["raise_exception"] = raise_exception
+        self.source = Path(path).read_text(encoding="utf-8")
+        self.template = env.from_string(self.source)
+
+    def render(self, messages: list[dict], tools: list[dict] | None = None, add_generation_prompt: bool = True,
+               **kwargs) -> str:
+        return self.template.render(messages=messages, tools=tools, add_generation_prompt=add_generation_prompt,
+                                    **kwargs)
+
+
+# ------------------------------------------------------------------------------------------------ requests
+def _text_of(content) -> str:
+    if content is None:
+        return ""
+    if isinstance(content, str):
+        return content
+    return "".join(part.get("text", "") for part in content if isinstance(part, dict) and part.get("type") in
+                   ("text", "input_text", None))
+
+
+IMAGE_PARTS = ("image_url", "input_image", "image")
+
+# Thinking levels.  The model's template knows low, medium and xhigh (its default; "high" means xhigh), and
+# enable_thinking=false for none.  Clients spell these many ways; everything maps onto those four.
+EFFORT = {"none": None, "off": None, "minimal": None, "disabled"
+
+Now write the review, module by module.

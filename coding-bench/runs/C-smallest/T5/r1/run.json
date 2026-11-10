@@ -1,0 +1,63 @@
+{
+ "model": "C",
+ "prompt_variant": "smallest",
+ "task": "T5",
+ "rep": 1,
+ "t0": 1794235733.5067017,
+ "t1": 1794236583.6484027,
+ "wall_s": 850.1,
+ "exit_code": 0,
+ "killed": null,
+ "prompt_chars": 1063,
+ "cmd": [
+  "C:\\Users\\user\\AppData\\Roaming\\npm\\node_modules\\opencode-ai\\bin\\opencode.exe",
+  "run",
+  "--pure",
+  "-m",
+  "strata/deepseek",
+  "--format",
+  "json",
+  "<README on stdin>"
+ ],
+ "steps": 9,
+ "tool_calls": 13,
+ "tokens": {
+  "input": 11248,
+  "output": 2264,
+  "reasoning": 0,
+  "cache_read": 123158,
+  "cache_write": 0
+ },
+ "ran_visible_tests": true,
+ "pytest_calls": 2,
+ "peeked_outside": [],
+ "errors": [],
+ "final_text": "Cause: the refund tax was calculated on the line net **before** subtracting the order-level discount share, overstating refunds. In `orders.py:105`, tax now applies to the discounted taxable amount (`taxable`).\n\nVerification for ticket O1001:\n\n```\nfirst refund:  73.84\nsecond refund: 73.84\nsum:           147.68 (order total)\n```\n\nTests:\n\n```\n..............................                                           [100%]\n30 passed in 0.09s\n```",
+ "nan_drops": 0,
+ "engine": {
+  "turns": 10,
+  "prompt_tokens": 135266,
+  "cached_tokens": 124017,
+  "fresh_tokens": 11249,
+  "first_turn": {
+   "prompt": 860,
+   "cached": 859,
+   "fresh": 1,
+   "prompt_ms": 503,
+   "prompt_tok_s": 2.0,
+   "generated": 124,
+   "gen_ms": 37173,
+   "decode_tok_s": 3.34,
+   "drafts_kept": 58,
+   "drafts": 90
+  },
+  "ttft_first_s": 0.5,
+  "ttft_median_s": 24.8,
+  "ttft_total_s": 257.1,
+  "output_tokens": 2388,
+  "decode_tok_s": 4.07,
+  "drafts_kept": 1610,
+  "drafts": 2029
+ },
+ "disk_E_read_GB": 861.6
+}

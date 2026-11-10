@@ -1,0 +1,37 @@
+{
+ "label": "g-s5",
+ "file_kb": 57.8,
+ "console_errors": [],
+ "console_warnings": [],
+ "exceptions": [],
+ "logs": [
+  "garden voxels: 15465"
+ ],
+ "page": {
+  "title": "Voxel Pagoda Garden",
+  "canvases": [
+   [
+    1600,
+    900
+   ]
+  ],
+  "sliders": 4,
+  "checkboxes": 5,
+  "buttons": [
+   "▶",
+   "Overview",
+   "Pagoda",
+   "Pond",
+   "Torii",
+   "Blossoms",
+   "Regenerate seed",
+   "Reset view"
+  ],
+  "voxelText": "voxels 15465",
+  "fpsText": "fps · 10",
+  "hasJapaneseTitle": true,
+  "loadingVisible": false,
+  "text": "桜の庭 — raking the sand, planting the blossoms…\n桜の庭 – Voxel Pagoda Garden\n桜の庭\n▾\nTime of day\nPlay cycle\n▶\nSpeed\nPetal density\nWind strength\nAuto-rotate\nShadows\nFireflies\nWater animation\nWireframe mode\nCamera\nOverview\nPagoda\nPond\nTorii\nBlossoms\nRegenerate seed\nReset view\nvoxels 15465 · 135 fps · 10:00\nKeyboard\nSpace   toggle auto-rotate\n1 - 5   jump to a camera preset\nN       noon ⇄ 22:00\ndrag    orbit · wheel / pinch zoom\nclick   the panel header collapses it"
+ },
+ "measured_fps_headless": 135
+}

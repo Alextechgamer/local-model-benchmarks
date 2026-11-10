@@ -1,0 +1,33 @@
+{
+ "task": "T3",
+ "source_dir": "E:\\strata-tests\\coding-bench\\runs\\A\\T3\\r1\\work",
+ "label": "A-T3-r1",
+ "scored_at": "2026-10-20T01:26:02.212504",
+ "package_changed": true,
+ "tests_changed": false,
+ "visible": {
+  "total": 31,
+  "passed": 31,
+  "failed": 0,
+  "returncode": 0,
+  "timed_out": false,
+  "seconds": 0.8
+ },
+ "hidden": {
+  "total": 25,
+  "passed": 24,
+  "failed": 1,
+  "task_total": 1,
+  "task_passed": 1,
+  "keep_total": 24,
+  "keep_passed": 23,
+  "failures": [
+   "test_keep_golden_odd_inputs"
+  ],
+  "returncode": 1,
+  "timed_out": false,
+  "seconds": 0.8,
+  "output_tail": ".....................F...                                                [100%]\n================================== FAILURES ===================================\n_________________________ test_keep_golden_odd_inputs _________________________\n\ngot_fn = <function test_keep_golden_odd_inputs.<locals>.<lambda> at 0x000001E1A22109E0>\nexpected = {'error': ['ValidationError', 'ZZZ-0001: quantity must be positive']}\n\n    def check(got_fn, expected):\n        try:\n>           b = got_fn()\n                ^^^^^^^^\n\ntest_t3_golden.py:15: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\ntest_t3_golden.py:85: in <lambda>\n    check(lambda: compute_order_total(raw[name], cat, customer('C2')), expected)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n..\\model\\inventory_service\\pricing.py:135: in compute_order_total\n    details, subtotal, line_discounts, weight = price_lines(lines, catalog)\n                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n..\\model\\inventory_service\\pricing.py:99: in price_lines\n    product = catalog.get(line.sku)\n              ^^^^^^^^^^^^^^^^^^^^^\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself = <inventory_service.catalog.Catalog object at 0x000001E1A22F6390>\nsku = 'ZZZ-0001'\n\n    def get(self, sku: str) -> Product:\n        try:\n            return self._products[sku]\n        except KeyError:\n>           raise ValidationError(f\"unknown SKU {sku}\") from None\nE           inventory_service.models.ValidationError: unknown SKU ZZZ-0001\n\n..\\model\\inventory_service\\catalog.py:51: ValidationError\n\nDuring handling of the above exception, another exception occurred:\n\n    def test_keep_golden_odd_inputs():\n        from inventory_service.models import OrderLine\n        from inventory_service.pricing import compute_order_total\n        cat, *_ = world()\n        raw = {'zero': [OrderLine('TOO-0001', 0, cat.get('TOO-0001').price)],\n               'negative_second': [OrderLine('TOO-0001', 1, cat.get('TOO-0001').price), OrderLine('KIT-0001', -2, cat.get('KIT-0001').price)],\n               'unknown_sku': [OrderLine('ZZZ-0001', 1, cat.get('TOO-0001').price)],\n               'unknown_sku_zero_qty': [OrderLine('ZZZ-0001', 0, cat.get('TOO-0001').price)],\n               'empty': [],\n               'custom_price': [OrderLine('TOO-0002', 2, cat.get('TOO-0002').price / 3)]}\n        for name, expected in ODD:\n>           check(lambda: compute_order_total(raw[name], cat, customer('C2')), expected)\n\ntest_t3_golden.py:85: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\ngot_fn = <function test_keep_golden_odd_inputs.<locals>.<lambda> at 0x000001E1A22109E0>\nexpected = {'error': ['ValidationError', 'ZZZ-0001: quantity must be positive']}\n\n    def check(got_fn, expected):\n        try:\n            b = got_fn()\n        except Exception as e:\n            assert 'error' in expected, f'unexpected {type(e).__name__}: {e}'\n>           assert [type(e).__name__, str(e)] == expected['error']\nE           AssertionError: assert ['ValidationE...SKU ZZZ-0001'] == ['ValidationE... be positive']\nE             \nE             At index 1 diff: 'unknown SKU ZZZ-0001' != 'ZZZ-0001: quantity must be positive'\nE             Use -v to get more diff\n\ntest_t3_golden.py:18: AssertionError\n=========================== short test summary info ===========================\nFAILED test_t3_golden.py::test_keep_golden_odd_inputs - AssertionError: asser...\n1 failed, 24 passed in 0.27s\n"
+ },
+ "score": 0.96
+}

@@ -1,0 +1,13 @@
+﻿>>> A-v045-ec5000
+{"event": "start", "pid": 34400, "free_gb": 50.3, "cmd": ["C:\\Users\\user\\Strata\\.venv\\Scripts\\python.exe", "E:\\strata-tests\\coding-bench\\tools\\strata-v0.1.45\\serve\\server.py", "--engine", "strata", "--config", "E:\\strata-tests\\coding-bench\\configs\\tune\\A-v045-ec5000.json", "--port", "8080"], "env": [], "tag": "A-v045-ec5000", "t": 1792479833.384574}
+{"event": "loaded", "load_s": 21.2, "tag": "A-v045-ec5000", "t": 1792479854.552085}
+warmup {'error': None, 'prompt_tokens': 16140, 'completion_tokens': 512, 'ttft_s': 13.702351808547974}
+{"run": 1, "error": null, "prompt_tokens": 16142, "completion_tokens": 512, "ttft_s": 13.04314661026001, "prompt_tps": 1237.5848008411074, "output_tps": 57.05310639644022, "peak_vram_dedicated_mb": 20216.0, "peak_vram_shared_mb": 29513.0}
+{"run": 2, "error": null, "prompt_tokens": 16137, "completion_tokens": 512, "ttft_s": 13.060702800750732, "prompt_tps": 1235.5384121497996, "output_tps": 57.92963237731441, "peak_vram_dedicated_mb": 20216.0, "peak_vram_shared_mb": 29513.0}
+{"run": 3, "error": null, "prompt_tokens": 16141, "completion_tokens": 512, "ttft_s": 13.010957956314087, "prompt_tps": 1240.5696839691143, "output_tps": 62.44032390703981, "peak_vram_dedicated_mb": 20216.0, "peak_vram_shared_mb": 29513.0}
+SUMMARY {"tag": "A-v045-ec5000", "n": 3, "median_ttft_s": 13.04314661026001, "median_prompt_tps": 1237.5848008411074, "median_output_tps": 57.92963237731441, "max_vram_shared_mb": 29513.0, "max_vram_dedicated_mb": 20216.0, "completion_tokens": [512, 512, 512], "errors": []}
+{"event": "stopped", "pid": 34400, "alive_s": 117.8, "tag": "A-v045-ec5000", "t": 1792479951.225419}
+>>> A-v045-ec5000-notable
+{"event": "start", "pid": 5372, "free_gb": 50.4, "cmd": ["C:\\Users\\user\\Strata\\.venv\\Scripts\\python.exe", "E:\\strata-tests\\coding-bench\\tools\\strata-v0.1.45\\serve\\server.py", "--engine", "strata", "--config", "E:\\strata-tests\\coding-bench\\configs\\tune\\A-v045-ec5000-notable.json", "--port", "8080"], "env": [], "tag": "A-v045-ec5000-notable", "t": 1792479962.2384973}
+{"event": "loaded", "load_s": 20.7, "tag": "A-v045-ec5000-notable", "t": 1792479982.8971155}
+warmup {'error': None, 'prompt_tokens': 16141, 'completion_tokens': 512, 'ttft_s': 24.63563823699951}

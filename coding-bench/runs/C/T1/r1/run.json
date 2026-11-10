@@ -1,0 +1,63 @@
+{
+ "model": "C",
+ "prompt_variant": "default",
+ "task": "T1",
+ "rep": 1,
+ "t0": 1794222846.5785487,
+ "t1": 1794223376.6719103,
+ "wall_s": 530.1,
+ "exit_code": 0,
+ "killed": null,
+ "prompt_chars": 691,
+ "cmd": [
+  "C:\\Users\\user\\AppData\\Roaming\\npm\\node_modules\\opencode-ai\\bin\\opencode.exe",
+  "run",
+  "--pure",
+  "-m",
+  "strata/deepseek",
+  "--format",
+  "json",
+  "<README on stdin>"
+ ],
+ "steps": 5,
+ "tool_calls": 9,
+ "tokens": {
+  "input": 6802,
+  "output": 1035,
+  "reasoning": 0,
+  "cache_read": 47128,
+  "cache_write": 0
+ },
+ "ran_visible_tests": true,
+ "pytest_calls": 2,
+ "peeked_outside": [],
+ "errors": [],
+ "final_text": "Fixed all 3 bugs:\n\n- `inventory.py:89` \u2014 `release` returned on the first reservation instead of freeing all lines.\n- `csv_io.py:60` \u2014 blank optional `weight_kg` was treated as present, so it should default to `\"0\"`.\n- `pricing.py:90` \u2014 bulk discount used `>` instead of `>=` (threshold is 10).\n\nAll 30 tests pass.",
+ "nan_drops": 0,
+ "engine": {
+  "turns": 6,
+  "prompt_tokens": 54671,
+  "cached_tokens": 47666,
+  "fresh_tokens": 7005,
+  "first_turn": {
+   "prompt": 741,
+   "cached": 538,
+   "fresh": 203,
+   "prompt_ms": 30114,
+   "prompt_tok_s": 6.7,
+   "generated": 103,
+   "gen_ms": 70780,
+   "decode_tok_s": 1.46,
+   "drafts_kept": 51,
+   "drafts": 74
+  },
+  "ttft_first_s": 30.1,
+  "ttft_median_s": 30.1,
+  "ttft_total_s": 155.6,
+  "output_tokens": 1138,
+  "decode_tok_s": 3.07,
+  "drafts_kept": 818,
+  "drafts": 978
+ },
+ "disk_E_read_GB": 468.0
+}
